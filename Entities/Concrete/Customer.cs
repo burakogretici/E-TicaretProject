@@ -12,7 +12,7 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int AddressId { get; set; }
+        public long AddressId { get; set; }
         public string Phone { get; set; }
     }
 }

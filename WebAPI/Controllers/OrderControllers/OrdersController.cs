@@ -17,7 +17,7 @@ namespace WebAPI.Controllers.OrderControllers
 
         public OrdersController(IOrderService orderService)
         {
-            _orderService = _orderService;
+            _orderService = orderService;
         }
         [HttpGet("getall")]
         public IActionResult GetAll()

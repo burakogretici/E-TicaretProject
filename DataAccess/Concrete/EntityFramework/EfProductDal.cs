@@ -20,11 +20,13 @@ namespace DataAccess.Concrete.EntityFramework
                              join c in context.Categories
                              on p.CategoryId equals c.Id
                              join brand in context.Brands on p.BrandId equals brand.Id
+                             join color in context.Colors on p.ColorId equals color.Id 
                              select new ProductDetailDto
                              {
                                  ProductName = p.Name,
                                  CategoryName = c.Name,
                                  BrandName = brand.Name,
+                                 ColorName = color.Name,
                                  UnitPrice = p.UnitPrice
                              };
                 return result.ToList();
