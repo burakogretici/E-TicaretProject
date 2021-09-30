@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Business\" />
     <Folder Include="Utilities\Helper\" />
   </ItemGroup>
 

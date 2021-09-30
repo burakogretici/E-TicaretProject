@@ -16,5 +16,6 @@ namespace Business.Abstract
 
         IDataResult<List<Brand>> GetAll();
         IDataResult<Brand> GetById(long brandId);
+      
     }
 }

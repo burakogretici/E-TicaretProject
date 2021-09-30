@@ -12,6 +12,7 @@ namespace Business.Constants
     {
         public static string ProductAdded = "Ürün eklendi ";
         public static string ProductNameInvalid = "Ürün ismi geçersiz";
+        public static string CheckProductNameLimit = "Ürün adı 2 karakterden fazla olmalı";
         public static string ProductAlreadyExists = "Ürün zaten var";
         public static string ProductListed = "Ürünler listelendi";
         public static string ProductDeleted = "Ürün silindi";
@@ -32,6 +33,7 @@ namespace Business.Constants
         public static string BrandListed = "Markalar listelendi";
         public static string BrandDeleted = "Marka silindi";
         public static string BrandUpdated = "Marka güncellendi";
+        public static string BrandNameAlreadyExists = "Marka adı zaten var";
 
         public static string UserAdded = "Kullanıcı eklendi ";
         public static string UserNameInvalid = "Kullanıcı ismi geçersiz";
@@ -67,22 +69,26 @@ namespace Business.Constants
         public static string CountryListed = "Ülkeler listelendi";
         public static string CountryDeleted = "Ülke silindi";
         public static string CountryUpdated = "Ülke güncellendi";
+        public static string CountryNameAlreadyExists = "Ülke adı zaten var";
 
         public static string CityAdded = "Şehir eklendi ";
         public static string CityNameInvalid = "Şehir ismi geçersiz";
         public static string CityListed = "Şehirler listelendi";
         public static string CityDeleted = "Şehir silindi";
         public static string CityUpdated = "Şehir güncellendi";
+        public static string CityNameAlreadyExists = "Şehir adı zaten var";
 
         public static string SupplierAdded = "Satıcı eklendi";
         public static string SupplierDeleted = "Satıcı silindi";
         public static string SupplierUpdated = "Satıcı güncellendi";
         public static string SuppliersListed = "Satıcılar listelendi";
+        public static string SupplierNameAlreadyExists = "Tedarikçi adı zaten var";
 
         public static string ColorAdded = "Renk eklendi";
         public static string ColorDeleted = "Renk silindi";
         public static string ColorUpdated = "Renk güncellendi";
         public static string ColorsListed = "Renk listelendi";
+        public static string ColorNameAlreadyExists = "Renk zaten var";
 
         public static string CustomerAdded = "Müşteri eklendi";
         public static string CustomerDeleted = "Müşteri silindi";
@@ -100,8 +106,5 @@ namespace Business.Constants
 
 
        
-
-
-
     }
 }

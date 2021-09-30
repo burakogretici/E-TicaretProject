@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,6 +23,11 @@ namespace Business.Concrete
 
         public IResult Add(Supplier supplier)
         {
+            IResult result = BusinessRules.Run(SupplierNameAlreadyExists(supplier.CompanyName));
+            if (result != null)
+            {
+                return result;
+            }
             _supplierDal.Add(supplier);
             return new SuccessResult(Messages.SupplierAdded);
         }
@@ -47,6 +53,17 @@ namespace Business.Concrete
         public IDataResult<Supplier> GetById(long supplierId)
         {
             return new SuccessDataResult<Supplier>(_supplierDal.Get(s=>s.Id==supplierId));
+        }
+
+        private IResult SupplierNameAlreadyExists(string companyName)
+        {
+            var result = _supplierDal.GetAll(s => s.CompanyName == companyName);
+            if (result == null)
+            {
+                return new ErrorResult(Messages.SupplierNameAlreadyExists);
+            }
+
+            return new SuccessResult();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities;
@@ -23,6 +24,11 @@ namespace Business.Concrete
 
         public IResult Add(Color color)
         {
+            IResult result = BusinessRules.Run(ColorNameAlreadyExists(color.Name));
+            if (result != null)
+            {
+                return result;
+            }
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
         }
@@ -48,6 +54,17 @@ namespace Business.Concrete
         public IDataResult<Color> GetById(int colorId)
         {
             return new SuccessDataResult<Color>(_colorDal.Get(cl => cl.Id == colorId));
+        }
+
+        private IResult ColorNameAlreadyExists(string colorName)
+        {
+            var result = _colorDal.GetAll(c => c.Name == colorName);
+            if (result == null)
+            {
+                return new ErrorResult(Messages.ColorNameAlreadyExists);
+            }
+
+            return new SuccessResult();
         }
     }
 }

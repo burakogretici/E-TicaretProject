@@ -11,8 +11,9 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
-        public string CompanyName { get; set; }
+        public string SupplierName { get; set; }
         public string Fax { get; set; }
         public string Website { get; set; }
+
     }
 }

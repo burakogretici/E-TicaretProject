@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -22,8 +23,14 @@ namespace Business.Concrete
 
         public IResult Add(Brand brand)
         {
-            _brandDal.Add(brand);
-            return new SuccessResult(Messages.BrandAdded);
+            IResult result = BusinessRules.Run(BrandNameAlreadyExists(brand.Name));
+            if (result == null)
+            {
+                _brandDal.Add(brand);
+                return new SuccessResult(Messages.BrandAdded);
+            }
+
+            return result;
         }
 
         public IResult Update(Brand brand)
@@ -47,5 +54,18 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Brand>(_brandDal.Get(br => br.Id == brandId));
         }
+
+        private IResult BrandNameAlreadyExists(string brandName)
+        {
+            var result = _brandDal.GetAll(b => b.Name == brandName).Any();
+            if (result == true)
+            {
+                return new ErrorResult(Messages.BrandNameAlreadyExists);
+            }
+
+            return new SuccessResult();
+        }
+
+      
     }
 }

@@ -33,7 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Color> Colors { get; set; }
 
-        
+      
     }
 }
 

@@ -76,10 +76,10 @@ namespace Business.Concrete
 
         private IResult CheckProductNameLimit(string productName)
         {
-            var result = _productDal.GetAll(p=>p.Name == productName);
-            if (result == null)
+            var result = _productDal.GetAll(p=>p.Name == productName).Count;
+            if (result <= 2)
             {
-                return new ErrorResult(Messages.ProductAlreadyExists);
+                return new ErrorResult(Messages.CheckProductNameLimit);
             }
 
             return new SuccessResult();
