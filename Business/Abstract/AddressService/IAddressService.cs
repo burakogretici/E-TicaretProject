@@ -3,23 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Business.Abstract;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
 
 namespace Business.Abstract.AddressService
 {
-    public interface IAddressService
+    public interface IAddressService : IBaseService<Address>
     {
-        IResult Add(Address address);
-        IResult Update(Address address);
-        IResult Delete(Address address);
-
-        IDataResult<List<Address>> GetAll();
         IDataResult<List<Address>> GetAllByCountryId(int countryId);
         IDataResult<List<Address>> GetAllByCityId(int cityId);
-        IDataResult<Address> GetById(int addressId);
-
         IDataResult<List<AddressDetailDto>> GetAddressDetail();
     }
 }

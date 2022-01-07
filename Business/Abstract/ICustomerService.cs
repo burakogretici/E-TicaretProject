@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Business.Abstract;
 using Core.Utilities.Results;
 using Entities.Concrete;
 
 namespace Business.Abstract
 {
-    public interface ICustomerService 
+    public interface ICustomerService : IBaseService<Customer> 
     {
-        IResult Add(Customer customer);
-        IResult Update(Customer customer);
-        IResult Delete(Customer customer);
-
-        IDataResult<List<Customer>> GetAll();
-        IDataResult<Customer> GetById(int customerId);
+       
     }
 }

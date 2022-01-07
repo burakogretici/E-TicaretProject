@@ -5,17 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Entities.Concrete;
-
+using Core.Business.Abstract;
 
 namespace Business.Abstract.OrderService
 {
-    public interface IOrderService
+    public interface IOrderService : IBaseService<Order>
     {
-        IResult Add(Order order);
-        IResult Delete(Order order);
-        IResult Update(Order order);
-
-        IDataResult<List<Order>> GetAll();
-        IDataResult<Order> GetById(long orderId);
+       
     }
 }

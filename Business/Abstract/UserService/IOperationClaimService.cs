@@ -3,18 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Business.Abstract;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 
 namespace Business.Abstract.UserService
 {
-    public interface IOperationClaimService
+    public interface IOperationClaimService : IBaseService<OperationClaim>
     {
-        IResult Add(OperationClaim operationClaim);
-        IResult Update(OperationClaim operationClaim);
-        IResult Delete(OperationClaim operationClaim);
-
-        IDataResult<List<OperationClaim>> GetAll();
-        IDataResult<OperationClaim> GetByOperationClaim(int operationClaimId);
+    
     }
 }
