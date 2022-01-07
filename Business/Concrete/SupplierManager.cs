@@ -23,7 +23,7 @@ namespace Business.Concrete
 
         public IResult Add(Supplier supplier)
         {
-            IResult result = BusinessRules.Run(SupplierNameAlreadyExists(supplier.CompanyName));
+            IResult result = BusinessRules.Run(SupplierNameAlreadyExists(supplier.SupplierName));
             if (result != null)
             {
                 return result;
@@ -57,7 +57,7 @@ namespace Business.Concrete
 
         private IResult SupplierNameAlreadyExists(string companyName)
         {
-            var result = _supplierDal.GetAll(s => s.CompanyName == companyName);
+            var result = _supplierDal.GetAll(s => s.SupplierName == companyName);
             if (result == null)
             {
                 return new ErrorResult(Messages.SupplierNameAlreadyExists);
