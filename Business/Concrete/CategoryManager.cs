@@ -46,10 +46,12 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Category>>(_categoryDal.GetAll(),Messages.CategoryListed);
         }
 
-        public IDataResult<Category> GetById(long categoryId)
+        public IDataResult<Category> GetById(int id)
         {
-            return new SuccessDataResult<Category>(_categoryDal.Get(c => c.Id == categoryId));
+            return new SuccessDataResult<Category>(_categoryDal.Get(c => c.Id == id));
         }
+
+       
     }
 }
 

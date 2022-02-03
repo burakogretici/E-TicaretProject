@@ -50,9 +50,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Supplier>>(_supplierDal.GetAll(),Messages.SuppliersListed);
         }
 
-        public IDataResult<Supplier> GetById(long supplierId)
+        public IDataResult<Supplier> GetById(long id)
         {
-            return new SuccessDataResult<Supplier>(_supplierDal.Get(s=>s.Id==supplierId));
+            return new SuccessDataResult<Supplier>(_supplierDal.Get(s=>s.Id==id));
         }
 
         private IResult SupplierNameAlreadyExists(string companyName)
