@@ -9,7 +9,7 @@ using Core.Utilities.Results;
 
 namespace Business.Abstract.UserService
 {
-    public interface IUserOperationClaimService : IBaseService<UserOperationClaim>
+    public interface IUserOperationClaimService 
     {
         IDataResult<UserOperationClaim> GetByOperationClaim(int operationClaimId);
     }

@@ -10,7 +10,7 @@ using Entities.DTOs;
 
 namespace Business.Abstract
 {
-    public interface IProductService : IBaseService<Product>
+    public interface IProductService
     {
 
         IDataResult<List<Product>> GetAllByCategoryId(int categoryId);

@@ -10,7 +10,7 @@ using Entities.Concrete;
 
 namespace Business.Abstract.AddressService
 {
-    public interface ICountryService : IBaseService<Country>
+    public interface ICountryService 
     {
        
     }

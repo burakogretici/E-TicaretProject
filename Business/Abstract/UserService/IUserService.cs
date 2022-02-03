@@ -9,7 +9,7 @@ using Core.Utilities.Results;
 
 namespace Business.Abstract.UserService
 {
-    public interface IUserService : IBaseService<User>
+    public interface IUserService
     {
         IDataResult<User> GetByMail(string email);
         IDataResult<List<OperationClaim>> GetClaims(User user);

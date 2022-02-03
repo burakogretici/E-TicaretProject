@@ -10,7 +10,7 @@ using Entities.Concrete;
 
 namespace Business.Abstract.AddressService
 {
-    public interface ICityService : IBaseService<City>
+    public interface ICityService 
     {
         IDataResult<List<City>> GetAllByCountry(int countryId);
     }

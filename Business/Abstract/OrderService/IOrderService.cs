@@ -9,7 +9,7 @@ using Core.Business.Abstract;
 
 namespace Business.Abstract.OrderService
 {
-    public interface IOrderService : IBaseService<Order>
+    public interface IOrderService 
     {
        
     }

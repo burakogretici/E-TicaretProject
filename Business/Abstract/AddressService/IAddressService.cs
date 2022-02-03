@@ -10,7 +10,7 @@ using Entities.DTOs;
 
 namespace Business.Abstract.AddressService
 {
-    public interface IAddressService : IBaseService<Address>
+    public interface IAddressService
     {
         IDataResult<List<Address>> GetAllByCountryId(int countryId);
         IDataResult<List<Address>> GetAllByCityId(int cityId);

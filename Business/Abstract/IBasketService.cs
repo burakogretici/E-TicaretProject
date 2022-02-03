@@ -10,7 +10,7 @@ using Entities.Concrete;
 
 namespace Business.Abstract
 {
-    public interface IBasketService : IBaseService<Basket>
+    public interface IBasketService 
     {
        
 
