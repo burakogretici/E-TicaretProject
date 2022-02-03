@@ -11,6 +11,11 @@ namespace Business.Abstract.OrderService
 {
     public interface IOrderService 
     {
-       
+        IResult Add(Order order);
+        IResult Update(Order order);
+        IResult Delete(Order order);
+
+        IDataResult<List<Order>> GetAll();
+        IDataResult<Order> GetById(long id);
     }
 }
