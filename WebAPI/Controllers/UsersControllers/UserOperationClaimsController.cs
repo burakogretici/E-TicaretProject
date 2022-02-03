@@ -61,26 +61,26 @@ namespace WebAPI.Controllers.UsersControllers
             return BadRequest(result);
         }
 
-        [HttpGet("getbyuseroperationclaim")]
-        public IActionResult GetByUserOperationClaim(int userOperationClaimId)
-        {
-            var result = _userOperationClaimService.GetByUserOperationClaim(userOperationClaimId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+        //[HttpGet("getbyuseroperationclaim")]
+        //public IActionResult GetByUserOperationClaim(int userOperationClaimId)
+        //{
+        //    var result = _userOperationClaimService.GetByUserOperationClaim(userOperationClaimId);
+        //    if (result.Success)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return BadRequest(result);
+        //}
 
-        [HttpGet("getbyoperationclaim")]
-        public IActionResult GetByOperationClaim(int operationClaimId)
-        {
-            var result = _userOperationClaimService.GetByUserOperationClaim(operationClaimId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
-        }
+        //[HttpGet("getbyoperationclaim")]
+        //public IActionResult GetByOperationClaim(int operationClaimId)
+        //{
+        //    var result = _userOperationClaimService.GetByUserOperationClaim(operationClaimId);
+        //    if (result.Success)
+        //    {
+        //        return Ok(result);
+        //    }
+        //    return BadRequest(result);
+        //}
     }
 }
