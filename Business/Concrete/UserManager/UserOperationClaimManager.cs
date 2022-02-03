@@ -43,10 +43,10 @@ namespace Business.Concrete.UserManager
             return new SuccessDataResult<List<UserOperationClaim>>(_userOperationClaimDal.GetAll(),Messages.UserOperationClaimListed);
         }
 
-        public IDataResult<UserOperationClaim> GetByUserOperationClaim(int userOperationClaimId)
-        {
-            return new SuccessDataResult<UserOperationClaim>(_userOperationClaimDal.Get(uoc => uoc.Id == userOperationClaimId));
-        }
+        //public IDataResult<UserOperationClaim> GetByUserOperationClaim(int userOperationClaimId)
+        //{
+        //    return new SuccessDataResult<UserOperationClaim>(_userOperationClaimDal.Get(uoc => uoc.Id == userOperationClaimId));
+        //}
 
         public IDataResult<UserOperationClaim> GetByOperationClaim(int operationClaimId)
         {

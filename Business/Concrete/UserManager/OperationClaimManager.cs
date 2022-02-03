@@ -44,9 +44,9 @@ namespace Business.Concrete.UserManager
             return new SuccessDataResult<List<OperationClaim>>(_operationClaimDal.GetAll(),Messages.OperationClaimListed);
         }
 
-        public IDataResult<OperationClaim> GetByOperationClaim(int operationClaimId)
-        {
-            return  new SuccessDataResult<OperationClaim>(_operationClaimDal.Get(oc=>oc.Id == operationClaimId));
-        }
+        //public IDataResult<OperationClaim> GetByOperationClaim(int operationClaimId)
+        //{
+        //    return  new SuccessDataResult<OperationClaim>(_operationClaimDal.Get(oc=>oc.Id == operationClaimId));
+        //}
     }
 }
