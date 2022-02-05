@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -24,57 +25,36 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _productService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
         public IActionResult GetById(int productId)
         {
             var result = _productService.GetById(productId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getallbycategorydid")]
         public IActionResult GetAllByCategoryId(int categoryId)
         {
             var result = _productService.GetAllByCategoryId(categoryId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Product product)
+        public IActionResult Add(CreateProductDto createProduct)
 
         {
-            var result = _productService.Add(product);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            var result = _productService.Add(createProduct);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyunitprice")]
         public IActionResult GetByUnitPrice(decimal min, decimal max)
         {
             var result = _productService.GetByUnitPrice(min, max);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
@@ -82,12 +62,7 @@ namespace WebAPI.Controllers
 
         {
             var result = _productService.Update(product);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
@@ -95,23 +70,15 @@ namespace WebAPI.Controllers
 
         {
             var result = _productService.Delete(product);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
+            return result.Success ? Ok(result) : BadRequest(result);
 
-            return BadRequest(result);
         }
 
         [HttpGet("getproductdetail")]
         public IActionResult GetProductDetail()
         {
             var result = _productService.GetProductDetails();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

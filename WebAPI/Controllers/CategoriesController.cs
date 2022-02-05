@@ -24,22 +24,14 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _categoryService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
         public IActionResult GetById(int categoryId)
         {
             var result = _categoryService.GetById(categoryId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("add")]
@@ -47,12 +39,7 @@ namespace WebAPI.Controllers
 
         {
             var result = _categoryService.Add(category);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
@@ -60,12 +47,7 @@ namespace WebAPI.Controllers
 
         {
             var result = _categoryService.Update(category);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
@@ -73,12 +55,7 @@ namespace WebAPI.Controllers
 
         {
             var result = _categoryService.Delete(category);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

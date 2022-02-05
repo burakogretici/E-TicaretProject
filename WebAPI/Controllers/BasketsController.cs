@@ -25,22 +25,14 @@ namespace WebAPI.Controllers
         public IActionResult GetAll()
         {
             var result = _basketService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
         public IActionResult GetById(int basketId)
         {
             var result = _basketService.GetById(basketId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("add")]
@@ -48,12 +40,7 @@ namespace WebAPI.Controllers
 
         {
             var result = _basketService.AddToCart(basket);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
@@ -61,12 +48,7 @@ namespace WebAPI.Controllers
 
         {
             var result = _basketService.Update(basket);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
@@ -74,12 +56,7 @@ namespace WebAPI.Controllers
 
         {
             var result = _basketService.DeleteFromCart(basket);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

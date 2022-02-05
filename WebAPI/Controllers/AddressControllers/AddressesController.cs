@@ -23,84 +23,52 @@ namespace WebAPI.Controllers.AddressControllers
         public IActionResult Add(Address address)
         {
             var result = _addressService.Add(address);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpPost("delete")]
         public IActionResult Delete(Address address)
         {
             var result = _addressService.Delete(address);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpPost("update")]
         public IActionResult Update(Address address)
         {
             var result = _addressService.Update(address);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
             var result = _addressService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getallbycountryid")]
         public IActionResult GetAllByCountryId(int countryId)
         {
             var result = _addressService.GetAllByCountryId(countryId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getallbycityid")]
         public IActionResult GetAllByCityId(int cityId)
         {
             var result = _addressService.GetAllByCityId(cityId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getbyid")]
         public IActionResult GetById(int addressId)
         {
             var result = _addressService.GetAllByCountryId(addressId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
        
         [HttpGet("getaddressdetail")]
         public IActionResult GetAddressDetail()
         {
             var result = _addressService.GetAddressDetail();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

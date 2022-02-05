@@ -23,23 +23,14 @@ namespace WebAPI.Controllers.OrderControllers
         public IActionResult GetAll()
         {
             var result = _orderService.GetAll();
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
         public IActionResult GetById(long orderId)
         {
             var result = _orderService.GetById(orderId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("add")]
@@ -47,12 +38,7 @@ namespace WebAPI.Controllers.OrderControllers
 
         {
             var result = _orderService.Add(order);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
@@ -60,12 +46,7 @@ namespace WebAPI.Controllers.OrderControllers
 
         {
             var result = _orderService.Update(order);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
@@ -73,12 +54,7 @@ namespace WebAPI.Controllers.OrderControllers
 
         {
             var result = _orderService.Delete(order);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }
