@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -15,8 +11,8 @@ namespace Business.Concrete
 {
     public class CategoryManager : ICategoryService
     {
-        private ICategoryDal _categoryDal;
-
+        private readonly ICategoryDal _categoryDal;
+        
         public CategoryManager(ICategoryDal categoryDal)
         {
             _categoryDal = categoryDal;

@@ -1,21 +1,19 @@
 ﻿using Business.Abstract;
-using Core.Entities.Concrete;
+
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Business.Abstract.UserService;
 using Business.Constants;
 using Core.Utilities.Security.Jwt;
+using Entities.Concrete;
 using Entities.DTOs;
 
 namespace Business.Concrete
 {
     public class AuthManager : IAuthService
     {
-         IUserService _userService;
-        private ITokenHelper _tokenHelper;
+        private readonly IUserService _userService;
+        private readonly ITokenHelper _tokenHelper;
 
         public AuthManager(IUserService userService, ITokenHelper tokenHelper)
         {

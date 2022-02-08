@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Business.Abstract.UserService;
 using Business.Constants;
-using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract.UserDal;
+using Entities.Concrete;
 
 namespace Business.Concrete.UserManager
 {
     public class UserManager : IUserService
     {
-        private IUserDal _userDal;
+        private readonly IUserDal _userDal;
 
         public UserManager(IUserDal userDal)
         {

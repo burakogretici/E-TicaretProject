@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Business.Abstract.AddressService;
 using Business.Constants;
 using Core.Utilities.Results;
@@ -14,7 +10,7 @@ namespace Business.Concrete.AddressManager
 {
     public class AddressManager : IAddressService
     {
-        private IAddressDal _addressDal;
+        private readonly IAddressDal _addressDal;
 
         public AddressManager(IAddressDal addressDal)
         {
