@@ -26,7 +26,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(BrandProfile));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

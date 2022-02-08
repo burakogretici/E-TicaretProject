@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        IProductService _productService;
+        private readonly IProductService _productService;
 
         public ProductsController(IProductService productService)
         {
@@ -43,10 +43,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(CreateProductDto createProduct)
+        public IActionResult Add(Product product)
 
         {
-            var result = _productService.Add(createProduct);
+            var result = _productService.Add(product);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
