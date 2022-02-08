@@ -4,6 +4,7 @@ using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Business.Abstract.UserService;
 using Business.Constants;
+using Core.Entities.Concrete;
 using Core.Utilities.Security.Jwt;
 using Entities.Concrete;
 using Entities.DTOs;

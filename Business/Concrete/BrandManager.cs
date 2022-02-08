@@ -13,7 +13,7 @@ namespace Business.Concrete
     public class BrandManager : IBrandService
     {
         private readonly IBrandDal _brandDal;
-        IMapper _mapper;
+        private readonly IMapper _mapper;
         public BrandManager(IBrandDal brandDal, IMapper mapper)
         {
             _brandDal = brandDal;
@@ -22,8 +22,10 @@ namespace Business.Concrete
 
         public IDataResult<BrandDto> Add(BrandDto model)
         {
-            Brand brand = new Brand();
-            brand.Name = model.Name;
+            Brand brand = new Brand
+            {
+                Name = model.Name
+            };
 
             var mapper = _mapper.Map<Brand>(model);
 
