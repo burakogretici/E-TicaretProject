@@ -6,7 +6,7 @@ namespace Business.Helpers.AutoMapperProfiles
     {
         public ProductProfile()
         {
-
+            
         }
     }
 }
