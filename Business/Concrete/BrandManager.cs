@@ -1,36 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
-using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
     public class BrandManager : IBrandService
     {
-        private IBrandDal _brandDal;
-
-        public BrandManager(IBrandDal brandDal)
+        private readonly IBrandDal _brandDal;
+        IMapper _mapper;
+        public BrandManager(IBrandDal brandDal, IMapper mapper)
         {
             _brandDal = brandDal;
+            _mapper = mapper;
         }
 
-        public IResult Add(Brand brand)
+        public IDataResult<BrandDto> Add(BrandDto model)
         {
-            IResult result = BusinessRules.Run(BrandNameAlreadyExists(brand.Name));
-            if (result == null)
-            {
-                _brandDal.Add(brand);
-                return new SuccessResult(Messages.BrandAdded);
-            }
+            Brand brand = new Brand();
+            brand.Name = model.Name;
 
-            return result;
+            var mapper = _mapper.Map<Brand>(model);
+
+            _brandDal.Add(mapper);
+            return new SuccessDataResult<BrandDto>(model,Messages.BrandAdded);
+
+
         }
 
         public IResult Update(Brand brand)
@@ -45,9 +45,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public IDataResult<List<Brand>> GetAll()
+        public IDataResult<List<BrandDto>> GetAll()
         {
-            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.BrandListed);
+            var result = _brandDal.GetAll();
+            var mapper = _mapper.Map<List<BrandDto>>(result);
+
+            return new SuccessDataResult<List<BrandDto>>(mapper,Messages.BrandListed);
         }
 
         public IDataResult<Brand> GetById(long brandId)
@@ -66,6 +69,6 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-      
+
     }
 }
