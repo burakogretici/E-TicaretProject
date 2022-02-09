@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Supplier : IEntity
+    public class Supplier : /*User*/IEntity
     {
-        public int Id { get; set; }
-        public int CustomerId { get; set; }
-        public string SupplierName { get; set; }
+        public int SupplierId { get; set; }
+        public string CompanyName { get; set; }
         public string Fax { get; set; }
         public string Website { get; set; }
 

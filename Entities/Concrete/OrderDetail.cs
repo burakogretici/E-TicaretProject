@@ -14,8 +14,10 @@ namespace Entities.Concrete
         public int ProductId { get; set; }
         public int Count { get; set; }
         public int SalePrice { get; set; }
-        public DateTime CreateDate { get; set; }
-        public bool Active { get; set; }
+        
+        public bool Status { get; set; } = true;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime? UpdatedDate { get; set; }
 
     }
 }

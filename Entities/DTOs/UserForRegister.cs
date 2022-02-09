@@ -15,3 +15,4 @@ namespace Entities.DTOs
         public string Password { get; set; }
     }
 }
+    

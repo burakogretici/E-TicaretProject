@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Entities.Abstract;
 
 namespace Entities.Concrete
 {
-    public class Color : IEntity
+    public class BasketDetail
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        
+        public int BasketId { get; set; }
+        public int ProductId { get; set; }
+        public float Amount { get; set; }
+        public float Price { get; set; }
+        public float Total { get; set; }
+
         public bool Status { get; set; } = true;
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime? UpdatedDate { get; set; }
     }
 }

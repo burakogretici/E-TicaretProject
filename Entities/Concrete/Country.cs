@@ -11,7 +11,9 @@ namespace Entities.Concrete
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime CreateDate { get; set; }
-        public bool Active { get; set; }
+       
+        public bool Status { get; set; } = true;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime? UpdatedDate { get; set; }
     }
 }

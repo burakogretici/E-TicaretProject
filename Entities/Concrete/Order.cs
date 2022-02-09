@@ -14,7 +14,9 @@ namespace Entities.Concrete
         public long AddressId { get; set; }
         public int OrderStatusId { get; set; }
         public int Count { get; set; }
-        public DateTime CreateDate { get; set; }
-        public bool Active { get; set; }
+
+        public bool Status { get; set; } = true;
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public DateTime? UpdatedDate { get; set; }
     }
 }
