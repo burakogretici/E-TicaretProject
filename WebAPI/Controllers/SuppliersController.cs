@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class SuppliersController : ControllerBase
     {
-        ISupplierService _supplierService;
+        readonly ISupplierService _supplierService;
 
         public SuppliersController(ISupplierService supplierService)
         {

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
 
         public CategoriesController(ICategoryService categoryService)
         {
@@ -21,21 +22,22 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public  IActionResult GetAll()
         {
-            var result = _categoryService.GetAll();
-            return result.Success ? Ok(result) : BadRequest(result);
+
+            var result =  _categoryService.GetAll();
+            return  result.Success ? Ok( result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
         public IActionResult GetById(int categoryId)
         {
-            var result = _categoryService.GetById(categoryId);
+            var result = (_categoryService.GetById(categoryId));
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Category category)
+        public IActionResult Add(CategoryDto category)
 
         {
             var result = _categoryService.Add(category);

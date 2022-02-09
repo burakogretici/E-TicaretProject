@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers.AddressControllers
 {
@@ -13,14 +14,14 @@ namespace WebAPI.Controllers.AddressControllers
     [ApiController]
     public class CountriesController : ControllerBase
     {
-        ICountryService _countryService;
+        readonly ICountryService _countryService;
         public CountriesController(ICountryService countryService)
         {
             _countryService = countryService;
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Country country)
+        public IActionResult Add(CountryDto country)
         {
             var result = _countryService.Add(country);
             return result.Success ? Ok(result) : BadRequest(result);

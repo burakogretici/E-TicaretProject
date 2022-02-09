@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers.AddressControllers
 {
@@ -13,14 +14,14 @@ namespace WebAPI.Controllers.AddressControllers
     [ApiController]
     public class AddressesController : ControllerBase
     {
-        IAddressService _addressService;
+        readonly IAddressService _addressService;
         public AddressesController(IAddressService addressService)
         {
             _addressService = addressService;
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Address address)
+        public IActionResult Add(AddressDto address)
         {
             var result = _addressService.Add(address);
             return result.Success ? Ok(result) : BadRequest(result);
@@ -57,13 +58,20 @@ namespace WebAPI.Controllers.AddressControllers
             var result = _addressService.GetAllByCityId(cityId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
+
+        [HttpGet("getallbyuserid")]
+        public IActionResult GetAllByUserId(int userId)
+        {
+            var result = _addressService.GetAllByUserId(userId);
+            return result.Success ? Ok(result) : BadRequest(result);
+        }
         [HttpGet("getbyid")]
         public IActionResult GetById(int addressId)
         {
-            var result = _addressService.GetAllByCountryId(addressId);
+            var result = _addressService.GetById(addressId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
-       
+
         [HttpGet("getaddressdetail")]
         public IActionResult GetAddressDetail()
         {

@@ -43,10 +43,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Product product)
+        public IActionResult Add(ProductDto model)
 
         {
-            var result = _productService.Add(product);
+            var result = _productService.Add(model);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

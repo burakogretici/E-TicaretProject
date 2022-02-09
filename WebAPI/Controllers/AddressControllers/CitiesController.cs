@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Entities.DTOs;
 
 
 namespace WebAPI.Controllers.AddressControllers
@@ -14,14 +15,14 @@ namespace WebAPI.Controllers.AddressControllers
     [ApiController]
     public class CitiesController : ControllerBase
     {
-        ICityService _cityService;
+        readonly ICityService _cityService;
         public CitiesController(ICityService cityService)
         {
             _cityService = cityService;
         }
 
         [HttpPost("add")]
-        public IActionResult Add(City city)
+        public IActionResult Add(CityDto city)
         {
             var result = _cityService.Add(city);
             return result.Success ? Ok(result) : BadRequest(result);

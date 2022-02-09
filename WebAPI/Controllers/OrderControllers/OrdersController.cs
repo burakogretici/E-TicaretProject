@@ -13,7 +13,7 @@ namespace WebAPI.Controllers.OrderControllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private IOrderService _orderService;
+        private readonly IOrderService _orderService;
 
         public OrdersController(IOrderService orderService)
         {

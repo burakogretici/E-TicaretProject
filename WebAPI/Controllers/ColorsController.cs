@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace WebAPI.Controllers
 {
@@ -13,11 +14,11 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ColorsController : ControllerBase
     {
-        IColorService _colorService;
+        private readonly IColorService _colorService;
 
         public ColorsController(IColorService colorService)
         {
-            _colorService = colorService;  
+            _colorService = colorService;
         }
         [HttpGet("getall")]
         public IActionResult GetAll()
@@ -34,8 +35,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Color color)
-
+        public IActionResult Add(ColorDto color)
         {
             var result = _colorService.Add(color);
             return result.Success ? Ok(result) : BadRequest(result);
