@@ -36,9 +36,9 @@ namespace Business.Concrete.UserManager
             return new SuccessResult(Messages.OperationClaimDeleted);
         }
 
-        public IDataResult<List<OperationClaim>> GetAll()
+        public IDataResult<IEnumerable<OperationClaim>> GetAll()
         {
-            return new SuccessDataResult<List<OperationClaim>>(_operationClaimDal.GetAll(),Messages.OperationClaimListed);
+            return new SuccessDataResult<IEnumerable<OperationClaim>>(_operationClaimDal.GetAll(),Messages.OperationClaimListed);
         }
 
         //public IDataResult<OperationClaim> GetByOperationClaim(int operationClaimId)

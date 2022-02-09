@@ -10,7 +10,7 @@ namespace Business.Concrete.OrderManager
 {
     public class OrderManager : IOrderService
     {
-        private IOrderDal _orderDal;
+        private readonly IOrderDal _orderDal;
 
         public OrderManager(IOrderDal orderDal)
         {
@@ -29,9 +29,9 @@ namespace Business.Concrete.OrderManager
             return new SuccessResult(Messages.OrderDeleted);
         }
 
-        public IDataResult<List<Order>> GetAll()
+        public IDataResult<IEnumerable<Order>> GetAll()
         {
-            return new SuccessDataResult<List<Order>>(_orderDal.GetAll(),Messages.OrderListed);
+            return new SuccessDataResult<IEnumerable<Order>>(_orderDal.GetAll(),Messages.OrderListed);
         }
 
         public IDataResult<Order> GetById(long orderId)

@@ -9,7 +9,7 @@ namespace Business.Concrete
 {
     public class BasketManager : IBasketService
     {
-        private IBasketDal _basketDal;
+        private readonly IBasketDal _basketDal;
 
         public BasketManager(IBasketDal basketDal)
         {
@@ -34,9 +34,9 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BasketDeleted);
         }
         
-        public IDataResult<List<Basket>> GetAll()
+        public IDataResult<IEnumerable<Basket>> GetAll()
         {
-            return new SuccessDataResult<List<Basket>>(_basketDal.GetAll(),Messages.BasketListed);
+            return new SuccessDataResult<IEnumerable<Basket>>(_basketDal.GetAll(),Messages.BasketListed);
         }
 
         public IDataResult<Basket> GetById(int basketId)

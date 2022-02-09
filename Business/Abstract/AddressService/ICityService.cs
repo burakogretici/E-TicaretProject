@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 
 
 namespace Business.Abstract.AddressService
 {
     public interface ICityService
     {
-        IResult Add(City city);
+        IDataResult<CityDto> Add(CityDto city);
         IResult Update(City city); 
         IResult Delete(City city);
 
-        IDataResult<List<City>> GetAll();
-        IDataResult<City> GetById(int id);
-        IDataResult<List<City>> GetAllByCountry(int countryId);
+        IDataResult<IEnumerable<CityDto>> GetAll();
+        IDataResult<CityDto> GetById(int id);
+        IDataResult<IEnumerable<CityDto>> GetAllByCountry(int countryId);
     }
 }

@@ -10,7 +10,7 @@ namespace Business.Abstract
         IResult Update(Supplier supplier);
         IResult Delete(Supplier supplier);
 
-        IDataResult<List<Supplier>> GetAll();
+        IDataResult<IEnumerable<Supplier>> GetAll();
         IDataResult<Supplier> GetById(long id);
     }
 }

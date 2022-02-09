@@ -40,14 +40,14 @@ namespace Business.Concrete.UserManager
             return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
         }
 
-        public IDataResult<List<OperationClaim>> GetClaims(User user)
+        public IDataResult<IEnumerable<OperationClaim>> GetClaims(User user)
         {
-            return new SuccessDataResult<List<OperationClaim>>(_userDal.GetClaims(user));
+            return new SuccessDataResult<IEnumerable<OperationClaim>>(_userDal.GetClaims(user));
         }
 
-        public IDataResult<List<User>> GetAll()
+        public IDataResult<IEnumerable<User>> GetAll()
         {
-            return new SuccessDataResult<List<User>>(_userDal.GetAll(), Messages.UserListed);
+            return new SuccessDataResult<IEnumerable<User>>(_userDal.GetAll(), Messages.UserListed);
         }
 
     }

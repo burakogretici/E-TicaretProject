@@ -11,11 +11,11 @@ namespace Business.Abstract.UserService
         IResult Update(User country);
         IResult Delete(User country);
 
-        IDataResult<List<User>> GetAll();
+        IDataResult<IEnumerable<User>> GetAll();
         //IDataResult<User> GetById(int id);
 
         IDataResult<User> GetByMail(string email);
-        IDataResult<List<OperationClaim>> GetClaims(User user);
+        IDataResult<IEnumerable<OperationClaim>> GetClaims(User user);
 
     }
 }

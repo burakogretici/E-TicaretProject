@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
     public interface ICategoryService 
     {
-        IResult Add(Category category);
+        IDataResult<CategoryDto> Add(CategoryDto category);
         IResult Update(Category category);
         IResult Delete(Category category);
 
-        IDataResult<List<Category>> GetAll();
-        IDataResult<Category> GetById(int id);
+        IDataResult<IEnumerable<CategoryDto>> GetAll();
+        IDataResult<CategoryDto> GetById(int id);
     }
 }

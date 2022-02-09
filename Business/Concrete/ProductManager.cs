@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -13,24 +15,28 @@ namespace Business.Concrete
 {
     public class ProductManager : IProductService
     {
-        private IProductDal _productDal;
+        private readonly IProductDal _productDal;
+        private readonly IMapper _mapper;
 
-        public ProductManager(IProductDal productDal)
+        public ProductManager(IProductDal productDal, IMapper mapper)
         {
             _productDal = productDal;
+            _mapper = mapper;
         }
 
         [ValidationAspect(typeof(ProductValidator))]
         //[SecuredOperation("Product.List")]
-        public IResult Add(Product product)
+        public IDataResult<ProductDto> Add(ProductDto product)
         {
-           IResult result= BusinessRules.Run(CheckProductNameLimit(product.Name));
-           if (result != null)
-           {
-               return result;
-           }
-           _productDal.Add(product);
-            return new SuccessResult(Messages.ProductAdded);
+            //IResult result= BusinessRules.Run(CheckProductNameLimit(product.ProductName));
+            //if (result != null)
+            //{
+            //    return (IDataResult<ProductDto>)result;
+            //}
+
+            var mapper = _mapper.Map<Product>(product);
+            _productDal.Add(mapper);
+            return new SuccessDataResult<ProductDto>(product, Messages.ProductAdded);
         }
 
         public IResult Update(Product product)
@@ -45,25 +51,33 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductDeleted);
         }
 
-        public IDataResult<List<Product>> GetAll()
+        public IDataResult<IEnumerable<ProductDto>> GetAll()
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll());
+            var result = _productDal.GetAll();
+            var mapper = _mapper.Map<List<ProductDto>>(result);
+            return new SuccessDataResult<IEnumerable<ProductDto>>(mapper, Messages.ProductListed);
         }
 
-        public IDataResult<List<Product>> GetAllByCategoryId(int categoryId)
+        public IDataResult<IEnumerable<ProductDto>> GetAllByCategoryId(int categoryId)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == categoryId));
+            var result = _productDal.GetAll(p => p.CategoryId == categoryId);
+            var mapper = _mapper.Map<List<ProductDto>>(result);
+            return new SuccessDataResult<IEnumerable<ProductDto>>(mapper);
         }
 
-        public IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max)
+        public IDataResult<IEnumerable<ProductDto>> GetByUnitPrice(decimal min, decimal max)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max));
+            var result = _productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max);
+            var mapper = _mapper.Map<List<ProductDto>>(result);
+            return new SuccessDataResult<IEnumerable<ProductDto>>(mapper);
         }
 
-        public IDataResult<Product> GetById(int productId)
-         {
-             return new SuccessDataResult<Product>(_productDal.Get(p => p.Id == productId));
-         }
+        public IDataResult<ProductDto> GetById(int productId)
+        {
+            var result = _productDal.Get(p => p.Id == productId);
+            var mapper = _mapper.Map<ProductDto>(result);
+            return new SuccessDataResult<ProductDto>(mapper);
+        }
 
         public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
@@ -72,7 +86,7 @@ namespace Business.Concrete
 
         private IResult CheckProductNameLimit(string productName)
         {
-            var result = _productDal.GetAll(p=>p.Name == productName).Count;
+            var result = _productDal.GetAll(p => p.Name == productName).Count();
             if (result <= 2)
             {
                 return new ErrorResult(Messages.CheckProductNameLimit);
@@ -81,5 +95,5 @@ namespace Business.Concrete
             return new SuccessResult();
         }
     }
-   
+
 }

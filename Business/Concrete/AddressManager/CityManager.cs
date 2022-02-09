@@ -1,27 +1,31 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Business.Abstract.AddressService;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract.AddressDal;
 using Entities.Concrete;
+using Entities.DTOs;
 
 
 namespace Business.Concrete.AddressManager
 {
     public class CityManager : ICityService
     {
-        private ICityDal _cityDal;
+        private readonly ICityDal _cityDal;
+        private readonly IMapper _mapper;
 
-        public CityManager(ICityDal cityDal)
+        public CityManager(ICityDal cityDal, IMapper mapper)
         {
             _cityDal = cityDal;
-
+            _mapper = mapper;
         }
 
-        public IResult Add(City city)
+        public IDataResult<CityDto> Add(CityDto city)
         {
-            _cityDal.Add(city);
-            return new SuccessResult(Messages.CityAdded);
+            var mapper = _mapper.Map<City>(city);
+            _cityDal.Add(mapper);
+            return new SuccessDataResult<CityDto>(city, Messages.CityAdded);
         }
 
         public IResult Update(City city)
@@ -36,19 +40,25 @@ namespace Business.Concrete.AddressManager
             return new SuccessResult(Messages.CityDeleted);
         }
 
-        public IDataResult<List<City>> GetAll()
+        public IDataResult<IEnumerable<CityDto>> GetAll()
         {
-            return new SuccessDataResult<List<City>>(_cityDal.GetAll(),Messages.CityListed);
+            var result = _cityDal.GetAll();
+            var mapper = _mapper.Map<List<CityDto>>(result);
+            return new SuccessDataResult<IEnumerable<CityDto>>(mapper,Messages.CityListed);
         }
 
-        public IDataResult<List<City>> GetAllByCountry(int countryId)
+        public IDataResult<IEnumerable<CityDto>> GetAllByCountry(int countryId)
         {
-            return new SuccessDataResult<List<City>>(_cityDal.GetAll(city=> city.CountryId == countryId));
+            var result = _cityDal.GetAll(city => city.CountryId == countryId);
+            var mapper = _mapper.Map<List<CityDto>>(result);
+            return new SuccessDataResult<IEnumerable<CityDto>>(mapper);
         }
 
-        public IDataResult<City> GetById(int cityId)
+        public IDataResult<CityDto> GetById(int cityId)
         {
-            return new SuccessDataResult<City>(_cityDal.Get(city => city.Id == cityId));
+            var result = _cityDal.Get(city => city.Id == cityId);
+            var mapper = _mapper.Map<CityDto>(result);
+            return new SuccessDataResult<CityDto>(mapper);
         }
     }
 }

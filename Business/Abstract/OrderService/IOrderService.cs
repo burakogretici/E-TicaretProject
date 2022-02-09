@@ -10,7 +10,7 @@ namespace Business.Abstract.OrderService
         IResult Update(Order order);
         IResult Delete(Order order);
 
-        IDataResult<List<Order>> GetAll();
+        IDataResult<IEnumerable<Order>> GetAll();
         IDataResult<Order> GetById(long id);
     }
 }

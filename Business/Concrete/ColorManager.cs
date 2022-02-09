@@ -1,31 +1,36 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
     public class ColorManager : IColorService
     {
-        private IColorDal _colorDal;
+        private readonly IColorDal _colorDal;
+        private readonly IMapper _mapper;
 
-        public ColorManager(IColorDal colorDal)
+        public ColorManager(IColorDal colorDal, IMapper mapper)
         {
             _colorDal = colorDal;
+            _mapper = mapper;
         }
 
-        public IResult Add(Color color)
+        public IDataResult<ColorDto> Add(ColorDto color)
         {
-            IResult result = BusinessRules.Run(ColorNameAlreadyExists(color.Name));
-            if (result != null)
-            {
-                return result;
-            }
-            _colorDal.Add(color);
-            return new SuccessResult(Messages.ColorAdded);
+            //IResult result = BusinessRules.Run(ColorNameAlreadyExists(color.Name));
+            //if (result != null)
+            //{
+            //    return result;
+            //},
+            var mapper = _mapper.Map<Color>(color);
+            _colorDal.Add(mapper);
+            return new SuccessDataResult<ColorDto>(color,Messages.ColorAdded);
         }
 
         public IResult Update(Color color)
@@ -40,15 +45,19 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
-        public IDataResult<List<Color>> GetAll()
+        public IDataResult<IEnumerable<ColorDto>> GetAll()
         {
-
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),Messages.ColorsListed);
+            var result = _colorDal.GetAll();
+            var mapper = _mapper.Map<List<ColorDto>>(result);
+            return new SuccessDataResult<IEnumerable<ColorDto>>(mapper,Messages.ColorsListed);
         }
 
-        public IDataResult<Color> GetById(int colorId)
+        public IDataResult<ColorDto> GetById(int colorId)
         {
-            return new SuccessDataResult<Color>(_colorDal.Get(cl => cl.Id == colorId));
+
+            var result = _colorDal.Get(cl => cl.Id == colorId);
+            var mapper = _mapper.Map<ColorDto>(result);
+            return new SuccessDataResult<ColorDto>(mapper);
         }
 
         private IResult ColorNameAlreadyExists(string colorName)

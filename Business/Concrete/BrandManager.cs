@@ -22,15 +22,9 @@ namespace Business.Concrete
 
         public IDataResult<BrandDto> Add(BrandDto model)
         {
-            Brand brand = new Brand
-            {
-                Name = model.Name
-            };
-
             var mapper = _mapper.Map<Brand>(model);
-
             _brandDal.Add(mapper);
-            return new SuccessDataResult<BrandDto>(model,Messages.BrandAdded);
+            return new SuccessDataResult<BrandDto>(model, Messages.BrandAdded);
 
 
         }
@@ -52,12 +46,14 @@ namespace Business.Concrete
             var result = _brandDal.GetAll();
             var mapper = _mapper.Map<List<BrandDto>>(result);
 
-            return new SuccessDataResult<List<BrandDto>>(mapper,Messages.BrandListed);
+            return new SuccessDataResult<List<BrandDto>>(mapper, Messages.BrandListed);
         }
 
-        public IDataResult<Brand> GetById(long brandId)
+        public IDataResult<BrandDto> GetById(long brandId)
         {
-            return new SuccessDataResult<Brand>(_brandDal.Get(br => br.Id == brandId));
+            var result = _brandDal.Get(br => br.Id == brandId);
+            var mapper = _mapper.Map<BrandDto>(result);
+            return new SuccessDataResult<BrandDto>(mapper);
         }
 
         private IResult BrandNameAlreadyExists(string brandName)

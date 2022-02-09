@@ -6,11 +6,11 @@ namespace Business.Abstract
 {
     public interface IBasketService 
     {
-        IResult AddToCart(Basket country);
-        IResult Update(Basket country);
-        IResult DeleteFromCart(Basket country);
+        IResult AddToCart(Basket basket);
+        IResult Update(Basket basket);
+        IResult DeleteFromCart(Basket basket);
 
-        IDataResult<List<Basket>> GetAll();
+        IDataResult<IEnumerable<Basket>> GetAll();
         IDataResult<Basket> GetById(int id);
 
     }

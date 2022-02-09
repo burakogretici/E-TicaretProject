@@ -9,7 +9,7 @@ namespace Business.Concrete
 {
     public class CustomerManager : ICustomerService
     {
-        private ICustomerDal _customerDal;
+        private readonly ICustomerDal _customerDal;
 
         public CustomerManager(ICustomerDal customerDal)
         {
@@ -34,15 +34,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CustomerDeleted);
         }
 
-        public IDataResult<List<Customer>> GetAll()
+        public IDataResult<IEnumerable<Customer>> GetAll()
         {
 
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.CustomersListed);
+            return new SuccessDataResult<IEnumerable<Customer>>(_customerDal.GetAll(), Messages.CustomersListed);
         }
 
         public IDataResult<Customer> GetById(int customerId)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == customerId));
+            return null;
+            //return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == customerId));
         }
     }
 }

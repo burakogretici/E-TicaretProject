@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 
 
 namespace Business.Abstract.AddressService
 {
     public interface ICountryService 
     {
-        IResult Add(Country country);
+        IDataResult<CountryDto> Add(CountryDto country);
         IResult Update(Country country);
         IResult Delete(Country country);
 
-        IDataResult<List<Country>> GetAll();
-        IDataResult<Country> GetById(int id);
+        IDataResult<IEnumerable<CountryDto>> GetAll();
+        IDataResult<CountryDto> GetById(int id);
     }
 }

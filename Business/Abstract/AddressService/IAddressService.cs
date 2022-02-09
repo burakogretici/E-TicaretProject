@@ -7,15 +7,16 @@ namespace Business.Abstract.AddressService
 {
     public interface IAddressService
     {
-        IResult Add(Address address);
+        IDataResult<AddressDto> Add(AddressDto address);
         IResult Update(Address address);
         IResult Delete(Address address);
 
-        IDataResult<List<Address>> GetAll();
-        IDataResult<Address> GetById(int id);
+        IDataResult<IEnumerable<AddressDto>> GetAll();
+        IDataResult<AddressDto> GetById(int id);
 
-        IDataResult<List<Address>> GetAllByCountryId(int countryId);
-        IDataResult<List<Address>> GetAllByCityId(int cityId);
+        IDataResult<IEnumerable<AddressDto>> GetAllByCountryId(int countryId);
+        IDataResult<IEnumerable<AddressDto>> GetAllByCityId(int cityId);
+        IDataResult<IEnumerable<AddressDto>> GetAllByUserId(int userId);
         IDataResult<List<AddressDetailDto>> GetAddressDetail();
     }
 }

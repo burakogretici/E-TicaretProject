@@ -11,7 +11,7 @@ namespace Business.Abstract.UserService
         IResult Update(UserOperationClaim brand);
         IResult Delete(UserOperationClaim brand);
 
-        IDataResult<List<UserOperationClaim>> GetAll();
+        IDataResult<IEnumerable<UserOperationClaim>> GetAll();
         //IDataResult<UserOperationClaim> GetById(int id);
         //IDataResult<UserOperationClaim> GetByOperationClaim(int operationClaimId);
     }

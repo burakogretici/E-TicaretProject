@@ -1,27 +1,31 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Business.Abstract.AddressService;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract.AddressDal;
 using Entities.Concrete;
+using Entities.DTOs;
 
 
 namespace Business.Concrete.AddressManager
 {
     public class CountryManager : ICountryService
     {
-        private ICountryDal _countryDal;
+        private readonly ICountryDal _countryDal;
+        private readonly IMapper _mapper;
 
-        public CountryManager(ICountryDal countryDal)
+        public CountryManager(ICountryDal countryDal, IMapper mapper)
         {
             _countryDal = countryDal;
-
+            _mapper = mapper;
         }
 
-        public IResult Add(Country country)
+        public IDataResult<CountryDto> Add(CountryDto country)
         {
-            _countryDal.Add(country);
-            return new SuccessResult(Messages.CountryAdded);
+            var mapper = _mapper.Map<Country>(country);
+            _countryDal.Add(mapper);
+            return new SuccessDataResult<CountryDto>(country,Messages.CountryAdded);
         }
 
         public IResult Update(Country country)
@@ -36,13 +40,17 @@ namespace Business.Concrete.AddressManager
             return new SuccessResult(Messages.CountryDeleted);
         }
 
-        public IDataResult<List<Country>> GetAll()
+        public IDataResult<IEnumerable<CountryDto>> GetAll()
         {
-            return new SuccessDataResult<List<Country>>(_countryDal.GetAll(), Messages.CountryListed);
+            var result = _countryDal.GetAll();
+            var mapper = _mapper.Map<List<CountryDto>>(result);
+            return new SuccessDataResult<IEnumerable<CountryDto>>(mapper,Messages.CountryListed);
         }
-        public IDataResult<Country> GetById(int countryId)
+        public IDataResult<CountryDto> GetById(int countryId)
         {
-            return new SuccessDataResult<Country>(_countryDal.Get(country => country.Id == countryId));
+            var result = _countryDal.Get(country => country.Id == countryId);
+            var mapper = _mapper.Map<CountryDto>(result);
+            return new SuccessDataResult<CountryDto>(mapper);
         }
     }
 }

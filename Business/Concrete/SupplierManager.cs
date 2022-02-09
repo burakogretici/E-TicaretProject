@@ -10,7 +10,7 @@ namespace Business.Concrete
 {
     public class SupplierManager : ISupplierService
     {
-        private ISupplierDal _supplierDal;
+        private readonly ISupplierDal _supplierDal;
 
         public SupplierManager(ISupplierDal supplierDal)
         {
@@ -19,7 +19,7 @@ namespace Business.Concrete
 
         public IResult Add(Supplier supplier)
         {
-            IResult result = BusinessRules.Run(SupplierNameAlreadyExists(supplier.SupplierName));
+            IResult result = BusinessRules.Run(/*SupplierNameAlreadyExists(supplier.SupplierName)*/);
             if (result != null)
             {
                 return result;
@@ -40,26 +40,26 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SupplierDeleted);
         }
 
-        public IDataResult<List<Supplier>> GetAll()
+        public IDataResult<IEnumerable<Supplier>> GetAll()
         {
 
-            return new SuccessDataResult<List<Supplier>>(_supplierDal.GetAll(),Messages.SuppliersListed);
+            return new SuccessDataResult<IEnumerable<Supplier>>(_supplierDal.GetAll(),Messages.SuppliersListed);
         }
 
         public IDataResult<Supplier> GetById(long id)
         {
-            return new SuccessDataResult<Supplier>(_supplierDal.Get(s=>s.Id==id));
+            return null; /*new SuccessDataResult<Supplier>(_supplierDal.Get(s=>s.Id==id));*/
         }
 
-        private IResult SupplierNameAlreadyExists(string companyName)
-        {
-            var result = _supplierDal.GetAll(s => s.SupplierName == companyName);
-            if (result == null)
-            {
-                return new ErrorResult(Messages.SupplierNameAlreadyExists);
-            }
+        //private IResult SupplierNameAlreadyExists(string companyName)
+        //{
+        //    var result = _supplierDal.GetAll(s => s.SupplierName == companyName);
+        //    if (result == null)
+        //    {
+        //        return new ErrorResult(Messages.SupplierNameAlreadyExists);
+        //    }
 
-            return new SuccessResult();
-        }
+        //    return new SuccessResult();
+        //}
     }
 }
