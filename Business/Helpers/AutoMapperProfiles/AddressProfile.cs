@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -6,7 +8,8 @@ namespace Business.Helpers.AutoMapperProfiles
     {
         public AddressProfile()
         {
-
+            CreateMap<Address, AddressDto>().ReverseMap();
+            CreateMap<AddressDto, Address>().ReverseMap();
         }
     }
 }
