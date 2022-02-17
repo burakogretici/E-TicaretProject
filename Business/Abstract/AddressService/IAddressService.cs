@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -11,12 +12,12 @@ namespace Business.Abstract.AddressService
         IResult Update(Address address);
         IResult Delete(Address address);
 
-        IDataResult<IEnumerable<AddressDto>> GetAll();
-        IDataResult<AddressDto> GetById(int id);
+        Task<IDataResult<IEnumerable<AddressDto>>> GetAllAsync();
+        Task<IDataResult<AddressDto>> GetByIdAsync(int id);
 
-        IDataResult<IEnumerable<AddressDto>> GetAllByCountryId(int countryId);
-        IDataResult<IEnumerable<AddressDto>> GetAllByCityId(int cityId);
-        IDataResult<IEnumerable<AddressDto>> GetAllByUserId(int userId);
+        Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCountryIdAsync(int countryId);
+        Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCityIdAsync(int cityId);
+        Task<IDataResult<IEnumerable<AddressDto>>> GetAllByUserIdAsync(int userId);
         IDataResult<List<AddressDetailDto>> GetAddressDetail();
     }
 }

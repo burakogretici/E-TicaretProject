@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract.AddressService;
 using Business.Constants;
@@ -25,7 +26,7 @@ namespace Business.Concrete.AddressManager
         {
             var mapper = _mapper.Map<Country>(country);
             _countryDal.Add(mapper);
-            return new SuccessDataResult<CountryDto>(country,Messages.CountryAdded);
+            return new SuccessDataResult<CountryDto>(country, Messages.CountryAdded);
         }
 
         public IResult Update(Country country)
@@ -40,15 +41,15 @@ namespace Business.Concrete.AddressManager
             return new SuccessResult(Messages.CountryDeleted);
         }
 
-        public IDataResult<IEnumerable<CountryDto>> GetAll()
+        public async Task<IDataResult<IEnumerable<CountryDto>>> GetAllAsync()
         {
-            var result = _countryDal.GetAll();
+            var result = await _countryDal.GetAllAsync();
             var mapper = _mapper.Map<List<CountryDto>>(result);
-            return new SuccessDataResult<IEnumerable<CountryDto>>(mapper,Messages.CountryListed);
+            return new SuccessDataResult<IEnumerable<CountryDto>>(mapper, Messages.CountryListed);
         }
-        public IDataResult<CountryDto> GetById(int countryId)
+        public async Task<IDataResult<CountryDto>> GetByIdAsync(int countryId)
         {
-            var result = _countryDal.Get(country => country.Id == countryId);
+            var result = await _countryDal.GetAsync(country => country.Id == countryId);
             var mapper = _mapper.Map<CountryDto>(result);
             return new SuccessDataResult<CountryDto>(mapper);
         }

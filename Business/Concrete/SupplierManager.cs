@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Business;
@@ -40,16 +41,17 @@ namespace Business.Concrete
             return new SuccessResult(Messages.SupplierDeleted);
         }
 
-        public IDataResult<IEnumerable<Supplier>> GetAll()
+        public async Task<IDataResult<IEnumerable<Supplier>>> GetAllAsync()
         {
 
-            return new SuccessDataResult<IEnumerable<Supplier>>(_supplierDal.GetAll(),Messages.SuppliersListed);
+            return new SuccessDataResult<IEnumerable<Supplier>>(await _supplierDal.GetAllAsync(),Messages.SuppliersListed);
         }
 
-        public IDataResult<Supplier> GetById(long id)
+        public async Task<IDataResult<Supplier>> GetByIdAsync(int id)
         {
             return null; /*new SuccessDataResult<Supplier>(_supplierDal.Get(s=>s.Id==id));*/
         }
+
 
         //private IResult SupplierNameAlreadyExists(string companyName)
         //{

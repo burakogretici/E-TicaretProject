@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract.AddressService;
 using Business.Constants;
@@ -40,23 +41,23 @@ namespace Business.Concrete.AddressManager
             return new SuccessResult(Messages.CityDeleted);
         }
 
-        public IDataResult<IEnumerable<CityDto>> GetAll()
+        public async Task<IDataResult<IEnumerable<CityDto>>> GetAllAsync()
         {
-            var result = _cityDal.GetAll();
+            var result = await _cityDal.GetAllAsync();
             var mapper = _mapper.Map<List<CityDto>>(result);
-            return new SuccessDataResult<IEnumerable<CityDto>>(mapper,Messages.CityListed);
+            return new SuccessDataResult<IEnumerable<CityDto>>(mapper, Messages.CityListed);
         }
 
-        public IDataResult<IEnumerable<CityDto>> GetAllByCountry(int countryId)
+        public async Task<IDataResult<IEnumerable<CityDto>>> GetAllByCountryAsync(int countryId)
         {
-            var result = _cityDal.GetAll(city => city.CountryId == countryId);
+            var result = await _cityDal.GetAllAsync(city => city.CountryId == countryId);
             var mapper = _mapper.Map<List<CityDto>>(result);
             return new SuccessDataResult<IEnumerable<CityDto>>(mapper);
         }
 
-        public IDataResult<CityDto> GetById(int cityId)
+        public async Task<IDataResult<CityDto>> GetByIdAsync(int cityId)
         {
-            var result = _cityDal.Get(city => city.Id == cityId);
+            var result = await _cityDal.GetAsync(city => city.Id == cityId);
             var mapper = _mapper.Map<CityDto>(result);
             return new SuccessDataResult<CityDto>(mapper);
         }

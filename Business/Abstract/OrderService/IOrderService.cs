@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Entities.Concrete;
 
 namespace Business.Abstract.OrderService
@@ -10,7 +11,7 @@ namespace Business.Abstract.OrderService
         IResult Update(Order order);
         IResult Delete(Order order);
 
-        IDataResult<IEnumerable<Order>> GetAll();
-        IDataResult<Order> GetById(long id);
+        Task<IDataResult<IEnumerable<Order>>> GetAllAsync();
+        Task<IDataResult<Order>> GetByIdAsync(long id);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -11,7 +12,7 @@ namespace Business.Abstract
         IResult Update(Color color);
         IResult Delete(Color color);
 
-        IDataResult<IEnumerable<ColorDto>> GetAll();
-        IDataResult<ColorDto> GetById(int colorId);
+        Task<IDataResult<IEnumerable<ColorDto>>> GetAllAsync();
+        Task<IDataResult<ColorDto>> GetByIdAsync(int id);
     }
 }

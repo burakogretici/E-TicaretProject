@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
 
@@ -10,8 +11,8 @@ namespace Business.Abstract
         IResult Update(Basket basket);
         IResult DeleteFromCart(Basket basket);
 
-        IDataResult<IEnumerable<Basket>> GetAll();
-        IDataResult<Basket> GetById(int id);
+        Task<IDataResult<IEnumerable<Basket>>> GetAllAsync();
+        Task<IDataResult<Basket>> GetByIdAsync(int id);
 
     }
 }

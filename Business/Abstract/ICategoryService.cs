@@ -12,7 +12,7 @@ namespace Business.Abstract
         IResult Update(Category category);
         IResult Delete(Category category);
 
-        IDataResult<IEnumerable<CategoryDto>> GetAll();
-        IDataResult<CategoryDto> GetById(int id);
+        Task<IDataResult<IEnumerable<CategoryDto>>> GetAllAsync();
+        Task<IDataResult<CategoryDto>> GetByIdAsync(int id);
     }
 }

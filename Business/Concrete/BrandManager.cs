@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
@@ -41,31 +42,31 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public IDataResult<List<BrandDto>> GetAll()
+        public async Task<IDataResult<List<BrandDto>>> GetAllAsync()
         {
-            var result = _brandDal.GetAll();
+            var result = await _brandDal.GetAllAsync();
             var mapper = _mapper.Map<List<BrandDto>>(result);
 
             return new SuccessDataResult<List<BrandDto>>(mapper, Messages.BrandListed);
         }
 
-        public IDataResult<BrandDto> GetById(long brandId)
+        public async Task<IDataResult<BrandDto>> GetByIdAsync(long brandId)
         {
-            var result = _brandDal.Get(br => br.Id == brandId);
+            var result =  await _brandDal.GetAsync(br => br.Id == brandId);
             var mapper = _mapper.Map<BrandDto>(result);
             return new SuccessDataResult<BrandDto>(mapper);
         }
+        
+        //private IResult BrandNameAlreadyExists(string brandName)
+        //{
+        //    var result =  _brandDal.GetAllAsync(b => b.Name == brandName).Any();
+        //    if (result == true)
+        //    {
+        //        return new ErrorResult(Messages.BrandNameAlreadyExists);
+        //    }
 
-        private IResult BrandNameAlreadyExists(string brandName)
-        {
-            var result = _brandDal.GetAll(b => b.Name == brandName).Any();
-            if (result == true)
-            {
-                return new ErrorResult(Messages.BrandNameAlreadyExists);
-            }
-
-            return new SuccessResult();
-        }
+        //    return new SuccessResult();
+        //}
 
 
     }

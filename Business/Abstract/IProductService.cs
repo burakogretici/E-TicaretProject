@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -11,11 +12,11 @@ namespace Business.Abstract
         IResult Update(Product product);
         IResult Delete(Product product);
 
-        IDataResult<IEnumerable<ProductDto>> GetAll();
-        IDataResult<ProductDto> GetById(int id);
+        Task<IDataResult<IEnumerable<ProductDto>>> GetAllAsync();
+        Task<IDataResult<ProductDto>> GetByIdAsync(int id);
 
-        IDataResult<IEnumerable<ProductDto>> GetAllByCategoryId(int categoryId);
-        IDataResult<IEnumerable<ProductDto>> GetByUnitPrice(decimal min, decimal max);
+        Task<IDataResult<IEnumerable<ProductDto>>> GetAllByCategoryIdAsync(int categoryId);
+        Task<IDataResult<IEnumerable<ProductDto>>> GetByUnitPriceAsync(decimal min, decimal max);
         IDataResult<List<ProductDetailDto>> GetProductDetails();
 
     }

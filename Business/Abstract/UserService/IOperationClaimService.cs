@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -11,7 +12,7 @@ namespace Business.Abstract.UserService
         IResult Update(OperationClaim brand);
         IResult Delete(OperationClaim brand);
 
-        IDataResult<IEnumerable<OperationClaim>> GetAll();
+        Task<IDataResult<IEnumerable<OperationClaim>>> GetAllAsync();
         //IDataResult<OperationClaim> GetById(int id);
 
         

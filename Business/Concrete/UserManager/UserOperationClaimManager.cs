@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Abstract.UserService;
 using Business.Constants;
 using Core.Entities.Concrete;
@@ -35,9 +36,13 @@ namespace Business.Concrete.UserManager
             return new SuccessResult(Messages.UserOperationClaimAdded);
         }
 
-        public IDataResult<IEnumerable<UserOperationClaim>> GetAll()
+        public async Task<IDataResult<IEnumerable<UserOperationClaim>>> GetAllAsync()
         {
-            return new SuccessDataResult<IEnumerable<UserOperationClaim>>(_userOperationClaimDal.GetAll(),Messages.UserOperationClaimListed);
+            return new SuccessDataResult<IEnumerable<UserOperationClaim>>(await _userOperationClaimDal.GetAllAsync(), Messages.UserOperationClaimListed);
+        }
+        public async Task<IDataResult<UserOperationClaim>> GetByOperationClaim(int operationClaimId)
+        {
+            return new SuccessDataResult<UserOperationClaim>(await _userOperationClaimDal.GetAsync(uoc => uoc.OperationClaimId == operationClaimId));
         }
 
         //public IDataResult<UserOperationClaim> GetByUserOperationClaim(int userOperationClaimId)
@@ -45,9 +50,5 @@ namespace Business.Concrete.UserManager
         //    return new SuccessDataResult<UserOperationClaim>(_userOperationClaimDal.Get(uoc => uoc.Id == userOperationClaimId));
         //}
 
-        public IDataResult<UserOperationClaim> GetByOperationClaim(int operationClaimId)
-        {
-            return new SuccessDataResult<UserOperationClaim>(_userOperationClaimDal.Get(uoc => uoc.OperationClaimId == operationClaimId));
-        }
     }
 }

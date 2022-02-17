@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract.AddressService;
 using Business.Constants;
@@ -39,36 +40,36 @@ namespace Business.Concrete.AddressManager
             return new SuccessResult(Messages.AddressDeleted);
         }
 
-        public IDataResult<IEnumerable<AddressDto>> GetAll()
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllAsync()
         {
-            var result = _addressDal.GetAll();
+            var result = await _addressDal.GetAllAsync();
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper, Messages.AddressListed);
         }
 
-        public IDataResult<IEnumerable<AddressDto>> GetAllByCountryId(int countryId)
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCountryIdAsync(int countryId)
         {
-            var result = _addressDal.GetAll(address => address.CountryId == countryId);
+            var result = await _addressDal.GetAllAsync(address => address.CountryId == countryId);
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
-            return new SuccessDataResult<IEnumerable<AddressDto>>(mapper,Messages.AddressListed);
+            return new SuccessDataResult<IEnumerable<AddressDto>>(mapper, Messages.AddressListed);
         }
 
-        public IDataResult<IEnumerable<AddressDto>> GetAllByCityId(int cityId)
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCityIdAsync(int cityId)
         {
-            var result = _addressDal.GetAll(address => address.CityId == cityId);
+            var result = await _addressDal.GetAllAsync(address => address.CityId == cityId);
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper);
         }
 
-        public IDataResult<IEnumerable<AddressDto>> GetAllByUserId(int userId)
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByUserIdAsync(int userId)
         {
-            var result = _addressDal.GetAll(address => address.UserId == userId);
+            var result = await _addressDal.GetAllAsync(address => address.UserId == userId);
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper);
         }
-        public IDataResult<AddressDto> GetById(int addressId)
+        public async Task<IDataResult<AddressDto>> GetByIdAsync(int addressId)
         {
-            var result = _addressDal.Get(address => address.Id == addressId);
+            var result = await _addressDal.GetAsync(address => address.Id == addressId);
             var mapper = _mapper.Map<AddressDto>(result);
             return new SuccessDataResult<AddressDto>(mapper);
         }

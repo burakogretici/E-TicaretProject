@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Abstract.UserService;
 using Business.Constants;
 using Core.Entities.Concrete;
@@ -35,9 +36,9 @@ namespace Business.Concrete.UserManager
             return new SuccessResult(Messages.UserUpdated);
         }
 
-        public IDataResult<User> GetByMail(string email)
+        public async Task<IDataResult<User>> GetByMail(string email)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u => u.Email == email));
+            return new SuccessDataResult<User>(await _userDal.GetAsync(u => u.Email == email));
         }
 
         public IDataResult<IEnumerable<OperationClaim>> GetClaims(User user)
@@ -45,9 +46,9 @@ namespace Business.Concrete.UserManager
             return new SuccessDataResult<IEnumerable<OperationClaim>>(_userDal.GetClaims(user));
         }
 
-        public IDataResult<IEnumerable<User>> GetAll()
+        public async Task<IDataResult<IEnumerable<User>>> GetAllAsync()
         {
-            return new SuccessDataResult<IEnumerable<User>>(_userDal.GetAll(), Messages.UserListed);
+            return new SuccessDataResult<IEnumerable<User>>(await _userDal.GetAllAsync(), Messages.UserListed);
         }
 
     }

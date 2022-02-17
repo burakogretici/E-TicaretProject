@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
@@ -45,24 +46,24 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
-        public IDataResult<IEnumerable<ColorDto>> GetAll()
+        public async Task<IDataResult<IEnumerable<ColorDto>>> GetAllAsync()
         {
-            var result = _colorDal.GetAll();
+            var result = await _colorDal.GetAllAsync();
             var mapper = _mapper.Map<List<ColorDto>>(result);
             return new SuccessDataResult<IEnumerable<ColorDto>>(mapper,Messages.ColorsListed);
         }
 
-        public IDataResult<ColorDto> GetById(int colorId)
+        public async Task<IDataResult<ColorDto>> GetByIdAsync(int colorId)
         {
 
-            var result = _colorDal.Get(cl => cl.Id == colorId);
+            var result = await _colorDal.GetAsync(cl => cl.Id == colorId);
             var mapper = _mapper.Map<ColorDto>(result);
             return new SuccessDataResult<ColorDto>(mapper);
         }
 
         private IResult ColorNameAlreadyExists(string colorName)
         {
-            var result = _colorDal.GetAll(c => c.Name == colorName);
+            var result = _colorDal.GetAllAsync(c => c.Name == colorName);
             if (result == null)
             {
                 return new ErrorResult(Messages.ColorNameAlreadyExists);

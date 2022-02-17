@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
 using Core.Utilities.Results;
@@ -24,24 +25,24 @@ namespace Business.Concrete
 
         public IResult Update(Basket basket)
         {
-           _basketDal.Update(basket);
+            _basketDal.Update(basket);
             return new SuccessResult(Messages.BasketUpdated);
         }
 
         public IResult DeleteFromCart(Basket basket)
         {
-           _basketDal.Delete(basket);
+            _basketDal.Delete(basket);
             return new SuccessResult(Messages.BasketDeleted);
         }
-        
-        public IDataResult<IEnumerable<Basket>> GetAll()
+
+        public async Task<IDataResult<IEnumerable<Basket>>> GetAllAsync()
         {
-            return new SuccessDataResult<IEnumerable<Basket>>(_basketDal.GetAll(),Messages.BasketListed);
+            return new SuccessDataResult<IEnumerable<Basket>>(await _basketDal.GetAllAsync(), Messages.BasketListed);
         }
 
-        public IDataResult<Basket> GetById(int basketId)
+        public async Task<IDataResult<Basket>> GetByIdAsync(int basketId)
         {
-            return new SuccessDataResult<Basket>(_basketDal.Get(b => b.Id == basketId));
+            return new SuccessDataResult<Basket>(await _basketDal.GetAsync(b => b.Id == basketId));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Abstract.OrderService;
 using Business.Constants;
 using Core.Utilities.Results;
@@ -29,14 +30,14 @@ namespace Business.Concrete.OrderManager
             return new SuccessResult(Messages.OrderDeleted);
         }
 
-        public IDataResult<IEnumerable<Order>> GetAll()
+        public async Task<IDataResult<IEnumerable<Order>>> GetAllAsync()
         {
-            return new SuccessDataResult<IEnumerable<Order>>(_orderDal.GetAll(),Messages.OrderListed);
+            return new SuccessDataResult<IEnumerable<Order>>(await _orderDal.GetAllAsync(), Messages.OrderListed);
         }
 
-        public IDataResult<Order> GetById(long orderId)
+        public async Task<IDataResult<Order>> GetByIdAsync(long orderId)
         {
-            return new SuccessDataResult<Order>(_orderDal.Get(o=> o.Id == orderId));
+            return new SuccessDataResult<Order>(await _orderDal.GetAsync(o => o.Id == orderId));
         }
         public IResult Update(Order order)
         {

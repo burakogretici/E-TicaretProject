@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Abstract.UserService;
 using Business.Constants;
 using Core.Entities.Concrete;
@@ -26,7 +27,7 @@ namespace Business.Concrete.UserManager
 
         public IResult Update(OperationClaim operationClaim)
         {
-           _operationClaimDal.Update(operationClaim);
+            _operationClaimDal.Update(operationClaim);
             return new SuccessResult(Messages.OperationClaimUpdated);
         }
 
@@ -36,9 +37,9 @@ namespace Business.Concrete.UserManager
             return new SuccessResult(Messages.OperationClaimDeleted);
         }
 
-        public IDataResult<IEnumerable<OperationClaim>> GetAll()
+        public async Task<IDataResult<IEnumerable<OperationClaim>>> GetAllAsync()
         {
-            return new SuccessDataResult<IEnumerable<OperationClaim>>(_operationClaimDal.GetAll(),Messages.OperationClaimListed);
+            return new SuccessDataResult<IEnumerable<OperationClaim>>(await _operationClaimDal.GetAllAsync(), Messages.OperationClaimListed);
         }
 
         //public IDataResult<OperationClaim> GetByOperationClaim(int operationClaimId)

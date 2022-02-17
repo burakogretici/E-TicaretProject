@@ -42,17 +42,17 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
-        public  IDataResult<IEnumerable<CategoryDto>> GetAll()
+        public async Task<IDataResult<IEnumerable<CategoryDto>>> GetAllAsync()
         {
-            var result =  _categoryDal.GetAll();
+            var result = await _categoryDal.GetAllAsync();
             var mapper = _mapper.Map<List<CategoryDto>>(result);
             return new SuccessDataResult<IEnumerable<CategoryDto>>(mapper,Messages.CategoryListed);
         }
         
 
-        public IDataResult<CategoryDto> GetById(int id)
+        public async Task<IDataResult<CategoryDto>> GetByIdAsync(int id)
         {
-            var result = _categoryDal.Get(c => c.Id == id);
+            var result = await _categoryDal.GetAsync(c => c.Id == id);
             var mapper = _mapper.Map<CategoryDto>(result);
             return new SuccessDataResult<CategoryDto>(mapper);
         }

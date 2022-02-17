@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
@@ -51,30 +52,30 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ProductDeleted);
         }
 
-        public IDataResult<IEnumerable<ProductDto>> GetAll()
+        public async Task<IDataResult<IEnumerable<ProductDto>>> GetAllAsync()
         {
-            var result = _productDal.GetAll();
+            var result = await _productDal.GetAllAsync();
             var mapper = _mapper.Map<List<ProductDto>>(result);
             return new SuccessDataResult<IEnumerable<ProductDto>>(mapper, Messages.ProductListed);
         }
 
-        public IDataResult<IEnumerable<ProductDto>> GetAllByCategoryId(int categoryId)
+        public async Task<IDataResult<IEnumerable<ProductDto>>> GetAllByCategoryIdAsync(int categoryId)
         {
-            var result = _productDal.GetAll(p => p.CategoryId == categoryId);
+            var result = await _productDal.GetAllAsync(p => p.CategoryId == categoryId);
             var mapper = _mapper.Map<List<ProductDto>>(result);
             return new SuccessDataResult<IEnumerable<ProductDto>>(mapper);
         }
 
-        public IDataResult<IEnumerable<ProductDto>> GetByUnitPrice(decimal min, decimal max)
+        public async Task<IDataResult<IEnumerable<ProductDto>>> GetByUnitPriceAsync(decimal min, decimal max)
         {
-            var result = _productDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max);
+            var result = await _productDal.GetAllAsync(p => p.UnitPrice >= min && p.UnitPrice <= max);
             var mapper = _mapper.Map<List<ProductDto>>(result);
             return new SuccessDataResult<IEnumerable<ProductDto>>(mapper);
         }
 
-        public IDataResult<ProductDto> GetById(int productId)
+        public async Task<IDataResult<ProductDto>> GetByIdAsync(int productId)
         {
-            var result = _productDal.Get(p => p.Id == productId);
+            var result = await  _productDal.GetAsync(p => p.Id == productId);
             var mapper = _mapper.Map<ProductDto>(result);
             return new SuccessDataResult<ProductDto>(mapper);
         }
@@ -84,16 +85,17 @@ namespace Business.Concrete
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
         }
 
-        private IResult CheckProductNameLimit(string productName)
-        {
-            var result = _productDal.GetAll(p => p.Name == productName).Count();
-            if (result <= 2)
-            {
-                return new ErrorResult(Messages.CheckProductNameLimit);
-            }
+        //look!!!
+        //private IResult CheckProductNameLimit(string productName)
+        //{
+        //    var result = _productDal.GetAllAsync(p => p.Name == productName).Count();
+        //    if (result <= 2)
+        //    {
+        //        return new ErrorResult(Messages.CheckProductNameLimit);
+        //    }
 
-            return new SuccessResult();
-        }
+        //    return new SuccessResult();
+        //}
     }
 
 }
