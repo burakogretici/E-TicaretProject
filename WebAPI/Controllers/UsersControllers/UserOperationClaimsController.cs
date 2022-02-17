@@ -39,9 +39,9 @@ namespace WebAPI.Controllers.UsersControllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _userOperationClaimService.GetAll();
+            var result = await _userOperationClaimService.GetAllAsync();
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

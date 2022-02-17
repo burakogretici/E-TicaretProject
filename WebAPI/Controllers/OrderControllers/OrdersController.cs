@@ -20,16 +20,16 @@ namespace WebAPI.Controllers.OrderControllers
             _orderService = orderService;
         }
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _orderService.GetAll();
+            var result = await _orderService.GetAllAsync();
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(long orderId)
+        public async Task<IActionResult> GetById(long orderId)
         {
-            var result = _orderService.GetById(orderId);
+            var result = await _orderService.GetByIdAsync(orderId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

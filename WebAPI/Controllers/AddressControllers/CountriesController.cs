@@ -40,16 +40,16 @@ namespace WebAPI.Controllers.AddressControllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _countryService.GetAll();
+            var result = await _countryService.GetAllAsync();
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int countryId)
+        public async Task<IActionResult> GetById(int countryId)
         {
-            var result = _countryService.GetById(countryId);
+            var result = await _countryService.GetByIdAsync(countryId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

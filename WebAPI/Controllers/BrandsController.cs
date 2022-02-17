@@ -21,16 +21,16 @@ namespace WebAPI.Controllers
             _brandService = brandService;
         }
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _brandService.GetAll();
+            var result =  await _brandService.GetAllAsync();
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(long brandId)
+        public async Task<IActionResult> GetById(long brandId)
         {
-            var result = _brandService.GetById(brandId);
+            var result = await _brandService.GetByIdAsync(brandId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

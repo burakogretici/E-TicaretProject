@@ -17,19 +17,19 @@ namespace WebAPI.Controllers
 
         public SuppliersController(ISupplierService supplierService)
         {
-            _supplierService = supplierService; 
+            _supplierService = supplierService;
         }
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _supplierService.GetAll();
+            var result = await _supplierService.GetAllAsync();
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int supplierId)
+        public async Task<IActionResult> GetById(int supplierId)
         {
-            var result = _supplierService.GetById(supplierId);
+            var result = await _supplierService.GetByIdAsync(supplierId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

@@ -39,16 +39,16 @@ namespace WebAPI.Controllers.UsersControllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _userService.GetAll();
+            var result = await _userService.GetAllAsync();
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyemail")]
-        public IActionResult GetByMail(string email)
+        public async Task<IActionResult> GetByMail(string email)
         {
-            var result = _userService.GetByMail(email);
+            var result = await _userService.GetByMail(email);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

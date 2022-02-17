@@ -22,23 +22,23 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getall")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var result = _productService.GetAll();
+            var result = await _productService.GetAllAsync();
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getbyid")]
-        public IActionResult GetById(int productId)
+        public async Task<IActionResult> GetById(int productId)
         {
-            var result = _productService.GetById(productId);
+            var result = await _productService.GetByIdAsync(productId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getallbycategorydid")]
-        public IActionResult GetAllByCategoryId(int categoryId)
+        public async Task<IActionResult> GetAllByCategoryId(int categoryId)
         {
-            var result = _productService.GetAllByCategoryId(categoryId);
+            var result = await _productService.GetAllByCategoryIdAsync(categoryId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
@@ -51,9 +51,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyunitprice")]
-        public IActionResult GetByUnitPrice(decimal min, decimal max)
+        public async Task<IActionResult> GetByUnitPrice(decimal min, decimal max)
         {
-            var result = _productService.GetByUnitPrice(min, max);
+            var result = await _productService.GetByUnitPriceAsync(min, max);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
