@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Eticaret;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer("Data Source=192.168.234.128;Initial Catalog=Eticaret;User ID=sa;Password=hidayet1969");
         }
 
         public DbSet<Product> Products { get; set; }
@@ -33,7 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Color> Colors { get; set; }
 
-      
     }
 }
+
 

@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Concrete\EntityFramework\Mappings\**" />
+    <EmbeddedResource Remove="Concrete\EntityFramework\Mappings\**" />
+    <None Remove="Concrete\EntityFramework\Mappings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -15,10 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Entities\Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Concrete\EntityFramework\Mappings\" />
   </ItemGroup>
 
 </Project>
