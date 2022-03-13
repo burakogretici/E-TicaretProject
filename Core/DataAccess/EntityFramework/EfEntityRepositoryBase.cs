@@ -5,13 +5,14 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.DataAccess.Abstract;
 using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace Core.DataAccess.EntityFramework
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
-        where TEntity : class, IEntity, new()
+        where TEntity :  BaseEntity, new()
         where TContext : DbContext, new()
     {
         public void Add(TEntity entity)
