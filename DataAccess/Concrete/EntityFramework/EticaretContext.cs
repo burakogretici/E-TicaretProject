@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Drawing;
+using System.Threading;
 using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Color = Entities.Concrete.Color;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -13,7 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=192.168.234.128;Initial Catalog=Eticaret;User ID=sa;Password=hidayet1969");
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ETicaretDb;Trusted_Connection=true");
         }
 
         public DbSet<Product> Products { get; set; }
@@ -33,7 +33,24 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Color> Colors { get; set; }
 
+
+        public override int SaveChanges()
+        {
+            var datas = ChangeTracker.Entries<BaseEntity>();
+            foreach (var data in datas)
+            {
+                _ = data.State switch
+                {
+                    EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow ,
+                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow,
+                    
+                };
+
+            }
+            return  base.SaveChanges();
+        }
     }
 }
+
 
 
