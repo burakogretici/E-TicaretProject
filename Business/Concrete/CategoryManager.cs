@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
@@ -50,7 +51,7 @@ namespace Business.Concrete
         }
         
 
-        public async Task<IDataResult<CategoryDto>> GetByIdAsync(int id)
+        public async Task<IDataResult<CategoryDto>> GetByIdAsync(Guid id)
         {
             var result = await _categoryDal.GetAsync(c => c.Id == id);
             var mapper = _mapper.Map<CategoryDto>(result);

@@ -4,8 +4,7 @@ using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Business.Abstract.UserService;
 using Business.Constants;
-using Core.Entities.Concrete;
-using Core.Utilities.Security.Jwt;
+using Business.Helpers.Jwt;
 using Entities.Concrete;
 using Entities.DTOs;
 
@@ -33,7 +32,7 @@ namespace Business.Concrete
                 LastName = userForRegister.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                Status = true
+                IsActive = true
             };
             _userService.Add(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);

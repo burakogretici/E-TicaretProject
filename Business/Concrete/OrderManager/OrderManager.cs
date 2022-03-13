@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Business.Abstract.OrderService;
 using Business.Constants;
@@ -35,7 +36,7 @@ namespace Business.Concrete.OrderManager
             return new SuccessDataResult<IEnumerable<Order>>(await _orderDal.GetAllAsync(), Messages.OrderListed);
         }
 
-        public async Task<IDataResult<Order>> GetByIdAsync(long orderId)
+        public async Task<IDataResult<Order>> GetByIdAsync(Guid orderId)
         {
             return new SuccessDataResult<Order>(await _orderDal.GetAsync(o => o.Id == orderId));
         }

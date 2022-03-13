@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
@@ -40,7 +41,7 @@ namespace Business.Concrete
             return new SuccessDataResult<IEnumerable<Basket>>(await _basketDal.GetAllAsync(), Messages.BasketListed);
         }
 
-        public async Task<IDataResult<Basket>> GetByIdAsync(int basketId)
+        public async Task<IDataResult<Basket>> GetByIdAsync(Guid basketId)
         {
             return new SuccessDataResult<Basket>(await _basketDal.GetAsync(b => b.Id == basketId));
         }

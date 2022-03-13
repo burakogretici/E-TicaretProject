@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
@@ -43,7 +44,7 @@ namespace Business.Concrete
 
         }
 
-        public async Task<IDataResult<Customer>> GetByIdAsync(int customerId)
+        public async Task<IDataResult<Customer>> GetByIdAsync(Guid customerId)
         {
             return null;
             //return new SuccessDataResult<Customer>(await _customerDal.GetAsync(c => c.Id == customerId));

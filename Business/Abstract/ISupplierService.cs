@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
-using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -13,6 +13,6 @@ namespace Business.Abstract
         IResult Delete(Supplier supplier);
 
         Task<IDataResult<IEnumerable<Supplier>>> GetAllAsync();
-        Task<IDataResult<Supplier>> GetByIdAsync(int id);
+        Task<IDataResult<Supplier>> GetByIdAsync(Guid id);
     }
 }

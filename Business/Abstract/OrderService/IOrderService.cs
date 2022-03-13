@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using System;
+using Core.Utilities.Results;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Entities.Concrete;
@@ -12,6 +13,6 @@ namespace Business.Abstract.OrderService
         IResult Delete(Order order);
 
         Task<IDataResult<IEnumerable<Order>>> GetAllAsync();
-        Task<IDataResult<Order>> GetByIdAsync(long id);
+        Task<IDataResult<Order>> GetByIdAsync(Guid id);
     }
 }

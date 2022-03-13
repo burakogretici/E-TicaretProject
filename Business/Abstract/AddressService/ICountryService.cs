@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -14,6 +15,6 @@ namespace Business.Abstract.AddressService
         IResult Delete(Country country);
 
         Task<IDataResult<IEnumerable<CountryDto>>> GetAllAsync();
-        Task<IDataResult<CountryDto>> GetByIdAsync(int id);
+        Task<IDataResult<CountryDto>> GetByIdAsync(Guid id);
     }
 }

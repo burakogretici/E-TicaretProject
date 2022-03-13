@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Constants;
@@ -47,7 +48,7 @@ namespace Business.Concrete
             return new SuccessDataResult<IEnumerable<Supplier>>(await _supplierDal.GetAllAsync(),Messages.SuppliersListed);
         }
 
-        public async Task<IDataResult<Supplier>> GetByIdAsync(int id)
+        public async Task<IDataResult<Supplier>> GetByIdAsync(Guid id)
         {
             return null; /*new SuccessDataResult<Supplier>(_supplierDal.Get(s=>s.Id==id));*/
         }

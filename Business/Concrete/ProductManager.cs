@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
-using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -59,7 +58,7 @@ namespace Business.Concrete
             return new SuccessDataResult<IEnumerable<ProductDto>>(mapper, Messages.ProductListed);
         }
 
-        public async Task<IDataResult<IEnumerable<ProductDto>>> GetAllByCategoryIdAsync(int categoryId)
+        public async Task<IDataResult<IEnumerable<ProductDto>>> GetAllByCategoryIdAsync(Guid categoryId)
         {
             var result = await _productDal.GetAllAsync(p => p.CategoryId == categoryId);
             var mapper = _mapper.Map<List<ProductDto>>(result);
@@ -73,7 +72,7 @@ namespace Business.Concrete
             return new SuccessDataResult<IEnumerable<ProductDto>>(mapper);
         }
 
-        public async Task<IDataResult<ProductDto>> GetByIdAsync(int productId)
+        public async Task<IDataResult<ProductDto>> GetByIdAsync(Guid productId)
         {
             var result = await  _productDal.GetAsync(p => p.Id == productId);
             var mapper = _mapper.Map<ProductDto>(result);

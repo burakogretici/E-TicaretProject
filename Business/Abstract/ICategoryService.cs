@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -13,6 +14,6 @@ namespace Business.Abstract
         IResult Delete(Category category);
 
         Task<IDataResult<IEnumerable<CategoryDto>>> GetAllAsync();
-        Task<IDataResult<CategoryDto>> GetByIdAsync(int id);
+        Task<IDataResult<CategoryDto>> GetByIdAsync(Guid id);
     }
 }

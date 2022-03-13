@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
@@ -50,7 +50,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<BrandDto>>(mapper, Messages.BrandListed);
         }
 
-        public async Task<IDataResult<BrandDto>> GetByIdAsync(long brandId)
+        public async Task<IDataResult<BrandDto>> GetByIdAsync(Guid brandId)
         {
             var result =  await _brandDal.GetAsync(br => br.Id == brandId);
             var mapper = _mapper.Map<BrandDto>(result);

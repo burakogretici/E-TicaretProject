@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Business.Abstract.UserService;
 using Business.Constants;
-using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract.UserDal;
 using Entities.Concrete;
@@ -40,7 +40,7 @@ namespace Business.Concrete.UserManager
         {
             return new SuccessDataResult<IEnumerable<UserOperationClaim>>(await _userOperationClaimDal.GetAllAsync(), Messages.UserOperationClaimListed);
         }
-        public async Task<IDataResult<UserOperationClaim>> GetByOperationClaim(int operationClaimId)
+        public async Task<IDataResult<UserOperationClaim>> GetByOperationClaim(Guid operationClaimId)
         {
             return new SuccessDataResult<UserOperationClaim>(await _userOperationClaimDal.GetAsync(uoc => uoc.OperationClaimId == operationClaimId));
         }

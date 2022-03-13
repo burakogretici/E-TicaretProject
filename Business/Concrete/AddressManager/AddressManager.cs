@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract.AddressService;
@@ -47,27 +48,27 @@ namespace Business.Concrete.AddressManager
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper, Messages.AddressListed);
         }
 
-        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCountryIdAsync(int countryId)
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCountryIdAsync(Guid countryId)
         {
             var result = await _addressDal.GetAllAsync(address => address.CountryId == countryId);
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper, Messages.AddressListed);
         }
 
-        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCityIdAsync(int cityId)
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCityIdAsync(Guid cityId)
         {
             var result = await _addressDal.GetAllAsync(address => address.CityId == cityId);
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper);
         }
 
-        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByUserIdAsync(int userId)
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByUserIdAsync(Guid userId)
         {
             var result = await _addressDal.GetAllAsync(address => address.UserId == userId);
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper);
         }
-        public async Task<IDataResult<AddressDto>> GetByIdAsync(int addressId)
+        public async Task<IDataResult<AddressDto>> GetByIdAsync(Guid addressId)
         {
             var result = await _addressDal.GetAsync(address => address.Id == addressId);
             var mapper = _mapper.Map<AddressDto>(result);

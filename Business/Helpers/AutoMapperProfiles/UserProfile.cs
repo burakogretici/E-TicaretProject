@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using Core.Entities.Concrete;
+﻿using AutoMapper;
 using Entities.Concrete;
 using Entities.DTOs;
 

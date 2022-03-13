@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract.AddressService;
@@ -47,7 +48,7 @@ namespace Business.Concrete.AddressManager
             var mapper = _mapper.Map<List<CountryDto>>(result);
             return new SuccessDataResult<IEnumerable<CountryDto>>(mapper, Messages.CountryListed);
         }
-        public async Task<IDataResult<CountryDto>> GetByIdAsync(int countryId)
+        public async Task<IDataResult<CountryDto>> GetByIdAsync(Guid countryId)
         {
             var result = await _countryDal.GetAsync(country => country.Id == countryId);
             var mapper = _mapper.Map<CountryDto>(result);

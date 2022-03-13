@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
@@ -14,6 +15,6 @@ namespace Business.Abstract
         IResult Delete(Brand brand);
 
         Task<IDataResult<List<BrandDto>>> GetAllAsync();
-        Task<IDataResult<BrandDto>> GetByIdAsync(long id);
+        Task<IDataResult<BrandDto>> GetByIdAsync(Guid id);
     }
 }

@@ -1,6 +1,5 @@
-﻿using Core.Entities.Concrete;
+﻿using Business.Helpers.Jwt;
 using Core.Utilities.Results;
-using Core.Utilities.Security.Jwt;
 using Entities.Concrete;
 using Entities.DTOs;
 

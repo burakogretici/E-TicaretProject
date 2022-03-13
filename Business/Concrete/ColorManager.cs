@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
-using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -53,7 +53,7 @@ namespace Business.Concrete
             return new SuccessDataResult<IEnumerable<ColorDto>>(mapper,Messages.ColorsListed);
         }
 
-        public async Task<IDataResult<ColorDto>> GetByIdAsync(int colorId)
+        public async Task<IDataResult<ColorDto>> GetByIdAsync(Guid colorId)
         {
 
             var result = await _colorDal.GetAsync(cl => cl.Id == colorId);
