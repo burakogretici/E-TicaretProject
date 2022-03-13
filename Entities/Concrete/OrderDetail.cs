@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class OrderDetail : IEntity
+    public class OrderDetail : BaseEntity
     {
-        public long Id { get; set; }
-        public long OrderId { get; set; }
-        public int ProductId { get; set; }
+
+        public Guid OrderId { get; set; }
+        public Guid ProductId { get; set; }
         public int Count { get; set; }
         public int SalePrice { get; set; }
-        
-        public bool Status { get; set; } = true;
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime? UpdatedDate { get; set; }
+        public Order Order { get; set; }
+        public Product Product { get; set; }
+
 
     }
 }

@@ -3,10 +3,10 @@ using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Color : BaseEntity
+    public class OperationClaim : BaseEntity
     {
         public string Name { get; set; }
+        public ICollection<UserOperationClaim> UserOperationClaims { get; set; }
 
-        public ICollection<Product> Products { get; set; }
     }
 }

@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Order : IEntity
+    public class Order : BaseEntity
     {
-        public long Id { get; set; }
-        public int UserId { get; set; }
-        public long AddressId { get; set; }
-        public int OrderStatusId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid AddressId { get; set; }
+        public Guid OrderStatusId { get; set; }
         public int Count { get; set; }
+        public User User { get; set; }
+        public Address Address { get; set; }
+        public OrderStatus OrderStatus { get; set; }
 
-        public bool Status { get; set; } = true;
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime? UpdatedDate { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
