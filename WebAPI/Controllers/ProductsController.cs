@@ -29,14 +29,14 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int productId)
+        public async Task<IActionResult> GetById(Guid productId)
         {
             var result = await _productService.GetByIdAsync(productId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getallbycategorydid")]
-        public async Task<IActionResult> GetAllByCategoryId(int categoryId)
+        public async Task<IActionResult> GetAllByCategoryId(Guid categoryId)
         {
             var result = await _productService.GetAllByCategoryIdAsync(categoryId);
             return result.Success ? Ok(result) : BadRequest(result);

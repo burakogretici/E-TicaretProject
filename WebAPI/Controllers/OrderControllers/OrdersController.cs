@@ -27,7 +27,7 @@ namespace WebAPI.Controllers.OrderControllers
         }
 
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(long orderId)
+        public async Task<IActionResult> GetById(Guid orderId)
         {
             var result = await _orderService.GetByIdAsync(orderId);
             return result.Success ? Ok(result) : BadRequest(result);

@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int categoryId)
+        public async Task<IActionResult> GetById(Guid categoryId)
         {
             var result = await _categoryService.GetByIdAsync(categoryId);
             return result.Success ? Ok(result) : BadRequest(result);

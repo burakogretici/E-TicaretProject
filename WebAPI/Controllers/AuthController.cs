@@ -16,13 +16,12 @@ namespace WebAPI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly IUserService _userService;
 
-        
-        public AuthController(IAuthService authService, IUserService userService)
+
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
-            _userService = userService;
+
         }
 
         [HttpPost("register")]

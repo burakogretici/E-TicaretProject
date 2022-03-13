@@ -48,7 +48,7 @@ namespace WebAPI.Controllers.AddressControllers
         }
 
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int cityId)
+        public async Task<IActionResult> GetById(Guid cityId)
         {
             var result = await _cityService.GetByIdAsync(cityId);
             return result.Success ? Ok(result) : BadRequest(result);

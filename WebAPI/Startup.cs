@@ -1,9 +1,11 @@
 using Business.Helpers.AutoMapperProfiles;
+using Business.Helpers.Jwt;
 using Core.Utilities.Security.Encryption;
-using Core.Utilities.Security.Jwt;
+using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,6 +27,8 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<EticaretContext>(options =>
+            //    options.UseNpgsql(Configuration.GetConnectionString("PostgreSQL")));
 
             services.AddAutoMapper(typeof(BrandProfile));
             services.AddControllers();

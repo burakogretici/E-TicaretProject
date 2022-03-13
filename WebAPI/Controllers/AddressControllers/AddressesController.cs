@@ -47,26 +47,26 @@ namespace WebAPI.Controllers.AddressControllers
         }
 
         [HttpGet("getallbycountryid")]
-        public async Task<IActionResult> GetAllByCountryId(int countryId)
+        public async Task<IActionResult> GetAllByCountryId(Guid countryId)
         {
             var result = await _addressService.GetAllByCountryIdAsync(countryId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getallbycityid")]
-        public async Task<IActionResult> GetAllByCityId(int cityId)
+        public async Task<IActionResult> GetAllByCityId(Guid cityId)
         {
             var result = await _addressService.GetAllByCityIdAsync(cityId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpGet("getallbyuserid")]
-        public async Task<IActionResult> GetAllByUserId(int userId)
+        public async Task<IActionResult> GetAllByUserId(Guid userId)
         {
             var result = await _addressService.GetAllByUserIdAsync(userId);
             return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int addressId)
+        public async Task<IActionResult> GetById(Guid addressId)
         {
             var result = await _addressService.GetByIdAsync(addressId);
             return result.Success ? Ok(result) : BadRequest(result);

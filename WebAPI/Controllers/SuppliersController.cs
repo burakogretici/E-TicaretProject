@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int supplierId)
+        public async Task<IActionResult> GetById(Guid supplierId)
         {
             var result = await _supplierService.GetByIdAsync(supplierId);
             return result.Success ? Ok(result) : BadRequest(result);

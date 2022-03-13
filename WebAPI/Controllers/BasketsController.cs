@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(int basketId)
+        public async Task<IActionResult> GetById(Guid basketId)
         {
             var result = await _basketService.GetByIdAsync(basketId);
             return result.Success ? Ok(result) : BadRequest(result);
