@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Concrete\" />
     <Folder Include="Utilities\Helper\" />
   </ItemGroup>
 
