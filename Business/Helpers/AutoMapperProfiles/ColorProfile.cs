@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Colors;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
