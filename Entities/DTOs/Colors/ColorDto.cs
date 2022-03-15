@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Abstract;
 
-namespace Entities.DTOs
+namespace Entities.DTOs.Colors
 {
     public class ColorDto : IDto
     {
