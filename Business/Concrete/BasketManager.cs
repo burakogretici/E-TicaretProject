@@ -18,21 +18,21 @@ namespace Business.Concrete
             _basketDal = basketDal;
         }
 
-        public IResult AddToCart(Basket basket)
+        public async Task<IResult> AddToCartAsync(Basket basket)
         {
-            _basketDal.Add(basket);
+            await _basketDal.AddAsync(basket);
             return new SuccessResult(Messages.BasketAdded);
         }
 
-        public IResult Update(Basket basket)
+        public async Task<IResult> UpdateAsync(Basket basket)
         {
-            _basketDal.Update(basket);
+            await _basketDal.UpdateAsync(basket);
             return new SuccessResult(Messages.BasketUpdated);
         }
 
-        public IResult DeleteFromCart(Basket basket)
+        public async Task<IResult> DeleteFromCartAsync(Basket basket)
         {
-            _basketDal.Delete(basket);
+            await _basketDal.DeleteAsync(basket);
             return new SuccessResult(Messages.BasketDeleted);
         }
 

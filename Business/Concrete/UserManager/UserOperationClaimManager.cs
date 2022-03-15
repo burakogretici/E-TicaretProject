@@ -18,21 +18,21 @@ namespace Business.Concrete.UserManager
             _userOperationClaimDal = userOperationClaimDal;
         }
 
-        public IResult Add(UserOperationClaim userOperationClaim)
+        public async Task<IResult> AddAsync(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimDal.Add(userOperationClaim);
+            _userOperationClaimDal.AddAsync(userOperationClaim);
             return new SuccessResult(Messages.UserOperationClaimAdded);
         }
 
-        public IResult Update(UserOperationClaim userOperationClaim)
+        public async Task<IResult> UpdateAsync(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimDal.Update(userOperationClaim);
+            _userOperationClaimDal.UpdateAsync(userOperationClaim);
             return new SuccessResult(Messages.UserOperationClaimAdded);
         }
 
-        public IResult Delete(UserOperationClaim userOperationClaim)
+        public async Task<IResult> DeleteAsync(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimDal.Update(userOperationClaim);
+            _userOperationClaimDal.DeleteAsync(userOperationClaim);
             return new SuccessResult(Messages.UserOperationClaimAdded);
         }
 

@@ -4,14 +4,15 @@ using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Products;
 
 namespace Business.Abstract
 {
     public interface IProductService
     {
-        IDataResult<ProductDto> Add(ProductDto product);
-        IResult Update(Product product);
-        IResult Delete(Product product);
+        Task<IDataResult<ProductDto>> AddAsync(ProductDto product);
+        Task<IResult> UpdateAsync(Product product);
+        Task<IResult> DeleteAsync(Product product);
 
         Task<IDataResult<IEnumerable<ProductDto>>> GetAllAsync();
         Task<IDataResult<ProductDto>> GetByIdAsync(Guid id);

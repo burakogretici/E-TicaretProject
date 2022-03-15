@@ -7,6 +7,7 @@ using Business.Constants;
 using Business.Helpers.Jwt;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Users;
 
 namespace Business.Concrete
 {
@@ -34,7 +35,7 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 IsActive = true
             };
-            _userService.Add(user);
+            _userService.AddAsync(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 

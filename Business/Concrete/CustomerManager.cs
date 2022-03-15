@@ -18,21 +18,21 @@ namespace Business.Concrete
             _customerDal = customerDal;
         }
 
-        public IResult Add(Customer customer)
+        public async Task<IResult> AddAsync(Customer customer)
         {
-            _customerDal.Add(customer);
+            await _customerDal.AddAsync(customer);
             return new SuccessResult(Messages.CustomerAdded);
         }
 
-        public IResult Update(Customer customer)
+        public async Task<IResult> UpdateAsync(Customer customer)
         {
-            _customerDal.Update(customer);
+            await _customerDal.UpdateAsync(customer);
             return new SuccessResult(Messages.CustomerUpdated);
         }
 
-        public IResult Delete(Customer customer)
+        public async Task<IResult> DeleteAsync(Customer customer)
         {
-            _customerDal.Delete(customer);
+            await _customerDal.DeleteAsync(customer);
             return new SuccessResult(Messages.CustomerDeleted);
         }
 

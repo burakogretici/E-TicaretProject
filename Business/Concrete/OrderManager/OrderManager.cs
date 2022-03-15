@@ -19,15 +19,15 @@ namespace Business.Concrete.OrderManager
             _orderDal = orderDal;
         }
 
-        public IResult Add(Order order)
+        public async Task<IResult> AddAsync(Order order)
         {
-            _orderDal.Add(order);
+            await _orderDal.AddAsync(order);
             return new SuccessResult(Messages.OrderAdded);
         }
 
-        public IResult Delete(Order order)
+        public async Task<IResult> DeleteAsync(Order order)
         {
-            _orderDal.Delete(order);
+            await _orderDal.DeleteAsync(order);
             return new SuccessResult(Messages.OrderDeleted);
         }
 
@@ -40,9 +40,9 @@ namespace Business.Concrete.OrderManager
         {
             return new SuccessDataResult<Order>(await _orderDal.GetAsync(o => o.Id == orderId));
         }
-        public IResult Update(Order order)
+        public async Task<IResult> UpdateAsync(Order order)
         {
-            _orderDal.Update(order);
+            _orderDal.UpdateAsync(order);
             return new SuccessResult(Messages.OrderUpdated);
         }
     }

@@ -8,9 +8,9 @@ namespace Business.Abstract
 {
     public interface ICustomerService 
     {
-        IResult Add(Customer customer);
-        IResult Update(Customer customer);
-        IResult Delete(Customer customer);
+        Task<IResult> AddAsync(Customer customer);
+        Task<IResult> UpdateAsync(Customer customer);
+        Task<IResult> DeleteAsync(Customer customer);
 
         Task<IDataResult<IEnumerable<Customer>>> GetAllAsync();
         Task<IDataResult<Customer>> GetByIdAsync(Guid id);

@@ -8,9 +8,9 @@ namespace Business.Abstract
 {
     public interface IBasketService 
     {
-        IResult AddToCart(Basket basket);
-        IResult Update(Basket basket);
-        IResult DeleteFromCart(Basket basket);
+        Task<IResult> AddToCartAsync(Basket basket);
+        Task<IResult> UpdateAsync(Basket basket);
+        Task<IResult> DeleteFromCartAsync(Basket basket);
 
         Task<IDataResult<IEnumerable<Basket>>> GetAllAsync();
         Task<IDataResult<Basket>> GetByIdAsync(Guid id);

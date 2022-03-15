@@ -7,9 +7,9 @@ namespace Business.Abstract.UserService
 {
     public interface IUserOperationClaimService 
     {
-        IResult Add(UserOperationClaim brand);
-        IResult Update(UserOperationClaim brand);
-        IResult Delete(UserOperationClaim brand);
+        Task<IResult> AddAsync(UserOperationClaim brand);
+        Task<IResult> UpdateAsync(UserOperationClaim brand);
+        Task<IResult> DeleteAsync(UserOperationClaim brand);
 
         Task<IDataResult<IEnumerable<UserOperationClaim>>> GetAllAsync();
         //IDataResult<UserOperationClaim> GetById(int id);

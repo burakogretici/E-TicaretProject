@@ -17,21 +17,21 @@ namespace Business.Concrete.UserManager
             _userDal = userDal;
         }
 
-        public IResult Add(User user)
+        public async Task<IResult> DeleteAsync(User user)
         {
-            _userDal.Add(user);
+            await _userDal.DeleteAsync(user);
             return new SuccessResult(Messages.UserAdded);
         }
 
-        public IResult Delete(User user)
+        public async Task<IResult> AddAsync(User user)
         {
-            _userDal.Delete(user);
-            return new SuccessResult(Messages.UserDeleted);
+            await _userDal.AddAsync(user);
+            return new SuccessResult(Messages.UserAdded);
         }
 
-        public IResult Update(User user)
+        public async Task<IResult> UpdateAsync(User user)
         {
-            _userDal.Update(user);
+            await _userDal.UpdateAsync(user);
             return new SuccessResult(Messages.UserUpdated);
         }
 

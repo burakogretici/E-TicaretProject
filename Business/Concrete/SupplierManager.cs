@@ -19,26 +19,26 @@ namespace Business.Concrete
             _supplierDal = supplierDal;
         }
 
-        public IResult Add(Supplier supplier)
+        public async Task<IResult> AddAsync(Supplier supplier)
         {
             IResult result = BusinessRules.Run(/*SupplierNameAlreadyExists(supplier.SupplierName)*/);
             if (result != null)
             {
                 return result;
             }
-            _supplierDal.Add(supplier);
+            await _supplierDal.AddAsync(supplier);
             return new SuccessResult(Messages.SupplierAdded);
         }
 
-        public IResult Update(Supplier supplier)
-        {
-           _supplierDal.Update(supplier);
+        public async Task<IResult> UpdateAsync(Supplier supplier)
+        { 
+            await _supplierDal.UpdateAsync(supplier);
            return new SuccessResult(Messages.SupplierUpdated);
         }
 
-        public IResult Delete(Supplier supplier)
+        public async Task<IResult> DeleteAsync(Supplier supplier)
         {
-            _supplierDal.Delete(supplier);
+            await _supplierDal.DeleteAsync(supplier);
             return new SuccessResult(Messages.SupplierDeleted);
         }
 

@@ -2,6 +2,7 @@
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Users;
 
 namespace Business.Abstract
 {

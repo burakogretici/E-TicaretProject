@@ -8,6 +8,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Brands;
 
 namespace Business.Concrete
 {
@@ -21,24 +22,24 @@ namespace Business.Concrete
             _mapper = mapper;
         }
 
-        public IDataResult<BrandDto> Add(BrandDto model)
+        public async Task<IDataResult<BrandDto>> AddAsync(BrandDto model)
         {
             var mapper = _mapper.Map<Brand>(model);
-            _brandDal.Add(mapper);
+            await _brandDal.AddAsync(mapper);
             return new SuccessDataResult<BrandDto>(model, Messages.BrandAdded);
 
 
         }
 
-        public IResult Update(Brand brand)
+        public async Task<IResult> UpdateAsync(Brand brand)
         {
-            _brandDal.Update(brand);
+            await _brandDal.UpdateAsync(brand);
             return new SuccessResult(Messages.BrandUpdated);
         }
 
-        public IResult Delete(Brand brand)
+        public async Task<IResult> DeleteAsync(Brand brand)
         {
-            _brandDal.Delete(brand);
+            await _brandDal.DeleteAsync(brand);
             return new SuccessResult(Messages.BrandDeleted);
         }
 

@@ -10,6 +10,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Products;
 
 namespace Business.Concrete
 {
@@ -26,7 +27,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(ProductValidator))]
         //[SecuredOperation("Product.List")]
-        public IDataResult<ProductDto> Add(ProductDto product)
+        public async Task<IDataResult<ProductDto>> AddAsync(ProductDto product)
         {
             //IResult result= BusinessRules.Run(CheckProductNameLimit(product.ProductName));
             //if (result != null)
@@ -35,19 +36,19 @@ namespace Business.Concrete
             //}
 
             var mapper = _mapper.Map<Product>(product);
-            _productDal.Add(mapper);
+            await _productDal.AddAsync(mapper);
             return new SuccessDataResult<ProductDto>(product, Messages.ProductAdded);
         }
 
-        public IResult Update(Product product)
+        public async Task<IResult> UpdateAsync(Product product)
         {
-            _productDal.Update(product);
+            await _productDal.UpdateAsync(product);
             return new SuccessResult(Messages.ProductUpdated);
         }
 
-        public IResult Delete(Product product)
+        public async Task<IResult> DeleteAsync(Product product)
         {
-            _productDal.Delete(product);
+            await _productDal.DeleteAsync(product);
             return new SuccessResult(Messages.ProductDeleted);
         }
 

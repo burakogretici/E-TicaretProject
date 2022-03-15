@@ -8,6 +8,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract.AddressDal;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Cities;
 
 
 namespace Business.Concrete.AddressManager
@@ -23,22 +24,22 @@ namespace Business.Concrete.AddressManager
             _mapper = mapper;
         }
 
-        public IDataResult<CityDto> Add(CityDto city)
+        public async Task<IDataResult<CityDto>> AddAsync(CityDto city)
         {
             var mapper = _mapper.Map<City>(city);
-            _cityDal.Add(mapper);
+            await _cityDal.AddAsync(mapper);
             return new SuccessDataResult<CityDto>(city, Messages.CityAdded);
         }
 
-        public IResult Update(City city)
+        public async Task<IResult> UpdateAsync(City city)
         {
-            _cityDal.Update(city);
+            await _cityDal.UpdateAsync(city);
             return new SuccessResult(Messages.CityUpdated);
         }
 
-        public IResult Delete(City city)
+        public async Task<IResult> DeleteAsync(City city)
         {
-            _cityDal.Delete(city);
+            await _cityDal.DeleteAsync(city);
             return new SuccessResult(Messages.CityDeleted);
         }
 

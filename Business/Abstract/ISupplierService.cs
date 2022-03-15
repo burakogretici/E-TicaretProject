@@ -8,9 +8,9 @@ namespace Business.Abstract
 {
     public interface ISupplierService 
     {
-        IResult Add(Supplier supplier);
-        IResult Update(Supplier supplier);
-        IResult Delete(Supplier supplier);
+        Task<IResult> AddAsync(Supplier supplier);
+        Task<IResult> UpdateAsync(Supplier supplier);
+        Task<IResult> DeleteAsync(Supplier supplier);
 
         Task<IDataResult<IEnumerable<Supplier>>> GetAllAsync();
         Task<IDataResult<Supplier>> GetByIdAsync(Guid id);

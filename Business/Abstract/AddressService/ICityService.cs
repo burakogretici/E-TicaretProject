@@ -4,15 +4,16 @@ using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Cities;
 
 
 namespace Business.Abstract.AddressService
 {
     public interface ICityService
     {
-        IDataResult<CityDto> Add(CityDto city);
-        IResult Update(City city); 
-        IResult Delete(City city);
+        Task<IDataResult<CityDto>> AddAsync(CityDto city);
+        Task<IResult> UpdateAsync(City city); 
+        Task<IResult> DeleteAsync(City city);
 
         Task<IDataResult<IEnumerable<CityDto>>> GetAllAsync();
         Task<IDataResult<CityDto>> GetByIdAsync(Guid id);

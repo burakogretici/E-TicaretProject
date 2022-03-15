@@ -10,6 +10,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Categories;
 
 namespace Business.Concrete
 {
@@ -24,22 +25,22 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CategoryValidator))]
-        public IDataResult<CategoryDto> Add(CategoryDto model)
+        public async Task<IDataResult<CategoryDto>> AddAsync(CategoryDto model)
         {
             var mapper = _mapper.Map<Category>(model);
-            _categoryDal.Add(mapper);
+            await _categoryDal.AddAsync(mapper);
             return new SuccessDataResult<CategoryDto>(model,Messages.CategoryAdded);
         }
 
-        public IResult Update(Category category)
+        public async Task<IResult> UpdateAsync(Category category)
         {
-            _categoryDal.Update(category);
+            await _categoryDal.UpdateAsync(category);
             return new SuccessResult(Messages.CategoryUpdated);
         }
 
-        public IResult Delete(Category category)
+        public async Task<IResult> DeleteAsync(Category category)
         {
-            _categoryDal.Delete(category);
+            await _categoryDal.DeleteAsync(category);
             return new SuccessResult(Messages.CategoryDeleted);
         }
 

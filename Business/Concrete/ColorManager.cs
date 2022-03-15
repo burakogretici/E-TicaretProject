@@ -8,6 +8,7 @@ using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Colors;
 
 namespace Business.Concrete
 {
@@ -22,7 +23,7 @@ namespace Business.Concrete
             _mapper = mapper;
         }
 
-        public IDataResult<ColorDto> Add(ColorDto color)
+        public async Task<IDataResult<ColorDto>> AddAsync(ColorDto color)
         {
             //IResult result = BusinessRules.Run(ColorNameAlreadyExists(color.Name));
             //if (result != null)
@@ -30,19 +31,19 @@ namespace Business.Concrete
             //    return result;
             //},
             var mapper = _mapper.Map<Color>(color);
-            _colorDal.Add(mapper);
+            await _colorDal.AddAsync(mapper);
             return new SuccessDataResult<ColorDto>(color,Messages.ColorAdded);
         }
 
-        public IResult Update(Color color)
+        public async Task<IResult> UpdateAsync(Color color)
         {
-            _colorDal.Update(color);
+            await _colorDal.UpdateAsync(color);
             return new SuccessResult(Messages.CategoryUpdated);
         }
 
-        public IResult Delete(Color color)
+        public async Task<IResult> DeleteAsync(Color color)
         {
-            _colorDal.Delete(color);
+            await _colorDal.DeleteAsync(color);
             return new SuccessResult(Messages.CategoryDeleted);
         }
 

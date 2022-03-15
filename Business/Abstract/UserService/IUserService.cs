@@ -7,9 +7,9 @@ namespace Business.Abstract.UserService
 {
     public interface IUserService
     {
-        IResult Add(User user);
-        IResult Update(User country);
-        IResult Delete(User country);
+        Task<IResult> AddAsync(User user);
+        Task<IResult> UpdateAsync(User country);
+        Task<IResult> DeleteAsync(User country);
 
         Task<IDataResult<IEnumerable<User>>> GetAllAsync();
         //IDataResult<User> GetById(int id);

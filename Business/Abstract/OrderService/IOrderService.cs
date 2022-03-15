@@ -8,9 +8,9 @@ namespace Business.Abstract.OrderService
 {
     public interface IOrderService 
     {
-        IResult Add(Order order);
-        IResult Update(Order order);
-        IResult Delete(Order order);
+        Task<IResult> AddAsync(Order order);
+        Task<IResult> UpdateAsync(Order order);
+        Task<IResult> DeleteAsync(Order order);
 
         Task<IDataResult<IEnumerable<Order>>> GetAllAsync();
         Task<IDataResult<Order>> GetByIdAsync(Guid id);
