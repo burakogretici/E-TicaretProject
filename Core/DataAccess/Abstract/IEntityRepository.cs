@@ -7,13 +7,15 @@ using Core.Entities.Concrete;
 
 namespace Core.DataAccess.Abstract
 {
-    public interface IEntityRepository<T> where T : BaseEntity, new()
+    public interface IEntityRepository<T> where T : BaseEntity
     {
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null);
-        Task<T> GetAsync(Expression<Func<T, bool>> filter);
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null);
+        T? Get(Expression<Func<T, bool>> predicate);
+        T Add(T entity);
+        T Update(T entity);
+        T Delete(T entity);
+
+      
     }
 
     
