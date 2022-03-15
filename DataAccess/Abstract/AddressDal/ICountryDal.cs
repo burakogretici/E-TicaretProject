@@ -4,7 +4,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract.AddressDal
 {
-    public interface ICountryDal : IEntityRepository<Country>
+    public interface ICountryDal : IEntityRepository<Country>, IEntityAsyncRepository<Country>
     {
     }
 }

@@ -7,5 +7,8 @@ namespace DataAccess.Concrete.EntityFramework.EfOrderDal
 {
     public class EfOrderStatusDal : EfEntityRepositoryBase<OrderStatus, EticaretContext>, IOrderStatusDal
     {
+        public EfOrderStatusDal(EticaretContext context) : base(context)
+        {
+        }
     }
 }

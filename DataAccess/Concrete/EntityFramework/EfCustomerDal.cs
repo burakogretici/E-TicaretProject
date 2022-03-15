@@ -6,5 +6,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCustomerDal : EfEntityRepositoryBase<Customer, EticaretContext>,ICustomerDal
     {
+        public EfCustomerDal(EticaretContext context) : base(context)
+        {
+        }
     }
 }

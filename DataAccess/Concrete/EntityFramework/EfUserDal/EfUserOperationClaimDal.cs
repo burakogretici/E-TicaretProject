@@ -6,5 +6,8 @@ namespace DataAccess.Concrete.EntityFramework.EfUserDal
 {
     public class EfUserOperationClaimDal : EfEntityRepositoryBase<UserOperationClaim, EticaretContext>,IUserOperationClaimDal
     {
+        public EfUserOperationClaimDal(EticaretContext context) : base(context)
+        {
+        }
     }
 }

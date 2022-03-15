@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract.UserDal
 {
-    public interface IOperationClaimDal : IEntityRepository<OperationClaim>
+    public interface IOperationClaimDal : IEntityRepository<OperationClaim>, IEntityAsyncRepository<OperationClaim>
     {
     }
 }

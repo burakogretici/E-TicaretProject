@@ -6,5 +6,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfSupplierDal : EfEntityRepositoryBase<Supplier, EticaretContext>,ISupplierDal
     {
+        public EfSupplierDal(EticaretContext context) : base(context)
+        {
+        }
     }
 }

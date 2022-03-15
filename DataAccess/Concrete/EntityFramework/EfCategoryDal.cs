@@ -6,5 +6,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCategoryDal : EfEntityRepositoryBase<Category, EticaretContext>, ICategoryDal
     {
+        public EfCategoryDal(EticaretContext context) : base(context)
+        {
+        }
     }
 }

@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface ISupplierDal : IEntityRepository<Supplier>
+    public interface ISupplierDal : IEntityRepository<Supplier>, IEntityAsyncRepository<Supplier>
     {
     }
 }

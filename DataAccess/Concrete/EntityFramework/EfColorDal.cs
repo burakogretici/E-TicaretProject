@@ -6,5 +6,8 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfColorDal : EfEntityRepositoryBase<Color,EticaretContext>,IColorDal
     {
+        public EfColorDal(EticaretContext context) : base(context)
+        {
+        }
     }
 }

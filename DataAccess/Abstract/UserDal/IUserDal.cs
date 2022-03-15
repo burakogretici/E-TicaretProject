@@ -4,7 +4,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract.UserDal
 {
-    public interface IUserDal : IEntityRepository<User>
+    public interface IUserDal : IEntityRepository<User>, IEntityAsyncRepository<User>
     {
         List<OperationClaim> GetClaims(User user);
     }

@@ -7,5 +7,8 @@ namespace DataAccess.Concrete.EntityFramework.EfAddressDal
 {
     public class EfCountryDal : EfEntityRepositoryBase<Country, EticaretContext>, ICountryDal
     {
+        public EfCountryDal(EticaretContext context) : base(context)
+        {
+        }
     }
 }

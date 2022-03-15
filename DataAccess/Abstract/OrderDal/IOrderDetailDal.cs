@@ -4,7 +4,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract.OrderDal
 {
-    public interface IOrderDetailDal : IEntityRepository<OrderDetail>
+    public interface IOrderDetailDal : IEntityRepository<OrderDetail>, IEntityAsyncRepository<OrderDetail>
     {
 
     }

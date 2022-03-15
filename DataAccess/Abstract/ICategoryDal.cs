@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface ICategoryDal : IEntityRepository<Category>
+    public interface ICategoryDal : IEntityRepository<Category>, IEntityAsyncRepository<Category>
     {
     }
 }
