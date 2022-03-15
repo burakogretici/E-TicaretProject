@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.DTOs;
+using Entities.DTOs.Brands;
 
 namespace WebAPI.Controllers
 {
@@ -35,26 +36,26 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(BrandDto brand)
+        public async Task<IActionResult> Add([FromBody] BrandDto brand)
 
         {
-            var result = _brandService.Add(brand);
+            var result = await _brandService.AddAsync(brand);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Brand brand)
+        public async Task<IActionResult> Update([FromBody] Brand brand)
 
         {
-            var result = _brandService.Update(brand);
+            var result = await _brandService.UpdateAsync(brand);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Brand brand)
+        public async Task<IActionResult> Delete(Brand brand)
 
         {
-            var result = _brandService.Delete(brand);
+            var result = await _brandService.DeleteAsync(brand);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

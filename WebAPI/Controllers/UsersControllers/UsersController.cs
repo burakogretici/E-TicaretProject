@@ -21,21 +21,21 @@ namespace WebAPI.Controllers.UsersControllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(User user)
+        public async Task<IActionResult> Add([FromBody] User user)
         {
-            var result = _userService.Add(user);
+            var result = await _userService.AddAsync(user);
             return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpPost("delete")]
-        public IActionResult Delete(User user)
+        public async Task<IActionResult> Delete([FromBody] User user)
         {
-            var result = _userService.Delete(user);
+            var result = await _userService.DeleteAsync(user);
             return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpPost("update")]
-        public IActionResult Update(User user)
+        public async Task<IActionResult> Update([FromBody] User user)
         {
-            var result = _userService.Update(user);
+            var result = await _userService.UpdateAsync(user);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

@@ -35,26 +35,26 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Basket basket)
+        public async Task<IActionResult> Add([FromBody] Basket basket)
 
         {
-            var result = _basketService.AddToCart(basket);
+            var result = await _basketService.AddToCartAsync(basket);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Basket basket)
+        public async Task<IActionResult> Update([FromBody] Basket basket)
 
         {
-            var result = _basketService.Update(basket);
+            var result = await _basketService.UpdateAsync(basket);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Basket basket)
+        public async Task<IActionResult> Delete([FromBody] Basket basket)
 
         {
-            var result = _basketService.DeleteFromCart(basket);
+            var result = await _basketService.DeleteFromCartAsync(basket);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

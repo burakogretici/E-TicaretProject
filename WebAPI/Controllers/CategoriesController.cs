@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.DTOs;
+using Entities.DTOs.Categories;
 
 namespace WebAPI.Controllers
 {
@@ -37,26 +38,26 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(CategoryDto category)
+        public async Task<IActionResult> Add([FromBody] CategoryDto category)
 
         {
-            var result = _categoryService.Add(category);
+            var result = await _categoryService.AddAsync(category);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Category category)
+        public async Task<IActionResult> Update([FromBody] Category category)
 
         {
-            var result = _categoryService.Update(category);
+            var result = await _categoryService.UpdateAsync(category);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Category category)
+        public async Task<IActionResult> Delete([FromBody] Category category)
 
         {
-            var result = _categoryService.Delete(category);
+            var result = await _categoryService.DeleteAsync(category);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

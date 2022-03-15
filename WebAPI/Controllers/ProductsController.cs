@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.DTOs;
+using Entities.DTOs.Products;
 
 namespace WebAPI.Controllers
 {
@@ -43,10 +44,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(ProductDto model)
+        public async Task<IActionResult> Add([FromBody] ProductDto model)
 
         {
-            var result = _productService.Add(model);
+            var result = await _productService.AddAsync(model);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
@@ -58,26 +59,26 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Product product)
+        public async Task<IActionResult> Update([FromBody] Product product)
 
         {
-            var result = _productService.Update(product);
+            var result = await _productService.UpdateAsync(product);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Product product)
+        public async Task<IActionResult> Delete([FromBody] Product product)
 
         {
-            var result = _productService.Delete(product);
+            var result = await _productService.DeleteAsync(product);
             return result.Success ? Ok(result) : BadRequest(result);
 
         }
 
         [HttpGet("getproductdetail")]
-        public IActionResult GetProductDetail()
+        public async Task<IActionResult> GetProductDetail()
         {
-            var result = _productService.GetProductDetails();
+            var result =  _productService.GetProductDetails();
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

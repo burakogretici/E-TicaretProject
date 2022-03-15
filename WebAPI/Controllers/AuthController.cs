@@ -8,6 +8,7 @@ using Business.Abstract;
 using Business.Abstract.UserService;
 using Core.Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Users;
 
 namespace WebAPI.Controllers
 {
@@ -25,7 +26,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register(UserForRegister userForRegister)
+        public ActionResult Register([FromBody] UserForRegister userForRegister)
         {
             var userExists = _authService.UserExits(userForRegister.Email);
             if (!userExists.Success)
@@ -39,7 +40,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult Login(UserForLogin userForLogin)
+        public ActionResult Login([FromBody] UserForLogin userForLogin)
         {
             var userLogin = _authService.Login(userForLogin);
             if (!userLogin.Success)

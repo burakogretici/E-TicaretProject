@@ -34,26 +34,26 @@ namespace WebAPI.Controllers.OrderControllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Order order)
+        public async Task<IActionResult> Add([FromBody] Order order)
 
         {
-            var result = _orderService.Add(order);
+            var result = await _orderService.AddAsync(order);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Order order)
+        public async Task<IActionResult> Update([FromBody] Order order)
 
         {
-            var result = _orderService.Update(order);
+            var result = await _orderService.UpdateAsync(order);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Order order)
+        public async Task<IActionResult> Delete([FromBody] Order order)
 
-        {
-            var result = _orderService.Delete(order);
+        { 
+            var result = await _orderService.DeleteAsync(order);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

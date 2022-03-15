@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Countries;
 
 namespace WebAPI.Controllers.AddressControllers
 {
@@ -21,21 +22,21 @@ namespace WebAPI.Controllers.AddressControllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(CountryDto country)
+        public async Task<IActionResult> Add([FromBody] CountryDto country)
         {
-            var result = _countryService.Add(country);
+            var result = await _countryService.AddAsync(country);
             return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpPost("delete")]
-        public IActionResult Delete(Country country)
+        public async Task<IActionResult> Delete([FromBody] Country country)
         {
-            var result = _countryService.Delete(country);
+            var result = await _countryService.DeleteAsync(country);
             return result.Success ? Ok(result) : BadRequest(result);
         }
         [HttpPost("update")]
-        public IActionResult Update(Country country)
+        public async Task<IActionResult> Update([FromBody] Country country)
         {
-            var result = _countryService.Update(country);
+            var result = await _countryService.UpdateAsync(country);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

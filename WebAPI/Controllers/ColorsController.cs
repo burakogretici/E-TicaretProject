@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Business.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Entities.DTOs.Colors;
 
 namespace WebAPI.Controllers
 {
@@ -35,25 +36,25 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(ColorDto color)
+        public async Task<IActionResult> Add([FromBody] ColorDto color)
         {
-            var result = _colorService.Add(color);
+            var result = await _colorService.AddAsync(color);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Color color)
+        public async Task<IActionResult> Update([FromBody] Color color)
 
         {
-            var result = _colorService.Update(color);
+            var result = await _colorService.UpdateAsync(color);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Color color)
+        public async Task<IActionResult> Delete([FromBody] Color color)
 
         {
-            var result = _colorService.Delete(color);
+            var result = await _colorService.DeleteAsync(color);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 

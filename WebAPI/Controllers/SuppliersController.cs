@@ -34,28 +34,28 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(Supplier supplier)
+        public async Task<IActionResult> Add([FromBody] Supplier supplier)
 
         {
-            var result = _supplierService.Add(supplier);
+            var result = await _supplierService.AddAsync(supplier);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("update")]
-        public IActionResult Update(Supplier supplier)
+        public async Task<IActionResult> Update([FromBody] Supplier supplier)
 
         {
-            var result = _supplierService.Update(supplier);
+            var result = await _supplierService.UpdateAsync(supplier);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("delete")]
-        public IActionResult Delete(Supplier supplier)
+        public async Task<IActionResult> Delete([FromBody] Supplier supplier)
 
         {
-            var result = _supplierService.Delete(supplier);
+            var result = await _supplierService.DeleteAsync(supplier);
 
-            return result.Success ? Ok(result) : BadRequest(result);
+            return  result.Success ? Ok(result) : BadRequest(result);
         }
 
     }
