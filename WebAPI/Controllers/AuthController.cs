@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult Register([FromBody] UserForRegister userForRegister)
+        public async Task<ActionResult> Register([FromBody] UserForRegister userForRegister)
         {
             var userExists = _authService.UserExits(userForRegister.Email);
             if (!userExists.Success)
@@ -34,21 +34,21 @@ namespace WebAPI.Controllers
                 return BadRequest(userExists.Message);
             }
 
-            var registerResult = _authService.Register(userForRegister, userForRegister.Password);
-            var result = _authService.CreateAccessToken(registerResult.Data);
+            var registerResult = await _authService.Register(userForRegister, userForRegister.Password);
+            var result = await _authService.CreateAccessToken(registerResult.Data);
             return result.Success ? Ok(result) : BadRequest(result);
         }
 
         [HttpPost("login")]
-        public ActionResult Login([FromBody] UserForLogin userForLogin)
+        public async Task<ActionResult> Login([FromBody] UserForLogin userForLogin)
         {
-            var userLogin = _authService.Login(userForLogin);
+            var userLogin =await _authService.Login(userForLogin);
             if (!userLogin.Success)
             {
                 return BadRequest(userLogin.Message);
             }
 
-            var result = _authService.CreateAccessToken(userLogin.Data);
+            var result =  await _authService.CreateAccessToken(userLogin.Data);
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

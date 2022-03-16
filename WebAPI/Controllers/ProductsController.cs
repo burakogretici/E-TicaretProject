@@ -78,7 +78,7 @@ namespace WebAPI.Controllers
         [HttpGet("getproductdetail")]
         public async Task<IActionResult> GetProductDetail()
         {
-            var result =  _productService.GetProductDetails();
+            var result =  await _productService.GetProductDetails();
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }

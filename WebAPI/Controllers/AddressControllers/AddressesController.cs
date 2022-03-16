@@ -74,9 +74,9 @@ namespace WebAPI.Controllers.AddressControllers
         }
 
         [HttpGet("getaddressdetail")]
-        public IActionResult GetAddressDetail()
+        public async Task<IActionResult> GetAddressDetail()
         {
-            var result = _addressService.GetAddressDetail();
+            var result = await _addressService.GetAddressDetail();
             return result.Success ? Ok(result) : BadRequest(result);
         }
     }
