@@ -15,17 +15,13 @@ namespace DataAccess.Concrete.EntityFramework
             Configuration = configuration;
         }
 
-        public EticaretContext()
-        {
-            
-        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                base.OnConfiguring(optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DArchMySqlContext")));
+                base.OnConfiguring(optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Mssql")));
             }
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ETicaretDb;Trusted_Connection=true");
+        
         }
 
         public DbSet<Product> Products { get; set; }
