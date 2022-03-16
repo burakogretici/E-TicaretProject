@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using Color = Entities.Concrete.Color;
 
@@ -46,20 +47,26 @@ namespace DataAccess.Concrete.EntityFramework
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var datas = ChangeTracker.Entries<BaseEntity>();
-            foreach (var data in datas)
+            foreach (var entry in datas)
             {
-                _ = data.State switch
+                switch (entry.State)
                 {
-                    EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
-                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow,
+                    case EntityState.Added:
+                        ((BaseEntity)entry.Entity).CreatedDate = DateTime.Now;
+                        ((BaseEntity)entry.Entity).IsActive = true;
+                        break;
 
-                };
+                    case EntityState.Modified:
+                        ((BaseEntity)entry.Entity).UpdatedDate = DateTime.Now;
+                        break;
 
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["IsDeleted"] = true;
+                        break;
+                }
             }
             return base.SaveChangesAsync(cancellationToken);
         }
     }
 }
-
-
-
