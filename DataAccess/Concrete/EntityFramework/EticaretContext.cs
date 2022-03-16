@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Core.Entities.Concrete;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 base.OnConfiguring(optionsBuilder.UseSqlServer(Configuration.GetConnectionString("Mssql")));
             }
-        
+
         }
 
         public DbSet<Product> Products { get; set; }
@@ -41,22 +43,21 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Color> Colors { get; set; }
 
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var datas = ChangeTracker.Entries<BaseEntity>();
+            foreach (var data in datas)
+            {
+                _ = data.State switch
+                {
+                    EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
+                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow,
 
-        //public override int SaveChanges()
-        //{
-        //    var datas = ChangeTracker.Entries<BaseEntity>();
-        //    foreach (var data in datas)
-        //    {
-        //        _ = data.State switch
-        //        {
-        //            EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow ,
-        //            EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow,
-                    
-        //        };
+                };
 
-        //    }
-        //    return  base.SaveChanges();
-        //}
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
     }
 }
 
