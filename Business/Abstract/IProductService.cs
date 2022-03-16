@@ -19,7 +19,7 @@ namespace Business.Abstract
 
         Task<IDataResult<IEnumerable<ProductDto>>> GetAllByCategoryIdAsync(Guid categoryId);
         Task<IDataResult<IEnumerable<ProductDto>>> GetByUnitPriceAsync(decimal min, decimal max);
-        IDataResult<List<ProductDetailDto>> GetProductDetails();
+        Task<IDataResult<List<ProductDetailDto>>> GetProductDetails();
 
     }
 }

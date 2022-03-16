@@ -15,7 +15,7 @@ namespace Business.Abstract.UserService
         //IDataResult<User> GetById(int id);
 
         Task<IDataResult<User>> GetByMail(string email);
-        IDataResult<IEnumerable<OperationClaim>> GetClaims(User user);
+        Task<IDataResult<IEnumerable<OperationClaim>>> GetClaims(User user);
 
     }
 }
