@@ -1,4 +1,5 @@
-﻿using Business.Abstract;
+﻿using System.Threading.Tasks;
+using Business.Abstract;
 
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
@@ -22,7 +23,7 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
-        public IDataResult<User> Register(UserForRegister userForRegister, string password)
+        public async Task<IDataResult<User>> Register(UserForRegister userForRegister, string password)
         {
             byte[] passwordHash, passwordSalt;
             HashingHelper.CreatePasswordHash(userForRegister.Password, out passwordHash, out passwordSalt);
@@ -35,13 +36,13 @@ namespace Business.Concrete
                 PasswordSalt = passwordSalt,
                 IsActive = true
             };
-            _userService.AddAsync(user);
+             await _userService.AddAsync(user);
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
-        public IDataResult<User> Login(UserForLogin userForLogin)
+        public async Task<IDataResult<User>> Login(UserForLogin userForLogin)
         {
-            var userToCheck = _userService.GetByMail(userForLogin.Email).Result.Data;
+            var userToCheck =   _userService.GetByMail(userForLogin.Email).Result.Data;
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);
@@ -65,9 +66,9 @@ namespace Business.Concrete
         }
 
 
-        public IDataResult<AccessToken> CreateAccessToken(User user)
+        public async Task<IDataResult<AccessToken>> CreateAccessToken(User user)
         {
-            var claims = _userService.GetClaims(user);
+            var claims = await _userService.GetClaims(user);
             var accessToken = _tokenHelper.CreateToken(user,claims.Data);
             return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
         }

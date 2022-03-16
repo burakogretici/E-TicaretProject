@@ -42,7 +42,7 @@ namespace Business.Concrete.OrderManager
         }
         public async Task<IResult> UpdateAsync(Order order)
         {
-            _orderDal.UpdateAsync(order);
+            await _orderDal.UpdateAsync(order);
             return new SuccessResult(Messages.OrderUpdated);
         }
     }

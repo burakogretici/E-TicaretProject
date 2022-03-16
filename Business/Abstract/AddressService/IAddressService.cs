@@ -20,6 +20,6 @@ namespace Business.Abstract.AddressService
         Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCountryIdAsync(Guid countryId);
         Task<IDataResult<IEnumerable<AddressDto>>> GetAllByCityIdAsync(Guid cityId);
         Task<IDataResult<IEnumerable<AddressDto>>> GetAllByUserIdAsync(Guid userId);
-        IDataResult<List<AddressDetailDto>> GetAddressDetail();
+        Task<IDataResult<List<AddressDetailDto>>> GetAddressDetail();
     }
 }

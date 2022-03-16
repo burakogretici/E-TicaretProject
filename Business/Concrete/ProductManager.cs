@@ -80,9 +80,10 @@ namespace Business.Concrete
             return new SuccessDataResult<ProductDto>(mapper);
         }
 
-        public IDataResult<List<ProductDetailDto>> GetProductDetails()
+        public async Task<IDataResult<List<ProductDetailDto>>> GetProductDetails()
         {
-            return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());
+            var result = await _productDal.GetProductDetails();
+            return new SuccessDataResult<List<ProductDetailDto>>(result);
         }
 
         //look!!!

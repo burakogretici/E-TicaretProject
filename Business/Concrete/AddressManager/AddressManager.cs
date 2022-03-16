@@ -76,9 +76,10 @@ namespace Business.Concrete.AddressManager
             return new SuccessDataResult<AddressDto>(mapper);
         }
 
-        public IDataResult<List<AddressDetailDto>> GetAddressDetail()
+        public async Task<IDataResult<List<AddressDetailDto>>> GetAddressDetail()
         {
-            return new SuccessDataResult<List<AddressDetailDto>>(_addressDal.GetAddressDetails());
+            var result = await _addressDal.GetAddressDetails();
+            return new SuccessDataResult<List<AddressDetailDto>>(result);
         }
     }
 }

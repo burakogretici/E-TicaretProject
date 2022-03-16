@@ -20,19 +20,19 @@ namespace Business.Concrete.UserManager
 
         public async Task<IResult> AddAsync(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimDal.AddAsync(userOperationClaim);
+           await _userOperationClaimDal.AddAsync(userOperationClaim);
             return new SuccessResult(Messages.UserOperationClaimAdded);
         }
 
         public async Task<IResult> UpdateAsync(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimDal.UpdateAsync(userOperationClaim);
+            await _userOperationClaimDal.UpdateAsync(userOperationClaim);
             return new SuccessResult(Messages.UserOperationClaimAdded);
         }
 
         public async Task<IResult> DeleteAsync(UserOperationClaim userOperationClaim)
         {
-            _userOperationClaimDal.DeleteAsync(userOperationClaim);
+            await _userOperationClaimDal.DeleteAsync(userOperationClaim);
             return new SuccessResult(Messages.UserOperationClaimAdded);
         }
 

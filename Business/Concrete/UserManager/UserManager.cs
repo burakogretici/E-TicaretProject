@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Intrinsics.X86;
 using System.Threading.Tasks;
 using Business.Abstract.UserService;
 using Business.Constants;
@@ -40,9 +41,10 @@ namespace Business.Concrete.UserManager
             return new SuccessDataResult<User>(await _userDal.GetAsync(u => u.Email == email));
         }
 
-        public IDataResult<IEnumerable<OperationClaim>> GetClaims(User user)
+        public async Task<IDataResult<IEnumerable<OperationClaim>>> GetClaims(User user)
         {
-            return new SuccessDataResult<IEnumerable<OperationClaim>>(_userDal.GetClaims(user));
+            var result = await _userDal.GetClaims(user);
+            return new SuccessDataResult<IEnumerable<OperationClaim>>(result);
         }
 
         public async Task<IDataResult<IEnumerable<User>>> GetAllAsync()
