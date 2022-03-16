@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Core.DataAccess.EntityFramework;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
@@ -13,28 +15,27 @@ namespace DataAccess.Concrete.EntityFramework
         {
 
         }
-        public List<ProductDetailDto> GetProductDetails()
+        public async Task<List<ProductDetailDto>> GetProductDetails()
         {
-            //using (EticaretContext context = new EticaretContext())
-            //{
-            //    var result = from p in context.Products
-            //                 join c in context.Categories
-            //                 on p.CategoryId equals c.Id
-            //                 join brand in context.Brands on p.BrandId equals brand.Id
-            //                 join color in context.Colors on p.ColorId equals color.Id 
-            //                 select new ProductDetailDto
-            //                 {
-            //                     ProductName = p.Name,
-            //                     CategoryName = c.Name,
-            //                     BrandName = brand.Name,
-            //                     ColorName = color.Name,
-            //                     UnitPrice = p.UnitPrice
-            //                 };
-            //    return result.ToList();
-            //}
-            return null;
-        }
+            var list = await (from p in Context.Products
+                              join c in Context.Categories
+                                  on p.CategoryId equals c.Id
+                              join brand in Context.Brands on p.BrandId equals brand.Id
+                              join color in Context.Colors on p.ColorId equals color.Id
 
-        
+                              select new ProductDetailDto
+                              {
+                                  ProductName = p.Name,
+                                  CategoryName = c.Name,
+                                  BrandName = brand.Name,
+                                  ColorName = color.Name,
+                                  UnitPrice = p.UnitPrice
+                              }).ToListAsync();
+            return list;
+
+
+        }
     }
+
+
 }
