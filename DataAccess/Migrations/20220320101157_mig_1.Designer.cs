@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(EticaretContext))]
-    [Migration("20220313112946_mig_1")]
+    [Migration("20220320101157_mig_1")]
     partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,6 +39,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -48,16 +51,13 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Addresses");
                 });
@@ -71,18 +71,18 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Baskets");
                 });
@@ -252,9 +252,6 @@ namespace DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AddressId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -264,11 +261,49 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Individual", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.ToTable("Individual");
                 });
 
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>
@@ -309,6 +344,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -318,16 +356,13 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("OrderStatusId");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OrderStatusId");
 
                     b.ToTable("Orders");
                 });
@@ -455,6 +490,9 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Fax")
                         .HasColumnType("nvarchar(max)");
 
@@ -468,6 +506,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
 
                     b.ToTable("Suppliers");
                 });
@@ -554,9 +595,9 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.User", "User")
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                        .WithMany("Address")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -564,18 +605,18 @@ namespace DataAccess.Migrations
 
                     b.Navigation("Country");
 
-                    b.Navigation("User");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Basket", b =>
                 {
-                    b.HasOne("Entities.Concrete.User", "User")
+                    b.HasOne("Entities.Concrete.Customer", "Customer")
                         .WithMany("Baskets")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Entities.Concrete.BasketDetail", b =>
@@ -610,13 +651,24 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Customer", b =>
                 {
-                    b.HasOne("Entities.Concrete.Address", "Address")
-                        .WithMany("Customers")
-                        .HasForeignKey("AddressId")
+                    b.HasOne("Entities.Concrete.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Address");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Individual", b =>
+                {
+                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                        .WithOne("Individual")
+                        .HasForeignKey("Entities.Concrete.Individual", "CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Order", b =>
@@ -627,23 +679,23 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Entities.Concrete.OrderStatus", "OrderStatus")
                         .WithMany("Orders")
                         .HasForeignKey("OrderStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.User", "User")
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Address");
 
-                    b.Navigation("OrderStatus");
+                    b.Navigation("Customer");
 
-                    b.Navigation("User");
+                    b.Navigation("OrderStatus");
                 });
 
             modelBuilder.Entity("Entities.Concrete.OrderDetail", b =>
@@ -700,6 +752,17 @@ namespace DataAccess.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.Supplier", b =>
+                {
+                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                        .WithOne("Supplier")
+                        .HasForeignKey("Entities.Concrete.Supplier", "CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Entities.Concrete.UserOperationClaim", b =>
                 {
                     b.HasOne("Entities.Concrete.OperationClaim", "OperationClaim")
@@ -721,8 +784,6 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Address", b =>
                 {
-                    b.Navigation("Customers");
-
                     b.Navigation("Orders");
                 });
 
@@ -758,6 +819,19 @@ namespace DataAccess.Migrations
                     b.Navigation("Cities");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.Customer", b =>
+                {
+                    b.Navigation("Address");
+
+                    b.Navigation("Baskets");
+
+                    b.Navigation("Individual");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>
                 {
                     b.Navigation("UserOperationClaims");
@@ -787,12 +861,6 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.User", b =>
                 {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Baskets");
-
-                    b.Navigation("Orders");
-
                     b.Navigation("UserOperationClaims");
                 });
 #pragma warning restore 612, 618
