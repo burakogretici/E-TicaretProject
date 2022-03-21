@@ -17,14 +17,14 @@ namespace DataAccess.Concrete.EntityFramework.EfAddressDal
         public async Task<List<AddressDetailDto>> GetAddressDetails()
         {
             var list = await (from a in Context.Addresses
-                                  join user in Context.Users on a.UserId equals user.Id
+                                  join u in Context.Users on a.CustomerId equals u.Id
                                   join cou in Context.Countries on a.CountryId equals cou.Id
                                   join city in Context.Cities on a.CityId equals city.Id
 
                                   select new AddressDetailDto
                                   {
-                                      FirstName = user.FirstName,
-                                      LastName = user.LastName,
+                                      FirstName = u.FirstName,
+                                      LastName = u.LastName,
                                       CountryName = cou.Name,
                                       CityName = city.Name,
                                       PostalCode = a.PostalCode,
