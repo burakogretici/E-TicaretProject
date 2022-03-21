@@ -6,9 +6,9 @@ namespace Entities.Concrete
 {
     public class Basket : BaseEntity
     {
-        public Guid UserId { get; set; }
+        public Guid CustomerId { get; set; }
 
-        public User User { get; set; }
+        public Customer Customer { get; set; }
         public ICollection<BasketDetail> BasketDetails { get; set; }
     }
 }

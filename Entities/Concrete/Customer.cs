@@ -1,14 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    //DÜZENLE
-    public class Customer : /*User,*/ BaseEntity
+    
+    public class Customer : BaseEntity
     {
-     
-        public Guid AddressId { get; set; }
+        public Guid UserId { get; set; }
+        public Individual? Individual { get; set; }
+        public Supplier? Supplier { get; set; }
 
-        public Address Address { get; set; }
+        public ICollection<Address> Address { get; set; }
+        public User User { get; set; }
+        public ICollection<Order> Orders { get; set; }
+        public ICollection<Basket> Baskets { get; set; }
+
     }
 }

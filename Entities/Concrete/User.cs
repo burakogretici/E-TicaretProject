@@ -12,12 +12,6 @@ namespace Entities.Concrete
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
 
-
-        public ICollection<Address> Addresses { get; set; }
-        public ICollection<Basket> Baskets { get; set; }
-        public ICollection<Order> Orders { get; set; }
         public ICollection<UserOperationClaim> UserOperationClaims { get; set; }
-
-       
     }
 }
