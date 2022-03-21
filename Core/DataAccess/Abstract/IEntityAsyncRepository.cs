@@ -8,13 +8,17 @@ using Core.Entities.Concrete;
 
 namespace Core.DataAccess.Abstract
 {
-    public interface IEntityAsyncRepository<T> where T : BaseEntity
+    public interface IEntityAsyncRepository<TEntity> where TEntity : BaseEntity
     {
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null);
-        Task<T> GetAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null);
+        Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);
 
-        Task<T> AddAsync(T entity);
-        Task<T> UpdateAsync(T entity);
-        Task<T> DeleteAsync(T entity);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
+
+        Task<TEntity> AddAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
+        Task<TEntity> DeleteAsync(TEntity entity);
+
     }
 }

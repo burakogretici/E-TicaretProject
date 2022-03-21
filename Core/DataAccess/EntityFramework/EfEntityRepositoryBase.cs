@@ -15,11 +15,12 @@ namespace Core.DataAccess.EntityFramework
         where TEntity : BaseEntity, new()
         where TContext : DbContext
     {
+        protected TContext Context { get; }
         public EfEntityRepositoryBase(TContext context)
         {
             Context = context;
         }
-        protected TContext Context { get; }
+
         public TEntity Add(TEntity entity)
         {
             Context.Entry(entity).State = EntityState.Added;
@@ -40,13 +41,26 @@ namespace Core.DataAccess.EntityFramework
             Context.SaveChanges();
             return entity;
         }
-
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null)
         {
-
-            return await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+            return predicate == null
+                ? Context.Set<TEntity>().ToList()
+                : Context.Set<TEntity>().Where(predicate).ToList();
 
         }
+
+        public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
+            => Context.Set<TEntity>().FirstOrDefault(predicate);
+
+
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
+            => await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+            => await Context.Set<TEntity>().AnyAsync(predicate);
+
+        public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
+            => await Context.Set<TEntity>().CountAsync(predicate);
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null)
         {
@@ -78,17 +92,6 @@ namespace Core.DataAccess.EntityFramework
             return entity;
         }
 
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null)
-        {
-            return predicate == null
-                ? Context.Set<TEntity>().ToList()
-                : Context.Set<TEntity>().Where(predicate).ToList();
-
-        }
-
-        public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
-        {
-            return Context.Set<TEntity>().FirstOrDefault(predicate);
-        }
+       
     }
 }

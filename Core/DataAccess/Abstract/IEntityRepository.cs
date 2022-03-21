@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Core.Entities.Abstract;
+
 using Core.Entities.Concrete;
 
 namespace Core.DataAccess.Abstract
 {
-    public interface IEntityRepository<T> where T : BaseEntity
+    public interface IEntityRepository<TEntity> where TEntity : BaseEntity
     {
-        IEnumerable<T> GetAll(Expression<Func<T, bool>>? predicate = null);
-        T? Get(Expression<Func<T, bool>> predicate);
-        T Add(T entity);
-        T Update(T entity);
-        T Delete(T entity);
+        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null);
+        TEntity? Get(Expression<Func<TEntity, bool>> predicate);
+        TEntity Add(TEntity entity);
+        TEntity Update(TEntity entity);
+        TEntity Delete(TEntity entity);
 
       
     }
