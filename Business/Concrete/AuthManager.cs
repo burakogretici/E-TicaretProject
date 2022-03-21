@@ -40,9 +40,9 @@ namespace Business.Concrete
             return new SuccessDataResult<User>(user, Messages.UserRegistered);
         }
 
-        public async Task<IDataResult<User>> Login(UserForLogin userForLogin)
+        public IDataResult<User> Login(UserForLogin userForLogin)
         {
-            var userToCheck =   _userService.GetByMail(userForLogin.Email).Result.Data;
+            var userToCheck = _userService.GetByMail(userForLogin.Email).Result.Data;
             if (userToCheck == null)
             {
                 return new ErrorDataResult<User>(Messages.UserNotFound);

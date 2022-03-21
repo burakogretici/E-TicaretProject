@@ -63,9 +63,9 @@ namespace Business.Concrete.AddressManager
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper);
         }
 
-        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByUserIdAsync(Guid userId)
+        public async Task<IDataResult<IEnumerable<AddressDto>>> GetAllByUserIdAsync(Guid customerId)
         {
-            var result = await _addressDal.GetAllAsync(address => address.UserId == userId);
+            var result = await _addressDal.GetAllAsync(address => address.CustomerId == customerId);
             var mapper = _mapper.Map<IEnumerable<AddressDto>>(result);
             return new SuccessDataResult<IEnumerable<AddressDto>>(mapper);
         }

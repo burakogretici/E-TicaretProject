@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
+using Business.Rules;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -16,18 +18,25 @@ namespace Business.Concrete
     {
         private readonly IBrandDal _brandDal;
         private readonly IMapper _mapper;
-        public BrandManager(IBrandDal brandDal, IMapper mapper)
+        private readonly BrandRules _brandRules;
+        public BrandManager(IBrandDal brandDal, IMapper mapper, BrandRules brandRules)
         {
             _brandDal = brandDal;
             _mapper = mapper;
+            _brandRules = brandRules;
         }
 
         public async Task<IDataResult<BrandDto>> AddAsync(BrandDto model)
         {
-            var mapper = _mapper.Map<Brand>(model);
-            await _brandDal.AddAsync(mapper);
-            return new SuccessDataResult<BrandDto>(model, Messages.BrandAdded);
+            IResult result =BusinessRules.Run(_brandRules.BrandNameAlreadyExists(model.Name));
+            if (result.Success)
+            {
+                var mapper = _mapper.Map<Brand>(model);
+                await _brandDal.AddAsync(mapper);
+                return new SuccessDataResult<BrandDto>(model, Messages.BrandAdded);
+            }
 
+            return new ErrorDataResult<BrandDto>(result.Message);
 
         }
 
@@ -58,17 +67,7 @@ namespace Business.Concrete
             return new SuccessDataResult<BrandDto>(mapper);
         }
         
-        //private IResult BrandNameAlreadyExists(string brandName)
-        //{
-        //    var result =  _brandDal.GetAllAsync(b => b.Name == brandName).Any();
-        //    if (result == true)
-        //    {
-        //        return new ErrorResult(Messages.BrandNameAlreadyExists);
-        //    }
-
-        //    return new SuccessResult();
-        //}
-
+       
 
     }
 }

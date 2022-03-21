@@ -62,15 +62,6 @@ namespace Business.Concrete
             return new SuccessDataResult<ColorDto>(mapper);
         }
 
-        private IResult ColorNameAlreadyExists(string colorName)
-        {
-            var result = _colorDal.GetAllAsync(c => c.Name == colorName);
-            if (result == null)
-            {
-                return new ErrorResult(Messages.ColorNameAlreadyExists);
-            }
-
-            return new SuccessResult();
-        }
+     
     }
 }
