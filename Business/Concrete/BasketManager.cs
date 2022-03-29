@@ -17,7 +17,7 @@ namespace Business.Concrete
         {
             _basketDal = basketDal;
         }
-
+       
         public async Task<IResult> AddToCartAsync(Basket basket)
         {
             await _basketDal.AddAsync(basket);
@@ -26,7 +26,7 @@ namespace Business.Concrete
 
         public async Task<IResult> UpdateAsync(Basket basket)
         {
-            await _basketDal.UpdateAsync(basket);
+            await _basketDal.UpdateAsync(basket); 
             return new SuccessResult(Messages.BasketUpdated);
         }
 

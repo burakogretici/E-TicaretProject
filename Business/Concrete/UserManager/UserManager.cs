@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.Intrinsics.X86;
 using System.Threading.Tasks;
 using Business.Abstract.UserService;
 using Business.Constants;

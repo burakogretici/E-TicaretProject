@@ -7,7 +7,6 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract.AddressDal;
 using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.Cities;
 
 

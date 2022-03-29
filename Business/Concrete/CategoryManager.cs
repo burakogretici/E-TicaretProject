@@ -5,11 +5,11 @@ using AutoMapper;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.Categories;
 
 namespace Business.Concrete
@@ -44,6 +44,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
+        [CacheAspect]
         public async Task<IDataResult<IEnumerable<CategoryDto>>> GetAllAsync()
         {
             var result = await _categoryDal.GetAllAsync();

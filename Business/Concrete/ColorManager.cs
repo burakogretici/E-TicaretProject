@@ -7,7 +7,6 @@ using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.Colors;
 
 namespace Business.Concrete

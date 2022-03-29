@@ -6,8 +6,9 @@ using Core.Utilities.Security.Hashing;
 using Business.Abstract.UserService;
 using Business.Constants;
 using Business.Helpers.Jwt;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.Users;
 
 namespace Business.Concrete
@@ -23,10 +24,12 @@ namespace Business.Concrete
             _tokenHelper = tokenHelper;
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public async Task<IDataResult<User>> Register(UserForRegister userForRegister, string password)
         {
+            
             byte[] passwordHash, passwordSalt;
-            HashingHelper.CreatePasswordHash(userForRegister.Password, out passwordHash, out passwordSalt);
+            HashingHelper.CreatePasswordHash(userForRegister.Password, out passwordHash,  out passwordSalt);
             var user = new User
             {
                 Email = userForRegister.Email,

@@ -9,7 +9,6 @@ using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.Brands;
 
 namespace Business.Concrete
@@ -52,12 +51,12 @@ namespace Business.Concrete
             return new SuccessResult(Messages.BrandDeleted);
         }
 
-        public async Task<IDataResult<List<BrandDto>>> GetAllAsync()
+        public async Task<IDataResult<IEnumerable<BrandDto>>> GetAllAsync()
         {
             var result = await _brandDal.GetAllAsync();
             var mapper = _mapper.Map<List<BrandDto>>(result);
 
-            return new SuccessDataResult<List<BrandDto>>(mapper, Messages.BrandListed);
+            return new SuccessDataResult<IEnumerable<BrandDto>>(mapper, Messages.BrandListed);
         }
 
         public async Task<IDataResult<BrandDto>> GetByIdAsync(Guid brandId)
