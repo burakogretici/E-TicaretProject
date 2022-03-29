@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] UserForLogin userForLogin)
         {
-            var userLogin =await _authService.Login(userForLogin);
+            var userLogin = _authService.Login(userForLogin);
             if (!userLogin.Success)
             {
                 return BadRequest(userLogin.Message);
