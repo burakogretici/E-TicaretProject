@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Business.Constants;
+﻿using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 
@@ -25,5 +24,15 @@ namespace Business.Rules
             return new SuccessResult();
         }
 
+        public IResult BrandMaximumCount()
+        {
+            var result =  _brandDal.CountAsync(x=>x.IsActive == true).Result;
+            if (result == 10)
+            {
+                return new ErrorResult("En fazla 10 marka olabilir");
+            }
+
+            return new SuccessResult();
+        }
     }
 }
