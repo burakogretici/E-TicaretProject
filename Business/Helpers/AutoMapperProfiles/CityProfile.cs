@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.Cities;
 
 namespace Business.Helpers.AutoMapperProfiles
