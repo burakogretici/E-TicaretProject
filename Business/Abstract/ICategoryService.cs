@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
-using Entities.DTOs;
 using Entities.DTOs.Categories;
 
 namespace Business.Abstract

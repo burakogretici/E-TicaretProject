@@ -20,7 +20,6 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.EfAddressDal;
 using DataAccess.Concrete.EntityFramework.EfOrderDal;
 using DataAccess.Concrete.EntityFramework.EfUserDal;
-using Entities.Concrete;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -79,7 +78,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<OrderDetailRules>().SingleInstance();
 
             //Customer
-            builder.RegisterType<CustomerManager>(typeof()).As<ICustomerService>().SingleInstance();
+            builder.RegisterType<CustomerManager>().As<ICustomerService>().SingleInstance();
             builder.RegisterType<EfCustomerDal>().As<ICustomerDal>().SingleInstance();
             builder.RegisterType<CustomerRules>().SingleInstance();
 
@@ -111,13 +110,9 @@ namespace Business.DependencyResolvers.Autofac
             //Auth
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
-         
-         
             
 
-
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()
                 {

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
 namespace Core.Utilities.Interceptors
 {
-    public abstract class   MethodInterception : MethodInterceptionBaseAttribute
+    public abstract class MethodInterception : MethodInterceptionBaseAttribute
     {
         protected virtual void OnBefore(IInvocation invocation) { }
         protected virtual void OnAfter(IInvocation invocation) { }
@@ -16,6 +17,8 @@ namespace Core.Utilities.Interceptors
             try
             {
                 invocation.Proceed();
+                var result = invocation.ReturnValue as Task;
+                result?.Wait();
             }
             catch (Exception e)
             {

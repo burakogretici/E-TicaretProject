@@ -44,15 +44,15 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CategoryDeleted);
         }
 
-        [CacheAspect]
+        [CacheAspect(50)]
         public async Task<IDataResult<IEnumerable<CategoryDto>>> GetAllAsync()
         {
             var result = await _categoryDal.GetAllAsync();
             var mapper = _mapper.Map<List<CategoryDto>>(result);
             return new SuccessDataResult<IEnumerable<CategoryDto>>(mapper,Messages.CategoryListed);
         }
-        
 
+        [CacheAspect(50)]
         public async Task<IDataResult<CategoryDto>> GetByIdAsync(Guid id)
         {
             var result = await _categoryDal.GetAsync(c => c.Id == id);
