@@ -19,7 +19,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
             : this(ServiceTool.ServiceProvider.GetService<IMemoryCache>())
         {
         }
-
+        
         public MemoryCacheManager(IMemoryCache cache)
         {
             _cache = cache;
@@ -42,7 +42,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public object? Get(string key)
         {
-            return Task.FromResult(_cache.Get(key));
+            return _cache.Get(key);
         }
 
         public bool IsAdd(string key)
