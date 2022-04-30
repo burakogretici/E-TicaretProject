@@ -10,8 +10,8 @@ namespace Entities.Concrete
         public string CompanyName { get; set; }
         public string Fax { get; set; }
         public string Website { get; set; }
-        public ICollection<Product> Products { get; set; }
-        public Customer Customer { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+        public virtual Customer Customer { get; set; }
 
     }
 }

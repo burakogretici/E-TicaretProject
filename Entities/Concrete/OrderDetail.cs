@@ -1,17 +1,16 @@
 ﻿using System;
-using Core.Entities.Concrete;
+using Core.Entities.Abstract;
 
 namespace Entities.Concrete
 {
-    public class OrderDetail : BaseEntity
+    public class OrderDetail : IEntity
     {
-
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }
-        public int Count { get; set; }
+        public int Amount { get; set; }
         public int SalePrice { get; set; }
-        public Order Order { get; set; }
-        public Product Product { get; set; }
+        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
 
 
     }

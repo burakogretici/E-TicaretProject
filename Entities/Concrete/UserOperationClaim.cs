@@ -1,14 +1,14 @@
 ﻿using System;
-using Core.Entities.Concrete;
+using Core.Entities.Abstract;
 
 namespace Entities.Concrete
 {
-    public class UserOperationClaim : BaseEntity
+    public class UserOperationClaim : IEntity
     {
         public Guid UserId { get; set; }
         public Guid OperationClaimId { get; set; }
 
-        public User User { get; set; }
-        public OperationClaim OperationClaim { get; set; }
+        public virtual User User { get; set; }
+        public virtual OperationClaim OperationClaim { get; set; }
     }
 }

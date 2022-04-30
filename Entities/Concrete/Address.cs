@@ -12,10 +12,10 @@ namespace Entities.Concrete
         public string AddressDetail { get; set; }
         public string PostalCode { get; set; }
 
-        public Customer Customer { get; set; }
-        public Country Country { get; set; }
-        public City City { get; set; }
-        public ICollection<Order> Orders { get; set; }
-        
+        public virtual Customer Customer { get; set; }
+        public virtual Country Country { get; set; }
+        public virtual City City { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+
     }
 }

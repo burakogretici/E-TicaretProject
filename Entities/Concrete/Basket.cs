@@ -8,7 +8,7 @@ namespace Entities.Concrete
     {
         public Guid CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
-        public ICollection<BasketDetail> BasketDetails { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual ICollection<BasketDetail> BasketDetails { get; set; }
     }
 }

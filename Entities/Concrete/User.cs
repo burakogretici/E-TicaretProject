@@ -11,7 +11,9 @@ namespace Entities.Concrete
         public string? Phone { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
+        public bool IsActive { get; set; }
 
-        public ICollection<UserOperationClaim> UserOperationClaims { get; set; }
+        public virtual ICollection<UserOperationClaim> UserOperationClaims { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }
