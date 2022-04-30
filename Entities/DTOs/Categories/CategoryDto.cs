@@ -1,8 +1,6 @@
-﻿using Core.Entities.Abstract;
-
-namespace Entities.DTOs.Categories
+﻿namespace Entities.Dtos.Categories
 {
-    public class CategoryDto : IDto
+    public class CategoryDto : BaseDto
     {
         public string Name { get; set; }
     }

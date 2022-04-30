@@ -1,6 +1,6 @@
 ﻿using Core.Entities.Abstract;
 
-namespace Entities.DTOs.Addresses
+namespace Entities.Dtos.Addresses
 {
     public class AddressDetailDto : IDto
     {

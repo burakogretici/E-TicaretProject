@@ -1,13 +1,10 @@
-﻿using System;
-using Core.Entities.Abstract;
-
-namespace Entities.DTOs.Addresses
+﻿namespace Entities.Dtos.Addresses
 {
-    public class AddressDto : IDto
+    public class AddressDto : BaseDto
     {
-        public Guid UserId { get; set; }
-        public Guid CountryId { get; set; }
-        public Guid CityId { get; set; }
+        public string CustomerFullName { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
         public string AddressDetail { get; set; }
         public string PostalCode { get; set; }
     }

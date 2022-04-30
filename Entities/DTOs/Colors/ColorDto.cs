@@ -1,8 +1,6 @@
-﻿using Core.Entities.Abstract;
-
-namespace Entities.DTOs.Colors
+﻿namespace Entities.Dtos.Colors
 {
-    public class ColorDto : IDto
+    public class ColorDto : BaseDto
     {
         public string Name { get; set; }
     }

@@ -1,8 +1,6 @@
-﻿using Core.Entities.Abstract;
-
-namespace Entities.DTOs.Countries
+﻿namespace Entities.Dtos.Countries
 {
-    public class CountryDto : IDto
+    public class CountryDto : BaseDto
     {
         public string Name { get; set; }
     }

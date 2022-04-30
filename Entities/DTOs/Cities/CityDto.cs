@@ -1,11 +1,8 @@
-﻿using System;
-using Core.Entities.Abstract;
-
-namespace Entities.DTOs.Cities
+﻿namespace Entities.Dtos.Cities
 {
-    public class CityDto : IDto
+    public class CityDto : BaseDto
     {
-        public Guid CountryId { get; set; }
+        public string CountryName { get; set; }
         public string Name { get; set; }
     }
 }
