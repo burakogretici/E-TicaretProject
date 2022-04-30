@@ -1,12 +1,15 @@
 ﻿using System;
+using Core.Entities.Abstract;
 
 namespace Core.Entities.Concrete
 {
-    public class BaseEntity
+    public abstract class BaseEntity : BaseEntity<Guid> { }
+    public abstract class BaseEntity<T> : IEntity
     {
         public Guid Id { get; set; }
-        public bool IsActive { get; set; }
-        public DateTime CreatedDate { get; set; } 
-        public DateTime? UpdatedDate { get; set; }
+        //public bool IsActive { get; set; }
+        //public DateTime CreatedDate { get; set; } 
+        //public DateTime? UpdatedDate { get; set; }
+
     }
 }
