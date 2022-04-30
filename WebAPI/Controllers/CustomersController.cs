@@ -1,61 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.Abstract;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Business.Handlers.Customers.Commands;
+using Business.Handlers.Customers.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomersController : ControllerBase
+    public class CustomersController : BaseController
     {
-        private readonly ICustomerService _customerService;
-
-        public CustomersController(ICustomerService customerService)
-        {
-            _customerService = customerService;
-        }
 
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _customerService.GetAllAsync();
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetCustomersQuery()));
         }
 
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(Guid customerId)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetCustomerQuery getCustomerQuery)
         {
-            var result = await _customerService.GetByIdAsync(customerId);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(getCustomerQuery));
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] Customer customer)
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateCustomerCommand createCustomer)
 
         {
-            var result = await _customerService.AddAsync(customer);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createCustomer));
         }
 
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Customer customer)
-
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateCustomerCommand updateCustomer)
         {
-            var result = await _customerService.UpdateAsync(customer);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateCustomer));
         }
 
-        [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromBody] Customer customer)
-
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteCustomerCommand deleteCustomer)
         {
-            var result = await _customerService.DeleteAsync(customer);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteCustomer));
 
         }
     }

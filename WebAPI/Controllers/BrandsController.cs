@@ -1,62 +1,42 @@
-﻿using Business.Abstract;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Entities.DTOs;
-using Entities.DTOs.Brands;
+using Business.Handlers.Brands.Commands;
+using Business.Handlers.Brands.Queries;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BrandsController : ControllerBase
+    public class BrandsController : BaseController
     {
-        private readonly IBrandService _brandService;
-
-        public BrandsController(IBrandService brandService)
-        {
-            _brandService = brandService;
-        }
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            var result =  await _brandService.GetAllAsync();
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetBrandsQuery()));
         }
 
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(Guid brandId)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetBrandQuery getBrandQuery)
         {
-            var result = await _brandService.GetByIdAsync(brandId);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(getBrandQuery));
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] BrandDto brand)
-
+        public async Task<IActionResult> Add([FromBody] CreateBrandCommand createBrand)
         {
-            var result = await _brandService.AddAsync(brand);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createBrand));
         }
 
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Brand brand)
-
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateBrandCommand updateBrand)
         {
-            var result = await _brandService.UpdateAsync(brand);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateBrand));
         }
 
-        [HttpPost("delete")]
-        public async Task<IActionResult> Delete(Brand brand)
-
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteBrandCommand deleteBrand)
         {
-            var result = await _brandService.DeleteAsync(brand);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteBrand));
         }
 
     }

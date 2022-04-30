@@ -1,85 +1,55 @@
-﻿using Business.Abstract;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Entities.DTOs;
-using Entities.DTOs.Products;
+using Business.Handlers.Products.Commands;
+using Business.Handlers.Products.Queries;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseController
     {
-        private readonly IProductService _productService;
-
-        public ProductsController(IProductService productService)
-        {
-            _productService = productService;
-        }
-
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _productService.GetAllAsync();
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetProductsQuery()));
+        }
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetProductQuery getProductQuery)
+        {
+            return GetResponseOnlyResultData(await Mediator.Send(getProductQuery));
         }
 
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(Guid productId)
+        //[HttpGet("getallbycategorydid")]
+        //public async Task<IActionResult> GetAllByCategoryId(Guid categoryId)
+        //{
+        //    return GetResponseOnlyResultData(await Mediator.Send());
+        //}
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateProductCommand createProduct)
         {
-            var result = await _productService.GetByIdAsync(productId);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createProduct));
         }
 
-        [HttpGet("getallbycategorydid")]
-        public async Task<IActionResult> GetAllByCategoryId(Guid categoryId)
+        //[HttpGet("getbyunitprice")]
+        //public async Task<IActionResult> GetByUnitPrice(decimal min, decimal max)
+        //{
+        //    return GetResponseOnlyResultData(await Mediator.Send());
+        //}
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateProductCommand updateProduct)
+
         {
-            var result = await _productService.GetAllByCategoryIdAsync(categoryId);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateProduct));
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] ProductDto model)
-
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteProductCommand deleteProduct)
         {
-            var result = await _productService.AddAsync(model);
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteProduct));
 
-        [HttpGet("getbyunitprice")]
-        public async Task<IActionResult> GetByUnitPrice(decimal min, decimal max)
-        {
-            var result = await _productService.GetByUnitPriceAsync(min, max);
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
-
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Product product)
-
-        {
-            var result = await _productService.UpdateAsync(product);
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
-
-        [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromBody] Product product)
-
-        {
-            var result = await _productService.DeleteAsync(product);
-            return result.Success ? Ok(result) : BadRequest(result);
-
-        }
-
-        [HttpGet("getproductdetail")]
-        public async Task<IActionResult> GetProductDetail()
-        {
-            var result =  await _productService.GetProductDetails();
-            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

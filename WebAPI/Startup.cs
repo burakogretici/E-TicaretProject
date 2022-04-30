@@ -1,11 +1,12 @@
-using System.Collections.Generic;
+using System.Reflection;
 using Business.Helpers.AutoMapperProfiles;
 using Business.Helpers.Jwt;
 using Core.DependencyResolvers;
 using Core.Extensions;
 using Core.Utilities.IoC;
 using Core.Utilities.Security.Encryption;
-using DataAccess.Concrete.EntityFramework;
+using DataAccess.Concrete.EntityFramework.Context;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 
 
 namespace WebAPI
@@ -32,8 +32,8 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EticaretContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Mssql")));
-
-            services.AddAutoMapper(typeof(BrandProfile));
+            services.AddAutoMapper(typeof(BrandProfile)); ;
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             var coreModule = new CoreModule();
             services.AddDependencyResolvers(new ICoreModule[] { coreModule });

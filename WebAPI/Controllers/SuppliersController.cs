@@ -1,61 +1,43 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Business.Abstract;
-using Entities.Concrete;
+using Business.Handlers.Suppliers.Commands;
+using Business.Handlers.Suppliers.Queries;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SuppliersController : ControllerBase
+    public class SuppliersController : BaseController
     {
-        readonly ISupplierService _supplierService;
-
-        public SuppliersController(ISupplierService supplierService)
+        
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetSupplierQuery getSupplierQuery)
         {
-            _supplierService = supplierService;
+            return GetResponseOnlyResultData(await Mediator.Send(getSupplierQuery));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateSupplierCommand createSupplier)
+        {
+            return GetResponseOnlyResultMessage(await Mediator.Send(createSupplier));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateSupplierCommand updateSupplier)
+        {
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateSupplier));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteSupplierCommand deleteSupplier)
+        {
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteSupplier));
+
         }
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _supplierService.GetAllAsync();
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
-
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(Guid supplierId)
-        {
-            var result = await _supplierService.GetByIdAsync(supplierId);
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
-
-        [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] Supplier supplier)
-
-        {
-            var result = await _supplierService.AddAsync(supplier);
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
-
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Supplier supplier)
-
-        {
-            var result = await _supplierService.UpdateAsync(supplier);
-            return result.Success ? Ok(result) : BadRequest(result);
-        }
-
-        [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromBody] Supplier supplier)
-
-        {
-            var result = await _supplierService.DeleteAsync(supplier);
-
-            return  result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetSuppliersQuery()));
         }
 
     }

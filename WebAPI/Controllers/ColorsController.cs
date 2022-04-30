@@ -1,61 +1,43 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Business.Abstract;
-using Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.Colors;
+using Business.Handlers.Colors.Commands;
+using Business.Handlers.Colors.Queries;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ColorsController : ControllerBase
+    public class ColorsController : BaseController
     {
-        private readonly IColorService _colorService;
 
-        public ColorsController(IColorService colorService)
-        {
-            _colorService = colorService;
-        }
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _colorService.GetAllAsync();
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetColorsQuery()));
         }
 
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(Guid colorId)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetColorQuery getColorQuery)
         {
-            var result =  await _colorService.GetByIdAsync(colorId);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(getColorQuery));
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] ColorDto color)
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateColorCommand createColor)
         {
-            var result = await _colorService.AddAsync(color);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createColor));
         }
 
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Color color)
-
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateColorCommand updateColor)
         {
-            var result = await _colorService.UpdateAsync(color);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateColor));
         }
 
-        [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromBody] Color color)
-
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteColorCommand deleteColor)
         {
-            var result = await _colorService.DeleteAsync(color);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteColor));
         }
 
     }

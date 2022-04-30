@@ -1,55 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Business.Abstract;
-using Business.Abstract.UserService;
-using Core.Entities.Concrete;
-using Entities.DTOs;
-using Entities.DTOs.Users;
+using Business.Handlers.Authorizations.Commands;
+using Business.Handlers.Authorizations.Queries;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController
     {
-        private readonly IAuthService _authService;
-
-
-        public AuthController(IAuthService authService)
-        {
-            _authService = authService;
-
-        }
 
         [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] UserForRegister userForRegister)
+        public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
-            var userExists = _authService.UserExits(userForRegister.Email);
-            if (!userExists.Success)
-            {
-                return BadRequest(userExists.Message);
-            }
-
-            var registerResult = await _authService.Register(userForRegister, userForRegister.Password);
-            var result = await _authService.CreateAccessToken(registerResult.Data);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResult(await Mediator.Send(createUser));
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] UserForLogin userForLogin)
+        public async Task<ActionResult> Login([FromBody] LoginUserQuery loginModel)
         {
-            var userLogin = _authService.Login(userForLogin);
-            if (!userLogin.Success)
-            {
-                return BadRequest(userLogin.Message);
-            }
-
-            var result =  await _authService.CreateAccessToken(userLogin.Data);
-            return result.Success ? Ok(result) : BadRequest(result);
+            var result = await Mediator.Send(loginModel);
+            return result.Success ? Ok(result) : Unauthorized(result.Message);
         }
     }
 }

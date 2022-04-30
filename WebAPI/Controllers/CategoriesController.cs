@@ -1,64 +1,45 @@
-﻿using Business.Abstract;
-using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Entities.DTOs;
-using Entities.DTOs.Categories;
+using Business.Handlers.Categories.Commands;
+using Business.Handlers.Categories.Queries;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : BaseController
     {
-        private readonly ICategoryService _categoryService;
 
-        public CategoriesController(ICategoryService categoryService)
-        {
-            _categoryService = categoryService;
-        }
-
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
 
-            var result = await _categoryService.GetAllAsync();
-            return  result.Success ? Ok( result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(new GetCategoriesQuery()));
         }
 
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetById(Guid categoryId)
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetById([FromRoute] GetCategoryQuery getCategoryQuery)
         {
-            var result = await _categoryService.GetByIdAsync(categoryId);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultData(await Mediator.Send(getCategoryQuery));
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] CategoryDto category)
-
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateCategoryCommand createCategory)
         {
-            var result = await _categoryService.AddAsync(category);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(createCategory));
         }
 
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] Category category)
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] UpdateCategoryCommand updateCategory)
 
         {
-            var result = await _categoryService.UpdateAsync(category);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(updateCategory));
         }
 
-        [HttpPost("delete")]
-        public async Task<IActionResult> Delete([FromBody] Category category)
-
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteCategoryCommand deleteCategory)
         {
-            var result = await _categoryService.DeleteAsync(category);
-            return result.Success ? Ok(result) : BadRequest(result);
+            return GetResponseOnlyResultMessage(await Mediator.Send(deleteCategory));
         }
     }
 }
