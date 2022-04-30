@@ -5,7 +5,7 @@ using Entities.Enums;
 
 namespace Entities.Concrete
 {
-    public class Customer : BaseEntity
+    public class Customer : BaseEntity<Guid>
     {
         public Guid UserId { get; set; }
         public CustomerType CustomerType { get; set; }

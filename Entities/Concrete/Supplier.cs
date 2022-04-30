@@ -4,7 +4,7 @@ using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Supplier : BaseEntity
+    public class Supplier : BaseEntity<Guid>
     {
         public Guid CustomerId  { get; set; }
         public string CompanyName { get; set; }

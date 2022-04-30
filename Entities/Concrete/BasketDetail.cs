@@ -3,7 +3,7 @@ using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class BasketDetail : BaseEntity
+    public class BasketDetail : BaseEntity<Guid>
     {
         public Guid BasketId { get; set; }
         public Guid ProductId { get; set; }

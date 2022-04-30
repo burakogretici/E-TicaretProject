@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class User : BaseEntity
+    public class User : BaseEntity<Guid>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -3,7 +3,7 @@ using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Individual : BaseEntity
+    public class Individual : BaseEntity<Guid>
     {
         public Guid CustomerId { get; set; }
         public string FirstName { get; set; }

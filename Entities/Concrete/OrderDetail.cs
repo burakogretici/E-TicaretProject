@@ -1,9 +1,10 @@
 ﻿using System;
 using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class OrderDetail : IEntity
+    public class OrderDetail : BaseEntity<Guid>
     {
         public Guid OrderId { get; set; }
         public Guid ProductId { get; set; }

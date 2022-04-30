@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Color : BaseEntity
+    public class Color : BaseEntity<Guid>
     {
         public string Name { get; set; }
 

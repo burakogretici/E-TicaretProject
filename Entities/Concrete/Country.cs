@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Country : BaseEntity
+    public class Country : BaseEntity<Guid>
     {
         public string Name { get; set; }
         public virtual ICollection<City> Cities { get; set; }

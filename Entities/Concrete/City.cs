@@ -4,7 +4,7 @@ using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class City : BaseEntity
+    public class City : BaseEntity<Guid>
     {
         public Guid CountryId { get; set; }
         public string Name { get; set; }

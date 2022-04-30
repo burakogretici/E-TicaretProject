@@ -6,7 +6,9 @@ namespace Core.Entities.Concrete
     public abstract class BaseEntity : BaseEntity<Guid> { }
     public abstract class BaseEntity<T> : IEntity
     {
-        public Guid Id { get; set; }
+        public T Id { get; set; }
+
+
         //public bool IsActive { get; set; }
         //public DateTime CreatedDate { get; set; } 
         //public DateTime? UpdatedDate { get; set; }

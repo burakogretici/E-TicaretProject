@@ -4,7 +4,7 @@ using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class Product : BaseEntity
+    public class Product : BaseEntity<Guid>
     {
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
