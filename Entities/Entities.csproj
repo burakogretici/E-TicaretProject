@@ -8,9 +8,4 @@
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\Baskets\" />
-    <Folder Include="DTOs\Orders\" />
-  </ItemGroup>
-
 </Project>
