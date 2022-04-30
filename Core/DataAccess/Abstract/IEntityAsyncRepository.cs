@@ -16,11 +16,11 @@ namespace Core.DataAccess.Abstract
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null);
 
-        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate); 
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
 
         Task<TEntity> AddAsync(TEntity entity);
-        Task<TEntity> UpdateAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);  
         Task<TEntity> DeleteAsync(TEntity entity);
 
     }
