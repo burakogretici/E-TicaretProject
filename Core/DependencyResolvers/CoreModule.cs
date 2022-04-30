@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
+﻿using System.Collections.Generic;
 using Core.CrossCuttingConcerns.Caching;
 using Core.CrossCuttingConcerns.Caching.Microsoft;
-using Core.CrossCuttingConcerns.Caching.Redis;
 using Core.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -21,7 +15,7 @@ namespace Core.DependencyResolvers
             service.AddMemoryCache();
             service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             service.AddSingleton<ICacheManager, MemoryCacheManager>();
-           
+
             service.AddSwaggerGen(options =>
             {
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

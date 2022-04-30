@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
-using Core.Entities.Concrete;
+using Core.Entities.Abstract;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Core.DataAccess.Abstract
 {
-    public interface IEntityAsyncRepository<TEntity> where TEntity : BaseEntity
+    public interface IEntityAsyncRepository<TEntity> where TEntity : IEntity
     {
-        Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null);
         Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector,
+            Expression<Func<TEntity, bool>>? expression= null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null);
 
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
         Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);

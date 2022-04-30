@@ -5,14 +5,14 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Core.DataAccess.Abstract;
 using Core.Entities.Abstract;
-using Core.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 
 namespace Core.DataAccess.EntityFramework
 {
-    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>, IEntityAsyncRepository<TEntity>
-        where TEntity : BaseEntity, new()
+    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityAsyncRepository<TEntity>
+        where TEntity : class, IEntity
         where TContext : DbContext
     {
         protected TContext Context { get; }
@@ -21,77 +21,68 @@ namespace Core.DataAccess.EntityFramework
             Context = context;
         }
 
-        public TEntity Add(TEntity entity)
-        {
-            Context.Entry(entity).State = EntityState.Added;
-            Context.SaveChanges();
-            return entity;
-        }
-
-        public TEntity Delete(TEntity entity)
-        {
-
-            Context.Entry(entity).State = EntityState.Deleted;
-            Context.SaveChanges();
-            return entity;
-        }
-        public TEntity Update(TEntity entity)
-        {
-            Context.Entry(entity).State = EntityState.Modified;
-            Context.SaveChanges();
-            return entity;
-        }
-        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>>? predicate = null)
-        {
-            return predicate == null
-                ? Context.Set<TEntity>().ToList()
-                : Context.Set<TEntity>().Where(predicate).ToList();
-
-        }
-
-        public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
-            => Context.Set<TEntity>().FirstOrDefault(predicate);
+        public DbSet<TEntity> Table => Context.Set<TEntity>();
 
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
-            => await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
+            => await Table.FirstOrDefaultAsync(predicate);
 
+        public async Task<List<TResult>> GetAllAsync<TResult>(Expression<Func<TEntity, TResult>> selector , Expression<Func<TEntity, bool>>? expression=null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
+        {
+            IQueryable<TEntity> query = Table;
+            if (include != null)
+            {
+                query = include(query);
+            }
+            if (expression != null)
+            {
+                query = query.Where(expression);
+            }
+            if (orderBy != null)
+            {
+                return await orderBy(query).Select(selector).ToListAsync();
+            }
+            else
+            {
+                return await query.Select(selector).ToListAsync();
+            }
+        }
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
-            => await Context.Set<TEntity>().AnyAsync(predicate);
+            => await Table.AnyAsync(predicate);
 
         public async Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate)
-            => await Context.Set<TEntity>().CountAsync(predicate);
+            => await Table.CountAsync(predicate);
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? predicate = null)
+        public Task<TEntity> AddAsync(TEntity entity)
         {
 
-            return predicate == null
-               ? await Context.Set<TEntity>().ToListAsync()
-               : await Context.Set<TEntity>().Where(predicate).ToListAsync();
-
-        }
-
-        public async Task<TEntity> AddAsync(TEntity entity)
-        {
             Context.Entry(entity).State = EntityState.Added;
-            await Context.SaveChangesAsync();
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public Task<TEntity> UpdateAsync(TEntity entity)
         {
+            AttachIfNot(entity);
             Context.Entry(entity).State = EntityState.Modified;
-            await Context.SaveChangesAsync();
-            return entity;
+            return Task.FromResult(entity);
         }
 
-        public async Task<TEntity> DeleteAsync(TEntity entity)
+        public Task<TEntity> DeleteAsync(TEntity entity)
         {
+            AttachIfNot(entity);
             Context.Entry(entity).State = EntityState.Deleted;
-            await Context.SaveChangesAsync();
-            return entity;
+            return Task.FromResult(entity);
         }
 
-       
+        private async Task AttachIfNot(TEntity entity)
+        {
+            var entry = Context.ChangeTracker.Entries().FirstOrDefault(ent => ent.Entity == entity);
+            if (entry != null)
+            {
+                return;
+            }
+
+            Table.Attach(entity);
+        }
     }
 }

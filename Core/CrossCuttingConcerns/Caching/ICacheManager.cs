@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Core.CrossCuttingConcerns.Caching
+﻿namespace Core.CrossCuttingConcerns.Caching
 {
     public interface ICacheManager
     {

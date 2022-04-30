@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Castle.DynamicProxy;
+﻿using Castle.DynamicProxy;
 using Core.CrossCuttingConcerns.Caching;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
@@ -39,7 +34,7 @@ namespace Core.Aspects.Autofac.Caching
                 _pattern = get + targetTypeName;
             }
 
-            _cacheManager.RemoveByPattern(_pattern);
+            _cacheManager.Remove(_pattern);
         }
     }
 }
