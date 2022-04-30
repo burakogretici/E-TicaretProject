@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Business.Handlers.Colors.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Colors;
+using Entities.Dtos.Colors;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,7 +10,9 @@ namespace Business.Helpers.AutoMapperProfiles
         public ColorProfile()
         {
             CreateMap<Color, ColorDto>().ReverseMap();
-            CreateMap<ColorDto, Color>().ReverseMap();
+            CreateMap<Color, CreateColorCommand>().ReverseMap();
+            CreateMap<Color, DeleteColorCommand>().ReverseMap();
+            CreateMap<Color, UpdateColorCommand>().ReverseMap();
         }
     }
 }

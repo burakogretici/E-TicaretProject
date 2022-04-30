@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Business.Handlers.Addresses.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Addresses;
+using Entities.Dtos.Addresses;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,7 +10,9 @@ namespace Business.Helpers.AutoMapperProfiles
         public AddressProfile()
         {
             CreateMap<Address, AddressDto>().ReverseMap();
-            CreateMap<AddressDto, Address>().ReverseMap();
+            CreateMap<Address, CreateAddressCommand>().ReverseMap();
+            CreateMap<Address, DeleteAddressCommand>().ReverseMap();
+            CreateMap<Address, UpdateAddressCommand>().ReverseMap();
         }
     }
 }

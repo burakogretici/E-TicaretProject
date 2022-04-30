@@ -1,4 +1,4 @@
-﻿using Entities.DTOs.Users;
+﻿using Entities.Dtos.Users;
 using FluentValidation;
 
 namespace Business.ValidationRules.FluentValidation

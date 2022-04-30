@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Business.Handlers.Authorizations.Commands;
+using Business.Handlers.Users.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Users;
+using Entities.Dtos.Users;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,8 +11,11 @@ namespace Business.Helpers.AutoMapperProfiles
         public UserProfile()
         {
             //Register
-            CreateMap<User, UserForRegister>().ReverseMap();
-            CreateMap<UserForRegister, User>().ReverseMap();
+            CreateMap<User, CreateUserCommand>().ReverseMap();
+            CreateMap<User, RegisterUserCommand>().ReverseMap();
+            CreateMap<User, DeleteUserCommand>().ReverseMap();
+            CreateMap<User, UpdateUserCommand>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
 
             //Login
             CreateMap<User, UserForLogin>().ReverseMap();

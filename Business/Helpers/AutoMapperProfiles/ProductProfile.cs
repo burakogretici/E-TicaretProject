@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Business.Handlers.Products.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Products;
+using Entities.Dtos.Products;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,7 +10,9 @@ namespace Business.Helpers.AutoMapperProfiles
         public ProductProfile()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<ProductDto, Product>().ReverseMap();
+            CreateMap<Product, CreateProductCommand>().ReverseMap();
+            CreateMap<Product, DeleteProductCommand>().ReverseMap();
+            CreateMap<Product, UpdateProductCommand>().ReverseMap();
         }
     }
 }

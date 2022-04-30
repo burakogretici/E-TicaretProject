@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Business.Handlers.Categories.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Categories;
+using Entities.Dtos.Categories;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,7 +10,9 @@ namespace Business.Helpers.AutoMapperProfiles
         public CategoryProfile()
         {
             CreateMap<Category, CategoryDto>().ReverseMap();
-            CreateMap<CategoryDto, Category>().ReverseMap();
+            CreateMap<Category, CreateCategoryCommand>().ReverseMap();
+            CreateMap<Category, DeleteCategoryCommand>().ReverseMap();
+            CreateMap<Category, UpdateCategoryCommand>().ReverseMap();
         }
     }
 }

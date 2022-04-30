@@ -6,9 +6,9 @@ namespace Business.Rules
 {
     public class ColorRules
     {
-        private readonly IColorDal _colorDal;
+        private readonly IColorRepository _colorDal;
 
-        public ColorRules(IColorDal colorDal) => _colorDal = colorDal;
+        public ColorRules(IColorRepository colorDal) => _colorDal = colorDal;
 
         private IResult ColorNameAlreadyExists(string colorName)
         {

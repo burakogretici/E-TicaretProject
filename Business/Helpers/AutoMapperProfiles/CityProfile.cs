@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Business.Handlers.Cities.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Cities;
+using Entities.Dtos.Cities;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,7 +10,9 @@ namespace Business.Helpers.AutoMapperProfiles
         public CityProfile()
         {
             CreateMap<City, CityDto>().ReverseMap();
-            CreateMap<CityDto, City>().ReverseMap();
+            CreateMap<City, CreateCityCommand>().ReverseMap();
+            CreateMap<City, DeleteCityCommand>().ReverseMap();
+            CreateMap<City, UpdateCityCommand>().ReverseMap();
         }
     }
 }

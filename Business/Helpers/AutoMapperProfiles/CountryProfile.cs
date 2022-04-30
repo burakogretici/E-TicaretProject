@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Business.Handlers.Countries.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Countries;
+using Entities.Dtos.Countries;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,7 +10,10 @@ namespace Business.Helpers.AutoMapperProfiles
         public CountryProfile()
         {
             CreateMap<Country, CountryDto>().ReverseMap();
-            CreateMap<CountryDto, Country>().ReverseMap();
+            CreateMap<Country, CreateCountryCommand>().ReverseMap();
+            CreateMap<Country, DeleteCountryCommand>().ReverseMap();
+            CreateMap<Country, UpdateCountryCommand>().ReverseMap();
+
         }
     }
 }

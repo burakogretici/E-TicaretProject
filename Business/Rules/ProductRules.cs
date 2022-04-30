@@ -6,9 +6,9 @@ namespace Business.Rules
 {
     public class ProductRules
     {
-        private IProductDal _productDal;
+        private readonly IProductRepository _productDal;
 
-        public ProductRules(IProductDal productDal)
+        public ProductRules(IProductRepository productDal)
         {
             _productDal = productDal;
         }

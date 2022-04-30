@@ -6,9 +6,9 @@ namespace Business.Rules
 {
     public class BrandRules
     {
-        private readonly IBrandDal _brandDal;
+        private readonly IBrandRepository _brandDal;
 
-        public BrandRules(IBrandDal brandDal)
+        public BrandRules(IBrandRepository brandDal)
         {
             _brandDal = brandDal;
         }
@@ -24,15 +24,15 @@ namespace Business.Rules
             return new SuccessResult();
         }
 
-        public IResult BrandMaximumCount()
-        {
-            var result =  _brandDal.CountAsync(x=>x.IsActive == true).Result;
-            if (result == 10)
-            {
-                return new ErrorResult("En fazla 10 marka olabilir");
-            }
+        //public IResult BrandMaximumCount()
+        //{
+        //    var result =  _brandDal.CountAsync(x=>x.IsActive == true).Result;
+        //    if (result == 10)
+        //    {
+        //        return new ErrorResult("En fazla 10 marka olabilir");
+        //    }
 
-            return new SuccessResult();
-        }
+        //    return new SuccessResult();
+        //}
     }
 }

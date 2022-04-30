@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
+using Business.Handlers.Brands.Commands;
 using Entities.Concrete;
-using Entities.DTOs.Brands;
+using Entities.Dtos.Brands;
 
 namespace Business.Helpers.AutoMapperProfiles
 {
@@ -9,7 +10,9 @@ namespace Business.Helpers.AutoMapperProfiles
         public BrandProfile()
         {
             CreateMap<Brand, BrandDto>().ReverseMap();
-            CreateMap<BrandDto, Brand>().ReverseMap();
+            CreateMap<Brand, CreateBrandCommand>().ReverseMap();
+            CreateMap<Brand, DeleteBrandCommand>().ReverseMap();
+            CreateMap<Brand, UpdateBrandCommand>().ReverseMap();
         }
     }
 }

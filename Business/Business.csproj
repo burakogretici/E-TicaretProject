@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -11,6 +11,8 @@
     <PackageReference Include="AutoMapper" Version="11.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="FluentValidation" Version="10.3.3" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
@@ -18,6 +20,24 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\Addresses\ValidationRules\" />
+    <Folder Include="Handlers\Baskets\ValidationRules\" />
+    <Folder Include="Handlers\Brands\ValidationRules\" />
+    <Folder Include="Handlers\Categories\ValidationRules\" />
+    <Folder Include="Handlers\Cities\ValidationRules\" />
+    <Folder Include="Handlers\Colors\ValidationRules\" />
+    <Folder Include="Handlers\Countries\ValidationRules\" />
+    <Folder Include="Handlers\Customers\ValidationRules\" />
+    <Folder Include="Handlers\OrderDetails\ValidationRules\" />
+    <Folder Include="Handlers\OperationClaims\ValidationRules\" />
+    <Folder Include="Handlers\Orders\ValidationRules\" />
+    <Folder Include="Handlers\Products\ValidationRules\" />
+    <Folder Include="Handlers\Suppliers\ValidationRules\" />
+    <Folder Include="Handlers\UserOperationClaims\ValidationRules\" />
+    <Folder Include="Handlers\Users\ValidationRules\" />
   </ItemGroup>
 
 </Project>
