@@ -6,6 +6,10 @@ namespace Entities.Concrete
 {
     public class Supplier : BaseEntity<Guid>
     {
+        public Supplier()
+        {
+            Products = new HashSet<Product>();
+        }
         public Guid CustomerId  { get; set; }
         public string CompanyName { get; set; }
         public string Fax { get; set; }

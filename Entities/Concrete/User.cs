@@ -6,6 +6,11 @@ namespace Entities.Concrete
 {
     public class User : BaseEntity<Guid>
     {
+        public User()
+        {
+            Customers = new HashSet<Customer>();
+            UserOperationClaims = new HashSet<UserOperationClaim>();
+        }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

@@ -6,6 +6,10 @@ namespace Entities.Concrete
 {
     public class City : BaseEntity<Guid>
     {
+        public City()
+        {
+            Addresses = new HashSet<Address>();
+        }
         public Guid CountryId { get; set; }
         public string Name { get; set; }
 

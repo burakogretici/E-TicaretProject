@@ -6,6 +6,10 @@ namespace Entities.Concrete
 {
     public class Basket : BaseEntity<Guid>
     {
+        public Basket()
+        {
+            BasketDetails = new HashSet<BasketDetail>();
+        }
         public Guid CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }

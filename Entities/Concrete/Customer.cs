@@ -7,6 +7,15 @@ namespace Entities.Concrete
 {
     public class Customer : BaseEntity<Guid>
     {
+        public Customer()
+        {
+            Addresses = new HashSet<Address>();
+            Baskets = new HashSet<Basket>();
+            Individuals = new HashSet<Individual>();
+            Orders = new HashSet<Order>();
+            Suppliers = new HashSet<Supplier>();
+           
+        }
         public Guid UserId { get; set; }
         public CustomerType CustomerType { get; set; }
 

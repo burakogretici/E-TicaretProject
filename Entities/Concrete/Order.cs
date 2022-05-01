@@ -7,6 +7,10 @@ namespace Entities.Concrete
 {
     public class Order : BaseEntity<Guid>
     {
+        public Order()
+        {
+            OrderDetails = new HashSet<OrderDetail>();
+        }
         public Guid CustomerId { get; set; }
         public Guid AddressId { get; set; }
         public Guid ShipperId { get; set; }
