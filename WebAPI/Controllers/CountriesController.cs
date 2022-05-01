@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Business.Handlers.Countries.Commands;
 using Business.Handlers.Countries.Queries;
+using Entities.Dtos.Countries;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -9,6 +12,8 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CountriesController : BaseController
     {
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateCountryCommand countryCommand)
         {
@@ -16,24 +21,32 @@ namespace WebAPI.Controllers
 
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteCountryCommand deleteCountry)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteCountry));
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateCountryCommand updateCountry)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(updateCountry));
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(IEnumerable<CountryDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetCountriesQuery()));
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(CountryDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetCountryQuery getCountryQuery)
         {
