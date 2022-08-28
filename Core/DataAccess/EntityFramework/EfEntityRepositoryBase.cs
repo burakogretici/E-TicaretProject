@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.DataAccess.Abstract;
 using Core.Entities.Abstract;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 
 
@@ -70,10 +71,9 @@ namespace Core.DataAccess.EntityFramework
         public Task<TEntity> DeleteAsync(TEntity entity)
         {
             AttachIfNot(entity);
-            Context.Entry(entity).State = EntityState.Deleted;
+            Context.Entry(entity).State = EntityState.Deleted;          
             return Task.FromResult(entity);
-        }
-
+        }   
         private async Task AttachIfNot(TEntity entity)
         {
             var entry = Context.ChangeTracker.Entries().FirstOrDefault(ent => ent.Entity == entity);

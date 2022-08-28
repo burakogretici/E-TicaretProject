@@ -10,6 +10,7 @@
         {
             Data = data;
         }
+        public DataResult(bool success,string message) : base(success,message)  { }
         public T Data { get; }
     }
 }
