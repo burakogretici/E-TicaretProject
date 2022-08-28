@@ -16,19 +16,17 @@ namespace Business.Handlers.Colors.Commands
 
         public class DeleteColorCommandHandler : IRequestHandler<DeleteColorCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;           
 
-            public DeleteColorCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public DeleteColorCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;            
             }
 
             public async Task<IResult> Handle(DeleteColorCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Color>(request);
-                await _unitOfWork.ColorRepository.DeleteAsync(mapper);
+                Color color = await _unitOfWork.ColorRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.ColorRepository.DeleteAsync(color);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.ColorDeleted);
             }

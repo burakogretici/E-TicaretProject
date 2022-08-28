@@ -20,19 +20,17 @@ namespace Business.Handlers.Suppliers.Commands
 
         public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;           
 
-            public UpdateSupplierCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public UpdateSupplierCommandHandler(IUnitOfWork unitOfWork)
+            {               
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(UpdateSupplierCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Supplier>(request);
-                await _unitOfWork.SupplierRepository.UpdateAsync(mapper);
+                Supplier supplier = await _unitOfWork.SupplierRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.SupplierRepository.UpdateAsync(supplier);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.SupplierUpdated);
             }

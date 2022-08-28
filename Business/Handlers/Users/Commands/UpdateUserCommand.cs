@@ -21,19 +21,17 @@ namespace Business.Handlers.Users.Commands
 
         public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;        
 
-            public UpdateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public UpdateUserCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;         
             }
 
             public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<User>(request);
-                await _unitOfWork.UserRepository.UpdateAsync(mapper);
+                User user = await _unitOfWork.UserRepository.GetAsync(p => p.Id == request.Id);
+                await _unitOfWork.UserRepository.UpdateAsync(user);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.UserUpdated);
             }

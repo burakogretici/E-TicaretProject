@@ -22,11 +22,14 @@ namespace Business.Handlers.Brands.Queries
 
             public async Task<IDataResult<IEnumerable<BrandDto>>> Handle(GetBrandsQuery request, CancellationToken cancellationToken)
             {
-                var brandList = await _unitOfWork.BrandRepository.GetAllAsync(
+                var brandList = await _unitOfWork.BrandRepository.GetAllAsync(expression:x=> x.Deleted != true,
                     selector: x => new BrandDto
                     {
                         Id = x.Id,
-                        Name = x.Name
+                        Name = x.Name,
+                        CreatedDate = x.CreatedDate,
+                        UpdatedDate = x.UpdatedDate,
+                        Deleted = x.Deleted,
                     },
                     orderBy: x => x.OrderBy(x => x.Name));
 

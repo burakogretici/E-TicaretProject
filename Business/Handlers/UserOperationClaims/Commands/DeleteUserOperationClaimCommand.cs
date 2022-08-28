@@ -5,6 +5,7 @@ using AutoMapper;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
+using Entities.Concrete;
 using MediatR;
 
 namespace Business.Handlers.UserOperationClaims.Commands
@@ -16,19 +17,15 @@ namespace Business.Handlers.UserOperationClaims.Commands
         public class DeleteUserOperationClaimCommandHandler : IRequestHandler<DeleteUserOperationClaimCommand, IResult>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
 
-
-            public DeleteUserOperationClaimCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public DeleteUserOperationClaimCommandHandler(IUnitOfWork unitOfWork)
             {
                 _unitOfWork = unitOfWork;
-                _mapper = mapper;
-
             }
             public async Task<IResult> Handle(DeleteUserOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Entities.Concrete.UserOperationClaim>(request);
-                await _unitOfWork.UserOperationClaimRepository.DeleteAsync(mapper);
+                UserOperationClaim userOperationClaim = await _unitOfWork.UserOperationClaimRepository.GetAsync(x => x.OperationClaimId == request.Id);
+                await _unitOfWork.UserOperationClaimRepository.DeleteAsync(userOperationClaim);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.UserOperationClaimDeleted);
             }

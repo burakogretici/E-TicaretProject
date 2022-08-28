@@ -29,8 +29,7 @@ namespace Business.Handlers.Cities.Queries
                          CountryName = x.Country.Name,
                          Name = x.Name
                      },
-                     orderBy: x => x.OrderBy(x => x.Name)
-                     );
+                     orderBy: x => x.OrderBy(x => x.Name));
                 return new SuccessDataResult<IEnumerable<CityDto>>(cityList);
             }
         }

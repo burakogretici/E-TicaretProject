@@ -16,19 +16,17 @@ namespace Business.Handlers.Customers.Commands
 
         public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;    
 
-            public DeleteCustomerCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public DeleteCustomerCommandHandler(IUnitOfWork unitOfWork)
+            {           
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Customer>(request);
-                await _unitOfWork.CustomerRepository.DeleteAsync(mapper);
+                Customer customer = await _unitOfWork.CustomerRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.CustomerRepository.DeleteAsync(customer);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CustomerDeleted);
             }

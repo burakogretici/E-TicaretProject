@@ -19,16 +19,15 @@ namespace Business.Handlers.Suppliers.Commands
             private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
 
-            public DeleteSupplierCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public DeleteSupplierCommandHandler(IUnitOfWork unitOfWork)
+            {            
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(DeleteSupplierCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Supplier>(request);
-                await _unitOfWork.SupplierRepository.DeleteAsync(mapper);
+                Supplier supplier = await _unitOfWork.SupplierRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.SupplierRepository.DeleteAsync(supplier);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.SupplierDeleted);
             }

@@ -17,19 +17,17 @@ namespace Business.Handlers.Categories.Commands
 
         public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;      
 
-            public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;              
             }
 
             public async Task<IResult> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Category>(request);
-                await _unitOfWork.CategoryRepository.UpdateAsync(mapper);
+                Category category = await _unitOfWork.CategoryRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.CategoryRepository.UpdateAsync(category);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CategoryUpdated);
             }

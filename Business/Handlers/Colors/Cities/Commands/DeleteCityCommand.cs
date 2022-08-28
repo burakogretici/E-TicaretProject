@@ -27,8 +27,8 @@ namespace Business.Handlers.Cities.Commands
 
             public async Task<IResult> Handle(DeleteCityCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<City>(request);
-                await _unitOfWork.CityRepository.DeleteAsync(mapper);
+                City city = await _unitOfWork.CityRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.CityRepository.DeleteAsync(city);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CityDeleted);
             }

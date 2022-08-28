@@ -20,20 +20,16 @@ namespace Business.Handlers.UserOperationClaims.Commands
         public class UpdateUserOperationClaimCommandHandler : IRequestHandler<UpdateUserOperationClaimCommand, IResult>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
 
-
-            public UpdateUserOperationClaimCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public UpdateUserOperationClaimCommandHandler(IUnitOfWork unitOfWork)
             {
                 _unitOfWork = unitOfWork;
-                _mapper = mapper;
-
             }
 
             public async Task<IResult> Handle(UpdateUserOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<UserOperationClaim>(request);
-                await _unitOfWork.UserOperationClaimRepository.UpdateAsync(mapper);
+                UserOperationClaim userOperationClaim = await _unitOfWork.UserOperationClaimRepository.GetAsync(x => x.OperationClaimId == request.Id);
+                await _unitOfWork.UserOperationClaimRepository.UpdateAsync(userOperationClaim);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.UserOperationClaimUpdated);
             }

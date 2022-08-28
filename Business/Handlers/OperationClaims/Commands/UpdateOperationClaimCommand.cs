@@ -18,18 +18,16 @@ namespace Business.Handlers.OperationClaims.Commands
         public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, IResult>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
-
-            public UpdateOperationClaimCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+           
+            public UpdateOperationClaimCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;              
             }
 
             public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<OperationClaim>(request);
-                await _unitOfWork.OperationClaimRepository.UpdateAsync(mapper);
+                OperationClaim operationClaim = await _unitOfWork.OperationClaimRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.OperationClaimRepository.UpdateAsync(operationClaim);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.OperationClaimUpdated);
             }

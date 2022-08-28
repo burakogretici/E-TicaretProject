@@ -22,19 +22,17 @@ namespace Business.Handlers.Orders.Commands
 
         public class UpdateOrderCommandHandler : IRequestHandler<UpdateOrderCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;         
 
-            public UpdateOrderCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public UpdateOrderCommandHandler(IUnitOfWork unitOfWork)
+            {               
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(UpdateOrderCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Order>(request);
-                await _unitOfWork.OrderRepository.UpdateAsync(mapper);
+                Order order = await _unitOfWork.OrderRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.OrderRepository.UpdateAsync(order);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.OrderUpdated);
             }

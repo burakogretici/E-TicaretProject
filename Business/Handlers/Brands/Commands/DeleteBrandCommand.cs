@@ -16,19 +16,17 @@ namespace Business.Handlers.Brands.Commands
 
         public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;         
 
-            public DeleteBrandCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public DeleteBrandCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;          
             }
 
             public async Task<IResult> Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Brand>(request);
-                await _unitOfWork.BrandRepository.DeleteAsync(mapper);
+                Brand brand = await _unitOfWork.BrandRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.BrandRepository.DeleteAsync(brand);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.BrandDeleted);
             }

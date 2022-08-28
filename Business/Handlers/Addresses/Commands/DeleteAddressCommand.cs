@@ -17,18 +17,16 @@ namespace Business.Handlers.Addresses.Commands
         public class DeleteAddressCommandHandler : IRequestHandler<DeleteAddressCommand, IResult>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
-
-            public DeleteAddressCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+     
+            public DeleteAddressCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;          
             }
 
             public async Task<IResult> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Address>(request);
-                await _unitOfWork.AddressRepository.DeleteAsync(mapper);
+                Address address = await _unitOfWork.AddressRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.AddressRepository.DeleteAsync(address);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.AddressDeleted);
             }

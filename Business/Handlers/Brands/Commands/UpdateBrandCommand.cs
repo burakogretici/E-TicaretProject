@@ -27,8 +27,13 @@ namespace Business.Handlers.Brands.Commands
             }
             public async Task<IResult> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Brand>(request);
-                await _unitOfWork.BrandRepository.UpdateAsync(mapper);
+                Brand brand = await _unitOfWork.BrandRepository.GetAsync(x => x.Id == request.Id);
+                if (brand != null)
+                {
+                    brand.Name = request.Name;
+                }
+             
+                await _unitOfWork.BrandRepository.UpdateAsync(brand);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.BrandUpdated);
             }

@@ -20,19 +20,17 @@ namespace Business.Handlers.OrderDetails.Commands
 
         public class UpdateOrderDetailCommandHandler : IRequestHandler<UpdateOrderDetailCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;          
 
-            public UpdateOrderDetailCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public UpdateOrderDetailCommandHandler(IUnitOfWork unitOfWork)
+            {             
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(UpdateOrderDetailCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<OrderDetail>(request);
-                await _unitOfWork.OrderDetailRepository.UpdateAsync(mapper);
+                OrderDetail orderDetail = await _unitOfWork.OrderDetailRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.OrderDetailRepository.UpdateAsync(orderDetail);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CountryUpdated);
             }

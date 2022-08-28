@@ -17,19 +17,17 @@ namespace Business.Handlers.Countries.Commands
 
         public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;          
 
-            public UpdateCountryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public UpdateCountryCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;        
             }
 
             public async Task<IResult> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Country>(request);
-                await _unitOfWork.CountryRepository.UpdateAsync(mapper);
+                Country country = await _unitOfWork.CountryRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.CountryRepository.UpdateAsync(country);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CountryUpdated);
             }

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Constants;
@@ -11,23 +12,21 @@ namespace Business.Handlers.Countries.Commands
 {
     public class DeleteCountryCommand : IRequest<IResult>
     {
-        public string Name { get; set; }
+        public Guid Id { get; set; }
 
         public class DeleteCountryCommandHandler : IRequestHandler<DeleteCountryCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;          
 
-            public DeleteCountryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public DeleteCountryCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;              
             }
 
             public async Task<IResult> Handle(DeleteCountryCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Country>(request);
-                await _unitOfWork.CountryRepository.DeleteAsync(mapper);
+                Country country = await _unitOfWork.CountryRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.CountryRepository.DeleteAsync(country);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CountryDeleted);
             }

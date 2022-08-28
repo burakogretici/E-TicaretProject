@@ -24,19 +24,17 @@ namespace Business.Handlers.Products.Commands
 
         public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;         
 
-            public UpdateProductCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public UpdateProductCommandHandler(IUnitOfWork unitOfWork)
+            {             
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Product>(request);
-                await _unitOfWork.ProductRepository.UpdateAsync(mapper);
+                Product product = await _unitOfWork.ProductRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.ProductRepository.UpdateAsync(product);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.ProductUpdated);
             }

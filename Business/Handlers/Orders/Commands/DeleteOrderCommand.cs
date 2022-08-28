@@ -13,23 +13,20 @@ namespace Business.Handlers.Orders.Commands
     public class DeleteOrderCommand : IRequest<IResult>
     {
         public Guid Id { get; set; }
-       
 
         public class DeleteOrderCommandHandler : IRequestHandler<DeleteOrderCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;          
 
-            public DeleteOrderCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public DeleteOrderCommandHandler(IUnitOfWork unitOfWork)
+            {              
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(DeleteOrderCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Order>(request);
-                await _unitOfWork.OrderRepository.DeleteAsync(mapper);
+                Order order = await _unitOfWork.OrderRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.OrderRepository.DeleteAsync(order);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.OrderDeleted);
             }

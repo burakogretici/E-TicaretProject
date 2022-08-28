@@ -17,18 +17,16 @@ namespace Business.Handlers.Categories.Commands
         public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand, IResult>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
-
-            public DeleteCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+           
+            public DeleteCategoryCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;         
             }
 
             public async Task<IResult> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Category>(request);
-                await _unitOfWork.CategoryRepository.AddAsync(mapper);
+                Category category = await _unitOfWork.CategoryRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.CategoryRepository.DeleteAsync(category);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CategoryDeleted);
             }

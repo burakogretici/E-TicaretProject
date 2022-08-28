@@ -29,8 +29,13 @@ namespace Business.Handlers.Cities.Commands
 
             public async Task<IResult> Handle(UpdateCityCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<City>(request);
-                await _unitOfWork.CityRepository.UpdateAsync(mapper);
+                City city = await _unitOfWork.CityRepository.GetAsync(x => x.Id == request.Id);
+                if (city != null)
+                {
+                    city.Name = request.Name;
+                    city.CountryId = request.CountryId;
+                }
+                await _unitOfWork.CityRepository.UpdateAsync(city);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CityUpdated);
             }

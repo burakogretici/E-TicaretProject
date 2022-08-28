@@ -28,8 +28,9 @@ namespace Business.Handlers.Colors.Commands
 
             public async Task<IResult> Handle(UpdateColorCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Color>(request);
-                await _unitOfWork.ColorRepository.UpdateAsync(mapper);
+                Color color = await _unitOfWork.ColorRepository.GetAsync(x => x.Id == request.Id);
+                if (color == null) return null;
+                await _unitOfWork.ColorRepository.UpdateAsync(color);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.ColorUpdated);
             }

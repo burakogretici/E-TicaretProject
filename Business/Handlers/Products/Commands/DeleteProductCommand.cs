@@ -16,19 +16,17 @@ namespace Business.Handlers.Products.Commands
         
         public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;            
 
-            public DeleteProductCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+            public DeleteProductCommandHandler(IUnitOfWork unitOfWork)
             {
-                _mapper = mapper;
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Product>(request);
-                await _unitOfWork.ProductRepository.DeleteAsync(mapper);
+                Product product = await _unitOfWork.ProductRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.ProductRepository.DeleteAsync(product);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.ProductDeleted);
             }

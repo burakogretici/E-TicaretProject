@@ -26,8 +26,8 @@ namespace Business.Handlers.Baskets.Commands
 
             public async Task<IResult> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Basket>(request);
-                await _unitOfWork.BasketRepository.DeleteAsync(mapper);
+                Basket basket = await _unitOfWork.BasketRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.BasketRepository.DeleteAsync(basket);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.BasketDeleted);
             }

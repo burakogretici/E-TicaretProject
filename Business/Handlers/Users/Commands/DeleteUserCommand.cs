@@ -5,6 +5,7 @@ using AutoMapper;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
+using Entities.Concrete;
 using MediatR;
 
 namespace Business.Handlers.Users.Commands
@@ -16,21 +17,17 @@ namespace Business.Handlers.Users.Commands
         public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, IResult>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
-
-            public DeleteUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public DeleteUserCommandHandler(IUnitOfWork unitOfWork)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _unitOfWork = unitOfWork;              
             }
 
             public async Task<IResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
             {
-                var userToDelete = await _unitOfWork.UserRepository.GetAsync(p => p.Id == request.Id);
-                if (userToDelete != null)
+                User user = await _unitOfWork.UserRepository.GetAsync(p => p.Id == request.Id);
+                if (user != null)
                 {
-                    userToDelete.IsActive = false;
-                    await _unitOfWork.UserRepository.UpdateAsync(userToDelete);
+                    await _unitOfWork.UserRepository.DeleteAsync(user);
                     await _unitOfWork.Commit();
                 }
 

@@ -19,19 +19,17 @@ namespace Business.Handlers.Customers.Commands
 
         public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUnitOfWork _unitOfWork;          
 
-            public UpdateCustomerCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
-            {
-                _mapper = mapper;
+            public UpdateCustomerCommandHandler(IUnitOfWork unitOfWork)
+            { 
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Customer>(request);
-                await _unitOfWork.CustomerRepository.UpdateAsync(mapper);
+                Customer customer = await _unitOfWork.CustomerRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.CustomerRepository.UpdateAsync(customer);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.CustomerUpdated);
             }

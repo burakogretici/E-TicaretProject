@@ -17,18 +17,16 @@ namespace Business.Handlers.OrderDetails.Commands
         public class DeleteOrderDetailCommandHandler : IRequestHandler<DeleteOrderDetailCommand, IResult>
         {
             private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
-
-            public DeleteOrderDetailCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+           
+            public DeleteOrderDetailCommandHandler( IUnitOfWork unitOfWork)
             {
-                _mapper = mapper;
                 _unitOfWork = unitOfWork;
             }
 
             public async Task<IResult> Handle(DeleteOrderDetailCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<OrderDetail>(request);
-                await _unitOfWork.OrderDetailRepository.DeleteAsync(mapper);
+                OrderDetail orderDetail = await _unitOfWork.OrderDetailRepository.GetAsync(x => x.Id == request.Id);
+                await _unitOfWork.OrderDetailRepository.DeleteAsync(orderDetail);
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.OrderDeleted);
             }

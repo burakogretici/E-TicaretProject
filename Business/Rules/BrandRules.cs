@@ -1,6 +1,8 @@
 ﻿using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using System;
+using System.Threading.Tasks;
 
 namespace Business.Rules
 {
@@ -13,26 +15,11 @@ namespace Business.Rules
             _brandDal = brandDal;
         }
 
-        public IResult BrandNameAlreadyExists(string brandName)
+        public async Task BrandNameAlreadyExists(string brandName)
         {
-            var result =  _brandDal.AnyAsync(b => b.Name == brandName).Result;
-            if (result)
-            {
-                return new ErrorResult(Messages.BrandNameAlreadyExists);
-            }
+            var result = await _brandDal.AnyAsync(b => b.Name == brandName);
+            if (result) throw new Exception(Messages.BrandNameAlreadyExists);
 
-            return new SuccessResult();
         }
-
-        //public IResult BrandMaximumCount()
-        //{
-        //    var result =  _brandDal.CountAsync(x=>x.IsActive == true).Result;
-        //    if (result == 10)
-        //    {
-        //        return new ErrorResult("En fazla 10 marka olabilir");
-        //    }
-
-        //    return new SuccessResult();
-        //}
     }
 }

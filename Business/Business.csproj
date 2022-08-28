@@ -27,7 +27,7 @@
     <Folder Include="Handlers\Baskets\ValidationRules\" />
     <Folder Include="Handlers\Brands\ValidationRules\" />
     <Folder Include="Handlers\Categories\ValidationRules\" />
-    <Folder Include="Handlers\Cities\ValidationRules\" />
+    <Folder Include="Handlers\Colors\Cities\ValidationRules\" />
     <Folder Include="Handlers\Colors\ValidationRules\" />
     <Folder Include="Handlers\Countries\ValidationRules\" />
     <Folder Include="Handlers\Customers\ValidationRules\" />

@@ -8,8 +8,6 @@ namespace Business.ValidationRules.FluentValidation
         public CategoryValidator()
         {
             RuleFor(c => c.Name).NotEmpty();
-        
-
         }
     }
 }
