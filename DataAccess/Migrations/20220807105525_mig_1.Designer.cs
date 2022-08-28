@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(EticaretContext))]
-    [Migration("20220411120113_mig1")]
-    partial class mig1
+    [Migration("20220807105525_mig_1")]
+    partial class mig_1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -314,6 +314,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int")
                         .HasColumnName("Amount");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SalePrice")
                         .HasColumnType("int")
