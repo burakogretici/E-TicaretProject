@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
         
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateBrandCommand updateBrand)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(updateBrand));
@@ -50,8 +50,8 @@ namespace WebAPI.Controllers
         
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteBrandCommand deleteBrand)
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteBrandCommand deleteBrand)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteBrand));
         }
