@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Services.Categories;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Categories;
 using MediatR;
 
@@ -13,25 +13,17 @@ namespace Business.Handlers.Categories.Queries
     {
         public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, IDataResult<IEnumerable<CategoryDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly ICategoryService _categoryService;
 
-            public GetCategoriesQueryHandler(IUnitOfWork unitOfWork)
+            public GetCategoriesQueryHandler(ICategoryService categoryService)
             {
-                _unitOfWork = unitOfWork;
+                _categoryService = categoryService;
             }
 
             public async Task<IDataResult<IEnumerable<CategoryDto>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
             {
-                var categoryList = await _unitOfWork.CategoryRepository.GetAllAsync(
-                    selector: x => new CategoryDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    },
-                    orderBy: x => x.OrderBy(x => x.Name));
-
-                return new SuccessDataResult<IEnumerable<CategoryDto>>(categoryList);
-
+                var categoryList = await _categoryService.GetAllAsync();
+                return categoryList;
             }
         }
     }

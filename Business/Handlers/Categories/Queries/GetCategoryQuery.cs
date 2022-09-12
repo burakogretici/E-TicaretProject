@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.Categories;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Categories;
 using MediatR;
 
@@ -15,20 +14,17 @@ namespace Business.Handlers.Categories.Queries
 
         public class GetCategoryQueryHandler : IRequestHandler<GetCategoryQuery, IDataResult<CategoryDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly ICategoryService _categoryService;
 
-            public GetCategoryQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetCategoryQueryHandler(ICategoryService categoryService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _categoryService = categoryService;
             }
 
             public async Task<IDataResult<CategoryDto>> Handle(GetCategoryQuery request, CancellationToken cancellationToken)
             {
-                var category = await _unitOfWork.CategoryRepository.GetAsync(a => a.Id == request.Id);
-                var categoryDto = _mapper.Map<CategoryDto>(category);
-                return new SuccessDataResult<CategoryDto>(categoryDto);
+                var category = await _categoryService.GetByIdAsync(request.Id);
+                return category;
             }
         }
     }

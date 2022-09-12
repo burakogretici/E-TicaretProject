@@ -48,8 +48,8 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteCategoryCommand deleteCategory)
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteCategoryCommand deleteCategory)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteCategory));
         }

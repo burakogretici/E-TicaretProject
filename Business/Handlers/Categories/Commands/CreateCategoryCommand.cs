@@ -1,10 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.Categories;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Categories;
 using MediatR;
 
 namespace Business.Handlers.Categories.Commands
@@ -14,22 +13,21 @@ namespace Business.Handlers.Categories.Commands
         public string Name { get; set; }
 
         public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommand, IResult>
-        {
-            private readonly IUnitOfWork _unitOfWork;
+        {            
             private readonly IMapper _mapper;
+            private readonly ICategoryService _categoryService;
 
-            public CreateCategoryCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public CreateCategoryCommandHandler(IMapper mapper, ICategoryService categoryService) 
             {
-                _unitOfWork = unitOfWork;
+                _categoryService = categoryService;
                 _mapper = mapper;
             }
 
             public async Task<IResult> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Category>(request);
-                await _unitOfWork.CategoryRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.CategoryAdded);
+                var mapper = _mapper.Map<CategoryDto>(request);
+                var category = await _categoryService.AddAsync(mapper);
+                return category;
             }
         }
     }

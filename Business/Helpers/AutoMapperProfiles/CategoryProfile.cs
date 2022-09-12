@@ -13,6 +13,10 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<Category, CreateCategoryCommand>().ReverseMap();
             CreateMap<Category, DeleteCategoryCommand>().ReverseMap();
             CreateMap<Category, UpdateCategoryCommand>().ReverseMap();
+            CreateMap<CategoryDto, CreateCategoryCommand>().ReverseMap();
+            CreateMap<CategoryDto, DeleteCategoryCommand>().ReverseMap();
+            CreateMap<CategoryDto, UpdateCategoryCommand>().ReverseMap();
+
         }
     }
 }
