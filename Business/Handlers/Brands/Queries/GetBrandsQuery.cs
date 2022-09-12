@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Services.Brands;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Brands;
 using MediatR;
-
 
 namespace Business.Handlers.Brands.Queries
 {
@@ -14,27 +13,17 @@ namespace Business.Handlers.Brands.Queries
     {
         public class GetBrandsQueryHandler : IRequestHandler<GetBrandsQuery, IDataResult<IEnumerable<BrandDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            public GetBrandsQueryHandler(IUnitOfWork unitOfWork)
+            private readonly IBrandService _brandService;
+
+            public GetBrandsQueryHandler(IBrandService brandService)
             {
-                _unitOfWork = unitOfWork;
+                _brandService = brandService;
             }
 
             public async Task<IDataResult<IEnumerable<BrandDto>>> Handle(GetBrandsQuery request, CancellationToken cancellationToken)
             {
-                var brandList = await _unitOfWork.BrandRepository.GetAllAsync(expression:x=> x.Deleted != true,
-                    selector: x => new BrandDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        CreatedDate = x.CreatedDate,
-                        UpdatedDate = x.UpdatedDate,
-                        Deleted = x.Deleted,
-                    },
-                    orderBy: x => x.OrderBy(x => x.Name));
-
-                return new SuccessDataResult<IEnumerable<BrandDto>>(brandList);
-
+                var brandList = await _brandService.GetAllAsync();
+                return brandList;
             }
         }
 

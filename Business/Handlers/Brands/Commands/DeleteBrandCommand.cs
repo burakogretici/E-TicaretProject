@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.Brands;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Brands;
 using MediatR;
 
 namespace Business.Handlers.Brands.Commands
@@ -16,19 +15,20 @@ namespace Business.Handlers.Brands.Commands
 
         public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;         
-
-            public DeleteBrandCommandHandler(IUnitOfWork unitOfWork)
+            private readonly IBrandService _brandService;
+            private readonly IMapper _mapper;
+            public DeleteBrandCommandHandler(IBrandService brandService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;          
+                _brandService = brandService;
+                _mapper = mapper;
             }
 
             public async Task<IResult> Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
             {
-                Brand brand = await _unitOfWork.BrandRepository.GetAsync(x => x.Id == request.Id);
-                await _unitOfWork.BrandRepository.DeleteAsync(brand);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.BrandDeleted);
+                var mapper = _mapper.Map<BrandDto>(request);
+                var brand = await _brandService.DeleteAsync(mapper);
+                return brand;
+
             }
         }
     }

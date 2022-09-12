@@ -2,6 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using Business.Helpers.Jwt;
 using Business.Rules;
+using Business.Services.Brands;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
@@ -24,6 +25,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<BasketRules>().SingleInstance();
 
             //Brand
+            builder.RegisterType<BrandManager>().As<IBrandService>().SingleInstance();
             builder.RegisterType<BrandRepository>().As<IBrandRepository>();
             builder.RegisterType<BrandRules>().SingleInstance();
 

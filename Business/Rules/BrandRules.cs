@@ -15,10 +15,14 @@ namespace Business.Rules
             _brandDal = brandDal;
         }
 
-        public async Task BrandNameAlreadyExists(string brandName)
+        public async Task<IResult> BrandNameAlreadyExists(string brandName)
         {
             var result = await _brandDal.AnyAsync(b => b.Name == brandName);
-            if (result) throw new Exception(Messages.BrandNameAlreadyExists);
+            if (!result) 
+                return new SuccessResult();
+            else
+                return new ErrorResult(Messages.BrandNameAlreadyExists);
+
 
         }
     }

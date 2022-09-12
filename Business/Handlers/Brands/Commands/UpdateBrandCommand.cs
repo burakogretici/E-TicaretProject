@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.Brands;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Brands;
 using MediatR;
 
 namespace Business.Handlers.Brands.Commands
@@ -17,25 +16,19 @@ namespace Business.Handlers.Brands.Commands
 
         public class UpdateBrandCommandHandler : IRequestHandler<UpdateBrandCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IBrandService _brandService;
             private readonly IMapper _mapper;
-
-            public UpdateBrandCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public UpdateBrandCommandHandler(IBrandService brandService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _brandService = brandService;
                 _mapper = mapper;
             }
             public async Task<IResult> Handle(UpdateBrandCommand request, CancellationToken cancellationToken)
             {
-                Brand brand = await _unitOfWork.BrandRepository.GetAsync(x => x.Id == request.Id);
-                if (brand != null)
-                {
-                    brand.Name = request.Name;
-                }
-             
-                await _unitOfWork.BrandRepository.UpdateAsync(brand);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.BrandUpdated);
+                var mapper = _mapper.Map<BrandDto>(request);
+                var brand = await _brandService.UpdateAsync(mapper);
+                return brand;
+
             }
         }
     }

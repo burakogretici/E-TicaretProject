@@ -13,6 +13,10 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<Brand, CreateBrandCommand>().ReverseMap();
             CreateMap<Brand, DeleteBrandCommand>().ReverseMap();
             CreateMap<Brand, UpdateBrandCommand>().ReverseMap();
+            CreateMap<BrandDto, CreateBrandCommand>().ReverseMap();
+            CreateMap<BrandDto, DeleteBrandCommand>().ReverseMap(); 
+            CreateMap<BrandDto, UpdateBrandCommand>().ReverseMap();
+
         }
     }
 }

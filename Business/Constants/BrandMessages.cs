@@ -8,5 +8,6 @@
         public static string BrandDeleted => "Marka silindi";
         public static string BrandUpdated => "Marka güncellendi";
         public static string BrandNameAlreadyExists => "Marka adı zaten var";
+        public static string BrandNotFound => "Marka bulunamadı";
     }
 }

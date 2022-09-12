@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.Brands;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Brands;
 using MediatR;
 
@@ -13,22 +12,18 @@ namespace Business.Handlers.Brands.Queries
     {
         public Guid Id { get; set; }
 
-        public class GetUserQueryHandler : IRequestHandler<GetBrandQuery, IDataResult<BrandDto>>
+        public class GetBrandQueryHandler : IRequestHandler<GetBrandQuery, IDataResult<BrandDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IBrandService _brandService;
 
-            public GetUserQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetBrandQueryHandler(IBrandService brandService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _brandService = brandService;
             }
-
             public async Task<IDataResult<BrandDto>> Handle(GetBrandQuery request, CancellationToken cancellationToken)
             {
-                var brand =  await _unitOfWork.BrandRepository.GetAsync(b => b.Id == request.Id);
-                var brandDto = _mapper.Map<BrandDto>(brand);
-                return new SuccessDataResult<BrandDto>(brandDto);
+                var brand = await _brandService.GetByIdAsync(request.Id);
+                return brand;
             }
         }
     }

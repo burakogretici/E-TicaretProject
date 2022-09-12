@@ -1,11 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
-using Business.Rules;
+using Business.Services.Brands;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Brands;
 using MediatR;
 
 namespace Business.Handlers.Brands.Commands
@@ -13,28 +11,22 @@ namespace Business.Handlers.Brands.Commands
     public class CreateBrandCommand : IRequest<IResult>
     {
         public string Name { get; set; }
-        
+
         public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IBrandService _brandService;
             private readonly IMapper _mapper;
-            private readonly BrandRules _brandRules;
-            public CreateBrandCommandHandler(IUnitOfWork unitOfWork, IMapper mapper,BrandRules brandRules)
+            public CreateBrandCommandHandler(IBrandService brandService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _brandService = brandService;
                 _mapper = mapper;
-                _brandRules = brandRules;
             }
 
             public async Task<IResult> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
             {
-                _brandRules.BrandNameAlreadyExists(request.Name);
-
-                var mapper = _mapper.Map<Brand>(request);
-            
-                await _unitOfWork.BrandRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.BrandAdded);
+                var mapper = _mapper.Map<BrandDto>(request);
+                var brand = await _brandService.AddAsync(mapper);
+                return brand;
             }
         }
     }
