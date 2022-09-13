@@ -12,7 +12,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ColorsController : BaseController
     {
-        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(IEnumerable<ColorDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ColorDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
         [HttpGet("getall")]
@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         }
 
 
-        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(ColorDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ColorDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetColorQuery getColorQuery)
@@ -48,12 +48,11 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteColorCommand deleteColor)
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteColorCommand deleteColor)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteColor));
         }
-
     }
 }
 

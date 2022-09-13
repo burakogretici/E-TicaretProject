@@ -56,7 +56,6 @@ namespace Core.DataAccess.EntityFramework
 
         public Task<TEntity> AddAsync(TEntity entity)
         {
-
             Context.Entry(entity).State = EntityState.Added;
             return Task.FromResult(entity);
         }

@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Services.Categories;
+using Business.Services.Colors;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
 using Entities.Dtos.Colors;
@@ -13,25 +15,18 @@ namespace Business.Handlers.Colors.Queries
     {
         public class GetColorsQueryHandler : IRequestHandler<GetColorsQuery, IDataResult<IEnumerable<ColorDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IColorService _colorService;
 
-            public GetColorsQueryHandler(IUnitOfWork unitOfWork)
+            public GetColorsQueryHandler(IColorService colorService)
             {
-                _unitOfWork = unitOfWork;
+                _colorService = colorService;
             }
 
             public async Task<IDataResult<IEnumerable<ColorDto>>> Handle(GetColorsQuery request,
                 CancellationToken cancellationToken)
             {
-                var colorList = await _unitOfWork.ColorRepository.GetAllAsync(
-                    selector: x => new ColorDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    },
-                    orderBy: x => x.OrderBy(x => x.Name)
-                );
-                return new SuccessDataResult<IEnumerable<ColorDto>>(colorList);
+                var colorList = await _colorService.GetAllAsync();
+                return colorList;
             }
         }
     }

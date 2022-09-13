@@ -1,24 +1,27 @@
 ﻿using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using System.Threading.Tasks;
 
 namespace Business.Rules
 {
     public class ColorRules
     {
-        private readonly IColorRepository _colorDal;
+        private readonly IColorRepository _colorRepository;
 
-        public ColorRules(IColorRepository colorDal) => _colorDal = colorDal;
+        public ColorRules(IColorRepository colorRepository) => _colorRepository = colorRepository;
 
-        private IResult ColorNameAlreadyExists(string colorName)
+        public async Task<IResult> ColorNameAlreadyExists(string colorName)
         {
-            var result = _colorDal.AnyAsync(c => c.Name == colorName).Result;
+            var result = await _colorRepository.AnyAsync(c => c.Name == colorName);
             if (result)
             {
+
                 return new ErrorResult(Messages.ColorNameAlreadyExists);
             }
 
             return new SuccessResult();
+
         }
     }
 }

@@ -3,6 +3,7 @@ using Autofac.Extras.DynamicProxy;
 using Business.Helpers.Jwt;
 using Business.Rules;
 using Business.Services.Brands;
+using Business.Services.Colors;
 using Castle.DynamicProxy;
 using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
@@ -63,6 +64,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CustomerRules>().SingleInstance();
 
             //Color
+            builder.RegisterType<ColorManager>().As<IColorService>().SingleInstance();
             builder.RegisterType<ColorRepository>().As<IColorRepository>().SingleInstance();
             builder.RegisterType<ColorRules>().SingleInstance();
 

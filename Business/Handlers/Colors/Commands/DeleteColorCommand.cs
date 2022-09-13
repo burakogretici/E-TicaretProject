@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.Colors;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Colors;
 using MediatR;
 
 namespace Business.Handlers.Colors.Commands
@@ -16,19 +15,20 @@ namespace Business.Handlers.Colors.Commands
 
         public class DeleteColorCommandHandler : IRequestHandler<DeleteColorCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;           
+            private readonly IMapper _mapper;
+            private readonly IColorService _colorService;
 
-            public DeleteColorCommandHandler(IUnitOfWork unitOfWork)
+            public DeleteColorCommandHandler(IMapper mapper, IColorService colorService)
             {
-                _unitOfWork = unitOfWork;            
+                _mapper = mapper;
+                _colorService = colorService;
             }
 
             public async Task<IResult> Handle(DeleteColorCommand request, CancellationToken cancellationToken)
             {
-                Color color = await _unitOfWork.ColorRepository.GetAsync(x => x.Id == request.Id);
-                await _unitOfWork.ColorRepository.DeleteAsync(color);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ColorDeleted);
+                var mapper = _mapper.Map<ColorDto>(request);
+                var color = await _colorService.DeleteAsync(mapper);
+                return color;
             }
 
         }

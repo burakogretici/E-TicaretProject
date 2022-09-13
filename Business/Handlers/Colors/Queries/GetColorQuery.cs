@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.Colors;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Colors;
 using MediatR;
 
@@ -15,20 +14,17 @@ namespace Business.Handlers.Colors.Queries
 
         public class GetColorQueryHandler : IRequestHandler<GetColorQuery, IDataResult<ColorDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IColorService _colorService;
 
-            public GetColorQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetColorQueryHandler(IColorService colorService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _colorService = colorService;
             }
 
             public async Task<IDataResult<ColorDto>> Handle(GetColorQuery request, CancellationToken cancellationToken)
             {
-                var color = await _unitOfWork.ColorRepository.GetAsync(a => a.Id == request.Id);
-                var colorDto = _mapper.Map<ColorDto>(color);
-                return new SuccessDataResult<ColorDto>(colorDto);
+                var color = await _colorService.GetByIdAsync(request.Id);
+                return color;
             }
         }
     }

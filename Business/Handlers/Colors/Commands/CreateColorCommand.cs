@@ -1,10 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.Colors;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Colors;
 using MediatR;
 
 namespace Business.Handlers.Colors.Commands
@@ -15,21 +14,20 @@ namespace Business.Handlers.Colors.Commands
 
         public class CreateColorCommandHandler : IRequestHandler<CreateColorCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
+            private readonly IColorService _colorService;
 
-            public CreateColorCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public CreateColorCommandHandler(IMapper mapper, IColorService colorService)
             {
-                _unitOfWork = unitOfWork;
                 _mapper = mapper;
+                _colorService = colorService;
             }
 
             public async Task<IResult> Handle(CreateColorCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Color>(request);
-                await _unitOfWork.ColorRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ColorAdded);
+                var mapper = _mapper.Map<ColorDto>(request);
+                var color = await _colorService.AddAsync(mapper);
+                return color;
             }
         }
     }

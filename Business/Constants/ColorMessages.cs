@@ -7,5 +7,8 @@
         public static string ColorUpdated => "Renk güncellendi";
         public static string ColorsListed => "Renk listelendi";
         public static string ColorNameAlreadyExists => "Renk zaten var";
+        public static string ColorNotFound => "Renk bulunamadı";
+
+
     }
 }
