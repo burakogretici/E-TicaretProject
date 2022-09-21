@@ -3,9 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Constants;
+using Business.Services.Brands;
+using Business.Services.Products;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
+using Entities.Dtos.Brands;
+using Entities.Dtos.Products;
 using MediatR;
 
 namespace Business.Handlers.Products.Commands
@@ -24,19 +28,20 @@ namespace Business.Handlers.Products.Commands
 
         public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;         
+            private readonly IProductService _productService;
+            private readonly IMapper _mapper;
 
-            public UpdateProductCommandHandler(IUnitOfWork unitOfWork)
-            {             
-                _unitOfWork = unitOfWork;
+            public UpdateProductCommandHandler(IProductService productService, IMapper mapper)
+            {
+                _productService = productService;
+                _mapper = mapper;
             }
 
             public async Task<IResult> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
             {
-                Product product = await _unitOfWork.ProductRepository.GetAsync(x => x.Id == request.Id);
-                await _unitOfWork.ProductRepository.UpdateAsync(product);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ProductUpdated);
+                var mapper = _mapper.Map<ProductDto>(request);
+                var product = await _productService.UpdateAsync(mapper);
+                return product;
             }
         }
     }

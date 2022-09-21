@@ -10,7 +10,7 @@ namespace DataAccess.Concrete.Configurations
         {
             builder.Property(a => a.BrandId).HasColumnName("BrandId").IsRequired();
             builder.Property(a => a.CategoryId).HasColumnName("CategoryId").IsRequired();
-            builder.Property(a => a.SupplierId).HasColumnName("SupplierId").IsRequired();
+            //builder.Property(a => a.SupplierId).HasColumnName("SupplierId").IsRequired();
             builder.Property(a => a.ColorId).HasColumnName("ColorId").IsRequired();
             builder.Property(a => a.Name).HasColumnName("Name").HasMaxLength(100).IsRequired();
             builder.Property(a => a.Code).HasColumnName("Code").IsRequired();
@@ -25,9 +25,9 @@ namespace DataAccess.Concrete.Configurations
                 .WithMany(a => a.Products)
                 .HasForeignKey(a => a.CategoryId);
             
-            builder.HasOne(a => a.Supplier)
-                .WithMany(a => a.Products)
-                .HasForeignKey(a => a.SupplierId); 
+            //builder.HasOne(a => a.Supplier)
+            //    .WithMany(a => a.Products)
+            //    .HasForeignKey(a => a.SupplierId); 
            
             builder.HasOne(a => a.Color)
                 .WithMany(a => a.Products).

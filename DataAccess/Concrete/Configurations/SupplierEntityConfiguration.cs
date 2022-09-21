@@ -17,9 +17,9 @@ namespace DataAccess.Concrete.Configurations
                 .WithMany(a => a.Suppliers)
                 .HasForeignKey(a => a.CustomerId);
 
-            builder.HasMany(a => a.Products)
-                .WithOne(a => a.Supplier)
-                .HasForeignKey(a => a.SupplierId);
+            //builder.HasMany(a => a.Products)
+            //    .WithOne(a => a.Supplier)
+            //    .HasForeignKey(a => a.SupplierId);
 
             base.Configure(builder);
         }

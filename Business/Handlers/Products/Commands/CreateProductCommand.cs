@@ -3,9 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Constants;
+using Business.Services.Brands;
+using Business.Services.Products;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
+using Entities.Dtos.Brands;
+using Entities.Dtos.Products;
 using MediatR;
 
 namespace Business.Handlers.Products.Commands
@@ -14,7 +18,7 @@ namespace Business.Handlers.Products.Commands
     {
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
-        public Guid SupplierId { get; set; }
+        //public Guid SupplierId { get; set; }
         public Guid BrandId { get; set; }
         public Guid ColorId { get; set; }
         public string Code { get; set; }
@@ -23,21 +27,21 @@ namespace Business.Handlers.Products.Commands
 
         public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IProductService _productService;
             private readonly IMapper _mapper;
 
-            public CreateProductCommandHandler(IMapper mapper, IUnitOfWork unitOfWork)
+            public CreateProductCommandHandler(IProductService productService, IMapper mapper)
             {
+                _productService = productService;
                 _mapper = mapper;
-                _unitOfWork = unitOfWork;
             }
+
 
             public async Task<IResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Product>(request);
-                await _unitOfWork.ProductRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ProductAdded);
+                var mapper = _mapper.Map<ProductDto>(request);
+                var product = await _productService.AddAsync(mapper);
+                return product;
             }
         }
     }

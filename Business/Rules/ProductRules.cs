@@ -1,4 +1,7 @@
-﻿using Core.Utilities.Results;
+﻿using System;
+using System.Threading.Tasks;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -13,14 +16,14 @@ namespace Business.Rules
             _productDal = productDal;
         }
 
-        public IResult CategoryCount(Category category)
+        public async Task<IResult> ProductAlreadyExists(string code)
         {
-            var result = _productDal.CountAsync(c=>c.CategoryId == category.Id).Result;
-            if (result == 15)
+            var result = await _productDal.AnyAsync(p => p.Code == code);
+            if (result)
             {
-                return new ErrorResult("En fazla 10 marka olabilir");
+                return new ErrorResult($" {code} Ürün Kodu başka bir üründe kullanılmaktadır.");
             }
-
+            
             return new SuccessResult();
         }
     }

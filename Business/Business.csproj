@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Handlers\Categories\ValidationRules\**" />
+    <Compile Remove="Handlers\Colors\ValidationRules\**" />
+    <EmbeddedResource Remove="Handlers\Categories\ValidationRules\**" />
+    <EmbeddedResource Remove="Handlers\Colors\ValidationRules\**" />
+    <None Remove="Handlers\Categories\ValidationRules\**" />
+    <None Remove="Handlers\Colors\ValidationRules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
@@ -26,9 +35,7 @@
     <Folder Include="Handlers\Addresses\ValidationRules\" />
     <Folder Include="Handlers\Baskets\ValidationRules\" />
     <Folder Include="Handlers\Brands\ValidationRules\" />
-    <Folder Include="Handlers\Categories\ValidationRules\" />
-    <Folder Include="Handlers\Colors\Cities\ValidationRules\" />
-    <Folder Include="Handlers\Colors\ValidationRules\" />
+    <Folder Include="Handlers\Cities\ValidationRules\" />
     <Folder Include="Handlers\Countries\ValidationRules\" />
     <Folder Include="Handlers\Customers\ValidationRules\" />
     <Folder Include="Handlers\OrderDetails\ValidationRules\" />
@@ -38,6 +45,8 @@
     <Folder Include="Handlers\Suppliers\ValidationRules\" />
     <Folder Include="Handlers\UserOperationClaims\ValidationRules\" />
     <Folder Include="Handlers\Users\ValidationRules\" />
+    <Folder Include="Services\BasketDetails\" />
+    <Folder Include="Services\Baskets\" />
   </ItemGroup>
 
 </Project>

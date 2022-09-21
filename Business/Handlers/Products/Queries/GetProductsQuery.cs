@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Business.Services.Brands;
+using Business.Services.Products;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
 using Entities.Dtos.Products;
@@ -10,37 +12,22 @@ using MediatR;
 
 namespace Business.Handlers.Products.Queries
 {
-    public class GetProductsQuery : IRequest<IDataResult<IEnumerable<ProductDto>>>
+    public class GetProductsQuery : IRequest<IDataResult<IEnumerable<ProductListDto>>>
     {
-        public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IDataResult<IEnumerable<ProductDto>>>
+        public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IDataResult<IEnumerable<ProductListDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IProductService _productService;
 
-            public GetProductsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetProductsQueryHandler(IProductService productService)
             {
-                _unitOfWork = unitOfWork;
+                _productService = productService;
             }
 
-            public async Task<IDataResult<IEnumerable<ProductDto>>> Handle(GetProductsQuery request,
+            public async Task<IDataResult<IEnumerable<ProductListDto>>> Handle(GetProductsQuery request,
                 CancellationToken cancellationToken)
             {
-                var countryList = await _unitOfWork.ProductRepository.GetAllAsync(
-                    selector: x => new ProductDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        CategoryName = x.Category.Name,
-                        BrandName = x.Brand.Name,
-                        ColorName = x.Color.Name,
-                        SupplierName = x.Supplier.CompanyName,
-                        Code = x.Code,
-                        UnitPrice = x.UnitPrice,
-                        UnitsInStock = x.UnitsInStock
-                    },
-                    orderBy: x => x.OrderBy(x => x.UnitPrice)
-                );
-
-                return new SuccessDataResult<IEnumerable<ProductDto>>(countryList);
+                var productList = await _productService.GetAllAsync();
+                return productList;
 
             }
         }

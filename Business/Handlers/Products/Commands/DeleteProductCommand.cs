@@ -3,9 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Constants;
+using Business.Services.Brands;
+using Business.Services.Products;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
 using Entities.Concrete;
+using Entities.Dtos.Brands;
+using Entities.Dtos.Products;
 using MediatR;
 
 namespace Business.Handlers.Products.Commands
@@ -16,19 +20,20 @@ namespace Business.Handlers.Products.Commands
         
         public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;            
+            private readonly IProductService _productService;
+            private readonly IMapper _mapper;
 
-            public DeleteProductCommandHandler(IUnitOfWork unitOfWork)
+            public DeleteProductCommandHandler(IUnitOfWork unitOfWork, IProductService productService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _productService = productService;
+                _mapper = mapper;
             }
 
             public async Task<IResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
             {
-                Product product = await _unitOfWork.ProductRepository.GetAsync(x => x.Id == request.Id);
-                await _unitOfWork.ProductRepository.DeleteAsync(product);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ProductDeleted);
+                var mapper = _mapper.Map<ProductDto>(request);
+                var product = await _productService.DeleteAsync(mapper);
+                return product;
             }
         }
     }

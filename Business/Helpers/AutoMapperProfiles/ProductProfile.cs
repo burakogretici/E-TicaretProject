@@ -13,6 +13,9 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<Product, CreateProductCommand>().ReverseMap();
             CreateMap<Product, DeleteProductCommand>().ReverseMap();
             CreateMap<Product, UpdateProductCommand>().ReverseMap();
+            CreateMap<ProductDto, CreateProductCommand>().ReverseMap();
+            CreateMap<ProductDto, DeleteProductCommand>().ReverseMap();
+            CreateMap<ProductDto, UpdateProductCommand>().ReverseMap();
         }
     }
 }

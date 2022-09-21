@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using Business.Services.Brands;
+using Business.Services.Products;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;
 using Entities.Dtos.Products;
@@ -15,20 +17,18 @@ namespace Business.Handlers.Products.Queries
 
         public class GetProductQueryHandler : IRequestHandler<GetProductQuery, IDataResult<ProductDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IProductService _productService;
 
-            public GetProductQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetProductQueryHandler(IProductService productService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _productService = productService;
             }
+
 
             public async Task<IDataResult<ProductDto>> Handle(GetProductQuery request, CancellationToken cancellationToken)
             {
-                var product = await _unitOfWork.ProductRepository.GetAsync(a => a.Id == request.Id);
-                var productDto = _mapper.Map<ProductDto>(product);
-                return new SuccessDataResult<ProductDto>(productDto);
+                var product = await _productService.GetByIdAsync(request.Id);
+                return product;
             }
         }
     }

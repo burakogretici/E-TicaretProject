@@ -56,6 +56,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
                     case EntityState.Deleted:
                         entry.State = EntityState.Modified;
                         entity.Deleted = true;
+                        entity.UpdatedDate = DateTime.Now;
                         break;
                 }
             }

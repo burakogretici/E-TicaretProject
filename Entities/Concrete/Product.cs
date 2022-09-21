@@ -13,7 +13,7 @@ namespace Entities.Concrete
         }
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
-        public Guid SupplierId { get; set; }
+        //public Guid SupplierId { get; set; }
         public Guid BrandId { get; set; }
         public Guid ColorId { get; set; }
         public string Code { get; set; }
@@ -21,7 +21,7 @@ namespace Entities.Concrete
         public decimal UnitPrice { get; set; }
 
         public virtual Category Category { get; set; }
-        public virtual Supplier Supplier { get; set; }
+        //public virtual Supplier Supplier { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual Color Color { get; set; }
 

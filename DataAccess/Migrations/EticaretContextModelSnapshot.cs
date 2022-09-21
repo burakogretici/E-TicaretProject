@@ -338,6 +338,59 @@ namespace DataAccess.Migrations
                     b.ToTable("Individual");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.Menu", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("DisplayOrder")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("DisplayOrder")
+                        .HasDefaultValueSql("0");
+
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("bit")
+                        .HasColumnName("Hidden");
+
+                    b.Property<string>("Icon")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Icon");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
+                        .HasColumnName("Name");
+
+                    b.Property<Guid?>("ParentMenuId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("QueryString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("QueryString");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentMenuId");
+
+                    b.ToTable("Menu");
+                });
+
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>
                 {
                     b.Property<Guid>("Id")
@@ -479,10 +532,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("Name");
 
-                    b.Property<Guid>("SupplierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("SupplierId");
-
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("UnitPrice");
@@ -501,8 +550,6 @@ namespace DataAccess.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("ColorId");
-
-                    b.HasIndex("SupplierId");
 
                     b.ToTable("Products");
                 });
@@ -733,6 +780,15 @@ namespace DataAccess.Migrations
                     b.Navigation("Customer");
                 });
 
+            modelBuilder.Entity("Entities.Concrete.Menu", b =>
+                {
+                    b.HasOne("Entities.Concrete.Menu", "ParentMenu")
+                        .WithMany()
+                        .HasForeignKey("ParentMenuId");
+
+                    b.Navigation("ParentMenu");
+                });
+
             modelBuilder.Entity("Entities.Concrete.Order", b =>
                 {
                     b.HasOne("Entities.Concrete.Address", "Address")
@@ -799,19 +855,11 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.Supplier", "Supplier")
-                        .WithMany("Products")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
 
                     b.Navigation("Color");
-
-                    b.Navigation("Supplier");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Supplier", b =>
@@ -914,11 +962,6 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Shipper", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Supplier", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Entities.Concrete.User", b =>

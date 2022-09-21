@@ -9,5 +9,6 @@
         public static string ProductListed => "Ürünler listelendi";
         public static string ProductDeleted => "Ürün silindi";
         public static string ProductUpdated => "Ürün güncellendi";
+        public static string ProductNotFound => "Ürün bulunamadı";
     }
 }
