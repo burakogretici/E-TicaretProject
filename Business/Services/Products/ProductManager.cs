@@ -55,6 +55,10 @@ namespace Business.Services.Products
                 if (result == null)
                 {
                     product.Data.Name = productDto.Name;
+                    product.Data.Code = productDto.Code;
+                    product.Data.UnitPrice = productDto.UnitPrice;
+                    product.Data.UnitsInStock = productDto.UnitsInStock;
+
                     var mapper = _mapper.Map<Product>(product.Data);
                     await _unitOfWork.ProductRepository.UpdateAsync(mapper);
                     await _unitOfWork.Commit();
