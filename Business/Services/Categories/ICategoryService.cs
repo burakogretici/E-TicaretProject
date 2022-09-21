@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Utilities.Results;
-using Entities.Concrete;
 using Entities.Dtos.Categories;
 
 namespace Business.Services.Categories

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.UnitOfWork;

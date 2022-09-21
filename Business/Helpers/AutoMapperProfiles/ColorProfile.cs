@@ -13,6 +13,9 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<Color, CreateColorCommand>().ReverseMap();
             CreateMap<Color, DeleteColorCommand>().ReverseMap();
             CreateMap<Color, UpdateColorCommand>().ReverseMap();
+            CreateMap<ColorDto, CreateColorCommand>().ReverseMap();
+            CreateMap<ColorDto, DeleteColorCommand>().ReverseMap();
+            CreateMap<ColorDto, UpdateColorCommand>().ReverseMap();
         }
     }
 }

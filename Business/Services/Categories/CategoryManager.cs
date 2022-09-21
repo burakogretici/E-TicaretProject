@@ -39,14 +39,14 @@ namespace Business.Services.Categories
                 var mapper = _mapper.Map<Category>(model);
                 await _unitOfWork.CategoryRepository.AddAsync(mapper);
                 await _unitOfWork.Commit();
-                return new SuccessDataResult<CategoryDto>(model, Messages.BrandAdded);
+                return new SuccessDataResult<CategoryDto>(model, Messages.CategoryAdded);
             }
+
             return new ErrorDataResult<CategoryDto>(result.Message);
         }
 
         public async Task<IResult> UpdateAsync(CategoryDto categoryDto)
         {
-
             var category = await GetByIdAsync(categoryDto.Id);
             if (category.Data != null)
             {
@@ -59,17 +59,12 @@ namespace Business.Services.Categories
                     await _unitOfWork.Commit();
                     return new SuccessResult(Messages.CategoryUpdated);
                 }
-                else
-                {
-                    return new ErrorResult(Messages.CategoryNameAlreadyExists);
-                }
+                return result;
 
             }
-            else
-            {
-                return new ErrorResult(Messages.CategoryNotFound);
-            }
+            return category;
         }
+
 
         public async Task<IResult> DeleteAsync(CategoryDto categoryDto)
         {
@@ -79,12 +74,10 @@ namespace Business.Services.Categories
                 var mapper = _mapper.Map<Category>(category.Data);
                 await _unitOfWork.CategoryRepository.DeleteAsync(mapper);
                 await _unitOfWork.Commit();
-                return new SuccessResult(Messages.BrandDeleted);
+                return new SuccessResult(Messages.CategoryDeleted);
             }
-            else
-            {
-                return new ErrorResult(Messages.BrandNotFound);
-            }
+
+            return category;
         }
 
         [CacheAspect(50)]
@@ -108,6 +101,11 @@ namespace Business.Services.Categories
         public async Task<IDataResult<CategoryDto>> GetByIdAsync(Guid categoryId)
         {
             var result = await _unitOfWork.CategoryRepository.GetAsync(br => br.Id == categoryId);
+            if (result == null)
+            {
+                return new ErrorDataResult<CategoryDto>(Messages.CategoryNotFound);
+            }
+
             var mapper = _mapper.Map<CategoryDto>(result);
             return new SuccessDataResult<CategoryDto>(mapper);
         }

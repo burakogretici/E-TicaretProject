@@ -53,16 +53,10 @@ namespace Business.Services.Brands
                     await _unitOfWork.Commit();
                     return new SuccessResult(Messages.BrandUpdated);
                 }
-                else
-                {
-                    return new ErrorResult(Messages.BrandNameAlreadyExists);
-                }
 
+                return result;
             }
-            else
-            {
-                return new ErrorResult(Messages.BrandNotFound);
-            }
+            return brand;
         }
 
         public async Task<IResult> DeleteAsync(BrandDto brandDto)
@@ -75,10 +69,9 @@ namespace Business.Services.Brands
                 await _unitOfWork.Commit();
                 return new SuccessResult(Messages.BrandDeleted);
             }
-            else
-            {
-                return new ErrorResult(Messages.BrandNotFound);
-            }
+
+            return brand;
+
         }
 
         public async Task<IDataResult<IEnumerable<BrandDto>>> GetAllAsync()
@@ -100,6 +93,10 @@ namespace Business.Services.Brands
         public async Task<IDataResult<BrandDto>> GetByIdAsync(Guid brandId)
         {
             var result = await _unitOfWork.BrandRepository.GetAsync(br => br.Id == brandId);
+            if (result == null)
+            {
+                return new ErrorDataResult<BrandDto>(Messages.BrandNotFound);
+            }
             var mapper = _mapper.Map<BrandDto>(result);
             return new SuccessDataResult<BrandDto>(mapper);
         }
