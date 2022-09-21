@@ -12,7 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Rules;
 using Core.Utilities.Business;
-using Entities.Dtos.Brands;
 using Microsoft.EntityFrameworkCore;
 
 namespace Business.Services.Products
@@ -49,22 +48,22 @@ namespace Business.Services.Products
 
         public async Task<IResult> UpdateAsync(ProductDto productDto)
         {
-            var brand = await GetByIdAsync(productDto.Id);
-            if (brand.Data != null)
+            var product = await GetByIdAsync(productDto.Id);
+            if (product.Data != null)
             {
                 IResult result = BusinessRules.Run(await _productRules.ProductAlreadyExists(productDto.Name));
                 if (result == null)
                 {
-                    brand.Data.Name = productDto.Name;
-                    var mapper = _mapper.Map<Brand>(brand.Data);
-                    await _unitOfWork.BrandRepository.UpdateAsync(mapper);
+                    product.Data.Name = productDto.Name;
+                    var mapper = _mapper.Map<Product>(product.Data);
+                    await _unitOfWork.ProductRepository.UpdateAsync(mapper);
                     await _unitOfWork.Commit();
                     return new SuccessResult(Messages.ProductUpdated);
                 }
 
                 return result;
             }
-            return brand;
+            return product;
         }
 
         public async Task<IResult> DeleteAsync(ProductDto productDto)
