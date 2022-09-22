@@ -1,41 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Services.Addresses;
 using Core.Utilities.Results;
-using DataAccess.Concrete.EntityFramework.Context;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Addresses;
 using MediatR;
 
 namespace Business.Handlers.Addresses.Queries
 {
-    public class GetAddressesQuery : IRequest<IDataResult<IEnumerable<AddressDto>>>
+    public class GetAddressesQuery : IRequest<IDataResult<IEnumerable<AddressListDto>>>
     {
-        public class GetAddressesQueryHandler : IRequestHandler<GetAddressesQuery, IDataResult<IEnumerable<AddressDto>>>
+        public class GetAddressesQueryHandler : IRequestHandler<GetAddressesQuery, IDataResult<IEnumerable<AddressListDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IAddressService _addressService;
 
-            public GetAddressesQueryHandler(IUnitOfWork unitOfWork, EticaretContext context)
+            public GetAddressesQueryHandler(IAddressService addressService)
             {
-                _unitOfWork = unitOfWork;
+                _addressService = addressService;
             }
 
-            public async Task<IDataResult<IEnumerable<AddressDto>>> Handle(GetAddressesQuery request,
+            public async Task<IDataResult<IEnumerable<AddressListDto>>> Handle(GetAddressesQuery request,
                 CancellationToken cancellationToken)
             {
-                var brandList = await _unitOfWork.AddressRepository.GetAllAsync(x => new AddressDto
-                {
-                    Id = x.Id,
-                    CustomerFullName = x.Customer.User.FirstName + " " + x.Customer.User.LastName,
-                    Country = x.Country.Name,
-                    City = x.City.Name,
-                    AddressDetail = x.AddressDetail,
-                    PostalCode = x.PostalCode
-                });
-                return new SuccessDataResult<IEnumerable<AddressDto>>(brandList);
-
+                var addressList = await _addressService.GetAllAsync();
+                return addressList;
 
             }
+
         }
     }
 }

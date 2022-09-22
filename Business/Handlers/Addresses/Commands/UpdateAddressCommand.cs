@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Business.Constants;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using Business.Services.Addresses;
+using Entities.Dtos.Addresses;
 
 namespace Business.Handlers.Addresses.Commands
 {
@@ -20,29 +19,19 @@ namespace Business.Handlers.Addresses.Commands
         public string PostalCode { get; set; }
         public class UpdateAddressCommandHandler : IRequestHandler<UpdateAddressCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IAddressService _addressService;
             private readonly IMapper _mapper;
 
-            public UpdateAddressCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public UpdateAddressCommandHandler(IAddressService addressService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _addressService = addressService;
                 _mapper = mapper;
             }
             public async Task<IResult> Handle(UpdateAddressCommand request, CancellationToken cancellationToken)
             {
-                Address address = await _unitOfWork.AddressRepository.GetAsync(x => x.Id == request.Id);
-                if (address != null)
-                {
-                    address.CustomerId = request.CustomerId;
-                    address.CountryId = request.CountryId;
-                    address.CityId = request.CityId;
-                    address.AddressDetail = request.AddressDetail;
-                    address.PostalCode = request.PostalCode;
-                }
-
-                await _unitOfWork.AddressRepository.UpdateAsync(address);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.BrandUpdated);
+                var mapper = _mapper.Map<AddressDto>(request);
+                var address = await _addressService.UpdateAsync(mapper);
+                return address;
             }
         }
     }

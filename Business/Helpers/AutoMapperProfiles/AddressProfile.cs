@@ -13,6 +13,9 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<Address, CreateAddressCommand>().ReverseMap();
             CreateMap<Address, DeleteAddressCommand>().ReverseMap();
             CreateMap<Address, UpdateAddressCommand>().ReverseMap();
+            CreateMap<AddressDto,CreateAddressCommand>().ReverseMap();
+            CreateMap<Address, DeleteAddressCommand>().ReverseMap();
+            CreateMap<Address, UpdateAddressCommand>().ReverseMap();
         }
     }
 }
