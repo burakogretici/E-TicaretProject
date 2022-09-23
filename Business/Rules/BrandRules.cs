@@ -21,8 +21,6 @@ namespace Business.Rules
                 return new SuccessResult();
             else
                 return new ErrorResult(Messages.BrandNameAlreadyExists);
-
-
         }
     }
 }
