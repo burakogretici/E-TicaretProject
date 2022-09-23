@@ -47,7 +47,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(CountryDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("{Id}")]
+        [HttpGet("delete/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetCountryQuery getCountryQuery)
         {
             return GetResponseOnlyResultData(await Mediator.Send(getCountryQuery));

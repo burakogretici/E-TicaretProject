@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Business.Constants;
+using AutoMapper;
+using Business.Services.Countries;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Countries;
 using MediatR;
 
 namespace Business.Handlers.Countries.Commands
@@ -16,19 +16,19 @@ namespace Business.Handlers.Countries.Commands
 
         public class UpdateCountryCommandHandler : IRequestHandler<UpdateCountryCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;          
-
-            public UpdateCountryCommandHandler(IUnitOfWork unitOfWork)
+            private readonly ICountryService _countryService;
+            private readonly IMapper _mapper;
+            public UpdateCountryCommandHandler(ICountryService countryService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;        
+                _countryService = countryService;
+                _mapper = mapper;
             }
-
             public async Task<IResult> Handle(UpdateCountryCommand request, CancellationToken cancellationToken)
             {
-                Country country = await _unitOfWork.CountryRepository.GetAsync(x => x.Id == request.Id);
-                await _unitOfWork.CountryRepository.UpdateAsync(country);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.CountryUpdated);
+                var mapper = _mapper.Map<CountryDto>(request);
+                var country = await _countryService.UpdateAsync(mapper);
+                return country;
+
             }
 
         }

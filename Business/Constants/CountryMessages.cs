@@ -8,5 +8,6 @@
         public static string CountryDeleted => "Ülke silindi";
         public static string CountryUpdated => "Ülke güncellendi";
         public static string CountryNameAlreadyExists => "Ülke adı zaten var";
+        public static string CountryNotFound => "Ülke bulunamadı";
     }
 }

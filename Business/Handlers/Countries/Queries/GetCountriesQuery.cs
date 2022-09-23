@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.Countries;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Countries;
 using MediatR;
 
@@ -14,26 +12,17 @@ namespace Business.Handlers.Countries.Queries
     {
         public class GetCountriesQueryHandler : IRequestHandler<GetCountriesQuery, IDataResult<IEnumerable<CountryDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly ICountryService _countryService;
 
-            public GetCountriesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetCountriesQueryHandler(ICountryService countryService)
             {
-                _unitOfWork = unitOfWork;
+                _countryService = countryService;
             }
 
             public async Task<IDataResult<IEnumerable<CountryDto>>> Handle(GetCountriesQuery request, CancellationToken cancellationToken)
             {
-                var countryList = await _unitOfWork.CountryRepository.GetAllAsync(
-                    selector: x => new CountryDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                    },
-                    orderBy: x => x.OrderBy(x => x.Name)
-                );
-
-                return new SuccessDataResult<IEnumerable<CountryDto>>(countryList);
-
+                var countryList = await _countryService.GetAllAsync();
+                return countryList;
             }
         }
     }

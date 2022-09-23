@@ -13,6 +13,9 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<Country, CreateCountryCommand>().ReverseMap();
             CreateMap<Country, DeleteCountryCommand>().ReverseMap();
             CreateMap<Country, UpdateCountryCommand>().ReverseMap();
+            CreateMap<CountryDto, CreateCountryCommand>().ReverseMap();
+            CreateMap<CountryDto, DeleteCountryCommand>().ReverseMap();
+            CreateMap<CountryDto, UpdateCountryCommand>().ReverseMap();
 
         }
     }
