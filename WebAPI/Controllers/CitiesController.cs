@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK,Type=typeof(CityDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("{Id}")]
+        [HttpGet("delete/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetCityQuery getCityQuery)
         {
             return GetResponseOnlyResultData(await Mediator.Send(getCityQuery));

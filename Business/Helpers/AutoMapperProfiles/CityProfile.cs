@@ -13,6 +13,9 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<City, CreateCityCommand>().ReverseMap();
             CreateMap<City, DeleteCityCommand>().ReverseMap();
             CreateMap<City, UpdateCityCommand>().ReverseMap();
+            CreateMap<CityDto, CreateCityCommand>().ReverseMap();
+            CreateMap<CityDto, DeleteCityCommand>().ReverseMap();
+            CreateMap<CityDto, UpdateCityCommand>().ReverseMap();
         }
     }
 }

@@ -9,5 +9,6 @@
         public static string CityDeleted => "Şehir silindi";
         public static string CityUpdated => "Şehir güncellendi";
         public static string CityNameAlreadyExists => "Şehir adı zaten var";
+        public static string CityNotFound => "Şehir bulunamadı";
     }
 }

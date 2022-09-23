@@ -2,10 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.Cities;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Cities;
 using MediatR;
 
 namespace Business.Handlers.Cities.Commands
@@ -17,21 +16,19 @@ namespace Business.Handlers.Cities.Commands
 
         public class CreateCityCommandHandler : IRequestHandler<CreateCityCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly ICityService _cityService;
             private readonly IMapper _mapper;
-
-            public CreateCityCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public CreateCityCommandHandler(ICityService cityService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _cityService = cityService;
                 _mapper = mapper;
             }
 
             public async Task<IResult> Handle(CreateCityCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<City>(request);
-                await _unitOfWork.CityRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.CityAdded);
+                var mapper = _mapper.Map<CityDto>(request);
+                var city = await _cityService.AddAsync(mapper);
+                return city;
             }
         }
     }

@@ -1,8 +1,10 @@
-﻿namespace Entities.Dtos.Cities
+﻿using System;
+
+namespace Entities.Dtos.Cities
 {
     public class CityDto : BaseDto
     {
-        public string CountryName { get; set; }
+        public Guid CountryId { get; set; }
         public string Name { get; set; }
     }
 }

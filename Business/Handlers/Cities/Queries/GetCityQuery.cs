@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.Cities;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Cities;
 using MediatR;
 
@@ -15,20 +14,16 @@ namespace Business.Handlers.Cities.Queries
 
         public class GetCityQueryHandler : IRequestHandler<GetCityQuery, IDataResult<CityDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly ICityService _cityService;
 
-            public GetCityQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetCityQueryHandler(ICityService cityService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _cityService = cityService;
             }
-
             public async Task<IDataResult<CityDto>> Handle(GetCityQuery request, CancellationToken cancellationToken)
             {
-                var city = await _unitOfWork.CityRepository.GetAsync(a => a.Id == request.Id);
-                var cityDto = _mapper.Map<CityDto>(city);
-                return new SuccessDataResult<CityDto>(cityDto);
+                var city = await _cityService.GetByIdAsync(request.Id);
+                return city;
             }
         }
     }
