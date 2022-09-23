@@ -1,5 +1,4 @@
 ﻿using Core.Utilities.Results;
-using Entities.Concrete;
 using Entities.Dtos.Products;
 using System;
 using System.Collections.Generic;

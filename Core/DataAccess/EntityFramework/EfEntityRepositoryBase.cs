@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Core.DataAccess.Abstract;
 using Core.Entities.Abstract;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Query;
 
 

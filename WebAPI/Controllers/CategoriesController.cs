@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Business.Handlers.Categories.Commands;
 using Business.Handlers.Categories.Queries;
-using Core.Utilities.Results;
 using Entities.Dtos.Categories;
 using Microsoft.AspNetCore.Http;
 

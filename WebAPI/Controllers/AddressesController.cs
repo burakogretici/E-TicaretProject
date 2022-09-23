@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Business.Handlers.Addresses.Commands;
 using Business.Handlers.Addresses.Queries;
 using Entities.Dtos.Addresses;
-using Entities.Dtos.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

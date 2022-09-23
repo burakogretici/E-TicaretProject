@@ -1,7 +1,4 @@
-﻿using Core.Utilities.Results;
-using RestSharp;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Web.ApiHelper

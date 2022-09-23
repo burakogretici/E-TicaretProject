@@ -1,14 +1,8 @@
 ﻿using Core.Utilities.Results;
-using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using RestSharp;
-using ServiceStack;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Diagnostics;
 using System.Net;
 using System.Threading.Tasks;
 
