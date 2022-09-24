@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] LoginUserQuery loginModel)
+        public async Task<ActionResult> Login([FromBody] LoginUserCommand loginModel)
         {
             var result = await Mediator.Send(loginModel);
             return result.Success ? Ok(result) : Unauthorized(result.Message);

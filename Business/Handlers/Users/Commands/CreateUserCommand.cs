@@ -1,10 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.Users;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Users;
 using MediatR;
 
 namespace Business.Handlers.Users.Commands
@@ -20,28 +19,20 @@ namespace Business.Handlers.Users.Commands
 
         public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
             private readonly IMapper _mapper;
+            private readonly IUserService _userService;
 
-            public CreateUserCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public CreateUserCommandHandler(IUserService userService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _userService = userService;
                 _mapper = mapper;
             }
 
             public async Task<IResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
             {
-                var isThereAnyUser = await _unitOfWork.UserRepository.GetAsync(u => u.Email == request.Email);
-
-                if (isThereAnyUser != null)
-                {
-                    return new ErrorResult(Messages.NameAlreadyExist);
-                }
-
-                var mapper = _mapper.Map<User>(request); 
-                await _unitOfWork.UserRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.Added);
+                var mapper = _mapper.Map<UserDto>(request);
+                var user = await _userService.AddAsync(mapper);
+                return user;
             }
         }
     }

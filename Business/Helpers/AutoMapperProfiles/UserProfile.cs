@@ -10,16 +10,30 @@ namespace Business.Helpers.AutoMapperProfiles
     {
         public UserProfile()
         {
-            //Register
             CreateMap<User, CreateUserCommand>().ReverseMap();
             CreateMap<User, RegisterUserCommand>().ReverseMap();
             CreateMap<User, DeleteUserCommand>().ReverseMap();
             CreateMap<User, UpdateUserCommand>().ReverseMap();
-            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, LoginUserCommand>().ReverseMap();
 
-            //Login
+            CreateMap<UserDto, CreateUserCommand>().ReverseMap();
+            CreateMap<UserDto, RegisterUserCommand>().ReverseMap();
+            CreateMap<UserDto, DeleteUserCommand>().ReverseMap();
+            CreateMap<UserDto, UpdateUserCommand>().ReverseMap();
+            CreateMap<UserDto, LoginUserCommand>().ReverseMap();
+
             CreateMap<User, UserForLogin>().ReverseMap();
-            CreateMap<UserForLogin, User>().ReverseMap();
+            CreateMap<User, UserForRegister>().ReverseMap();
+
+            CreateMap<UserDto, UserForRegister>().ReverseMap();
+            CreateMap<UserDto, UserForRegister>().ReverseMap();
+
+            CreateMap<UserForLogin, LoginUserCommand>().ReverseMap();
+            CreateMap<UserForRegister, RegisterUserCommand>().ReverseMap();
+
+            CreateMap<User, UserDto>().ReverseMap();
+            
+
         }
     }
 }

@@ -6,6 +6,7 @@ using Business.Helpers.Jwt;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
+using Entities.Dtos.Users;
 using MediatR;
 
 namespace Business.Handlers.Authorizations.Queries
@@ -45,7 +46,8 @@ namespace Business.Handlers.Authorizations.Queries
 
                 var claims = await _userRepository.GetClaims(user);
 
-                var accessToken = _tokenHelper.CreateToken(user, claims);
+                var userDto = _mapper.Map<UserDto>(user);
+                var accessToken = _tokenHelper.CreateToken(userDto, claims);
 
                 return new SuccessDataResult<AccessToken>(accessToken, Messages.SuccessfulLogin);
             }

@@ -2,10 +2,13 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Business.Constants;
+using Business.Services.Authorizations;
+using Business.Services.Users;
 using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos.Users;
 using MediatR;
 
 namespace Business.Handlers.Authorizations.Commands
@@ -18,30 +21,21 @@ namespace Business.Handlers.Authorizations.Commands
         public string Password { get; set; }
         public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, IResult>
         {
-            private readonly IUserRepository _userRepository;
+            private readonly IAuthService _authService;
             private readonly IMapper _mapper;
 
-            public RegisterUserCommandHandler(IUserRepository userRepository, IMapper mapper)
+            public RegisterUserCommandHandler(IMapper mapper, IAuthService authService)
             {
-                _userRepository = userRepository;
                 _mapper = mapper;
+                _authService = authService;
             }
 
-            
+
             public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
-                var isThereAnyUser = await _userRepository.GetAsync(u => u.Email == request.Email);
-
-                if (isThereAnyUser != null)
-                {
-                    return new ErrorResult(Messages.NameAlreadyExist);
-                }
-
-                HashingHelper.CreatePasswordHash(request.Password, out var passwordSalt, out var passwordHash);
-
-                var mapper = _mapper.Map<User>(request);
-                await _userRepository.AddAsync(mapper);
-                return new SuccessResult(Messages.Added);
+                var mapper = _mapper.Map<UserForRegister>(request);
+                var response = await _authService.Register(mapper, request.Password);
+                return response;
             }
         }
     }

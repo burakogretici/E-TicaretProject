@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Services.Users;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Users;
 using MediatR;
 
@@ -12,28 +12,17 @@ namespace Business.Handlers.Users.Queries
     {
         public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IDataResult<IEnumerable<UserDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IUserService _userService;
 
-            public GetUsersQueryHandler(IUnitOfWork unitOfWork)
+            public GetUsersQueryHandler(IUserService userService)
             {
-                _unitOfWork = unitOfWork;
+                _userService = userService;
             }
 
-            public async Task<IDataResult<IEnumerable<UserDto>>> Handle(GetUsersQuery request,
-                CancellationToken cancellationToken)
+            public async Task<IDataResult<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
             {
-                var userList = await _unitOfWork.UserRepository.GetAllAsync(
-                    selector: x => new UserDto
-                    {
-                        Id = x.Id,
-                        FirstName = x.FirstName,
-                        LastName = x.LastName,
-                        Email = x.Email,
-                        IsActive = x.IsActive
-                    },
-                    expression: x => x.IsActive == true);
-
-                return new SuccessDataResult<IEnumerable<UserDto>>(userList);
+                var userList = await _userService.GetAllAsync();
+                return userList;
             }
         }
     }

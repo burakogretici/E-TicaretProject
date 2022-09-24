@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Business.Constants;
+using AutoMapper;
+using Business.Services.Users;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Users;
 using MediatR;
 
 namespace Business.Handlers.Users.Commands
@@ -15,22 +15,20 @@ namespace Business.Handlers.Users.Commands
 
         public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            public DeleteUserCommandHandler(IUnitOfWork unitOfWork)
+            private readonly IUserService _userService;
+            private readonly IMapper _mapper;
+            public DeleteUserCommandHandler(IUserService userService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;              
+                _userService = userService;
+                _mapper = mapper;
             }
 
             public async Task<IResult> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
             {
-                User user = await _unitOfWork.UserRepository.GetAsync(p => p.Id == request.Id);
-                if (user != null)
-                {
-                    await _unitOfWork.UserRepository.DeleteAsync(user);
-                    await _unitOfWork.Commit();
-                }
+                var mapper = _mapper.Map<UserDto>(request);
+                var user = await _userService.DeleteAsync(mapper);
+                return user;
 
-                return new SuccessResult(Messages.UserDeleted);
             }
         }
     }

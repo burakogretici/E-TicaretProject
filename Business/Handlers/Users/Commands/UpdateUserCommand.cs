@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Business.Constants;
+using AutoMapper;
+using Business.Services.Users;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.Users;
 using MediatR;
 
 namespace Business.Handlers.Users.Commands
@@ -20,19 +20,19 @@ namespace Business.Handlers.Users.Commands
 
         public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;        
-
-            public UpdateUserCommandHandler(IUnitOfWork unitOfWork)
+            private readonly IUserService _userService;
+            private readonly IMapper _mapper;
+            public UpdateUserCommandHandler(IUserService userService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;         
+                _userService = userService;
+                _mapper = mapper;
             }
-
             public async Task<IResult> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
             {
-                User user = await _unitOfWork.UserRepository.GetAsync(p => p.Id == request.Id);
-                await _unitOfWork.UserRepository.UpdateAsync(user);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.UserUpdated);
+                var mapper = _mapper.Map<UserDto>(request);
+                var user = await _userService.UpdateAsync(mapper);
+                return user;
+
             }
         }
     }

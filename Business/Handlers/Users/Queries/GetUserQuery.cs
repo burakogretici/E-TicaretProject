@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.Users;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.Users;
 using MediatR;
 
@@ -15,20 +14,16 @@ namespace Business.Handlers.Users.Queries
 
         public class GetUserQueryHandler : IRequestHandler<GetUserQuery, IDataResult<UserDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUserService _userService;
 
-            public GetUserQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetUserQueryHandler(IUserService userService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _userService = userService;
             }
-
             public async Task<IDataResult<UserDto>> Handle(GetUserQuery request, CancellationToken cancellationToken)
             {
-                var user = await _unitOfWork.UserRepository.GetAsync(a => a.Id == request.Id);
-                var userDto = _mapper.Map<UserDto>(user);
-                return new SuccessDataResult<UserDto>(userDto);
+                var user = await _userService.GetByIdAsync(request.Id);
+                return user;
             }
         }
     }
