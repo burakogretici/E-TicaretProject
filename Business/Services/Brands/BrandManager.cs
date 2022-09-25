@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Business.BusinessAspects;
 
 namespace Business.Services.Brands
 {
@@ -74,6 +75,7 @@ namespace Business.Services.Brands
 
         }
 
+        [SecuredOperation("Admin")]
         public async Task<IDataResult<IEnumerable<BrandDto>>> GetAllAsync()
         {
             var result = await _unitOfWork.BrandRepository.GetAllAsync(expression: x => x.Deleted != true,

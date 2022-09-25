@@ -96,11 +96,12 @@ namespace Business.Services.Users
             var result = await _unitOfWork.UserRepository.GetClaims(mapper);
             if (result == null)
             {
-                return new ErrorDataResult<IEnumerable<OperationClaim>>(Messages.OperationClaimListed);
+                return new ErrorDataResult<IEnumerable<OperationClaim>>("Rol Bulunamadı");
             }
             return new SuccessDataResult<IEnumerable<OperationClaim>>(result);
         }
 
+        //[Auth]
         public async Task<IDataResult<IEnumerable<UserDto>>> GetAllAsync()
         {
             var result = await _unitOfWork.UserRepository.GetAllAsync(expression: x => x.Deleted != true,

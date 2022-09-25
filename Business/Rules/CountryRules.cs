@@ -1,6 +1,5 @@
 ﻿using Business.Constants;
 using Core.Utilities.Results;
-using DataAccess.Concrete.EntityFramework;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
 

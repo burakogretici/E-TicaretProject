@@ -92,7 +92,7 @@ namespace Business.Services.Cities
 
         public async Task<IDataResult<IEnumerable<CityDto>>> GetAllByCountryAsync(Guid countryId)
         {
-            var result = await _unitOfWork.CityRepository.GetAllAsync(expression: x => x.Deleted != true,
+            var result = await _unitOfWork.CityRepository.GetAllAsync(expression: x => x.Deleted != true && x.CountryId == countryId,
                 selector: x => new CityDto
                 {
                     Id = x.Id,
