@@ -1,6 +1,5 @@
 ﻿using Business.Helpers.Jwt;
 using Core.Utilities.Results;
-using Entities.Concrete;
 using Entities.Dtos.Users;
 using System.Threading.Tasks;
 

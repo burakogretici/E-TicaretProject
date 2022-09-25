@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
+using Business.Helpers.Jwt;
 using Business.Services.Authorizations;
 using Core.Utilities.Results;
 using Entities.Dtos.Users;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,6 +29,16 @@ namespace Business.Handlers.Authorizations.Commands
             {
                 var mapper = _mapper.Map<UserForLogin>(request);
                 var response = await _authService.Login(mapper);
+                if (!response.Success)
+                {
+                    return response;
+                }
+                var result = await _authService.CreateAccessToken(response.Data);
+                if (result.Success)
+                {
+                    return new SuccessDataResult<AccessToken>(result.Data);
+                }
+
                 return response;
             }
         }

@@ -1,13 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Helpers.Jwt;
 using Business.Services.Authorizations;
-using Business.Services.Users;
 using Core.Utilities.Results;
-using Core.Utilities.Security.Hashing;
-using DataAccess.Abstract;
-using Entities.Concrete;
 using Entities.Dtos.Users;
 using MediatR;
 
@@ -34,7 +30,19 @@ namespace Business.Handlers.Authorizations.Commands
             public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
                 var mapper = _mapper.Map<UserForRegister>(request);
+
                 var response = await _authService.Register(mapper, request.Password);
+                if (!response.Success)
+                {
+                    return response;
+                }
+
+                var result = await _authService.CreateAccessToken(response.Data);
+                if (result.Success)
+                {
+                    return new SuccessDataResult<AccessToken>(result.Data);
+                }
+
                 return response;
             }
         }
