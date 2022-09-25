@@ -1,6 +1,26 @@
-﻿namespace Business.Rules
+﻿using Business.Constants;
+using Core.Utilities.Results;
+using DataAccess.Abstract;
+using System.Threading.Tasks;
+
+namespace Business.Rules
 {
     public class OperationClaimRules
     {
+        private readonly IOperationClaimRepository _operationClaimRepository;
+
+        public OperationClaimRules(IOperationClaimRepository operationClaimRepository)
+        {
+            _operationClaimRepository = operationClaimRepository;
+        }
+
+        public async Task<IResult> OperationClaimAlreadyExists(string claim)
+        {
+            var result = await _operationClaimRepository.AnyAsync(b => b.Name == claim);
+            if (!result)
+                return new SuccessResult();
+            else
+                return new ErrorResult(Messages.OperationClaimExists);
+        }
     }
 }
