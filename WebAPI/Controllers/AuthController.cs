@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Business.Handlers.Authorizations.Commands;
-using Business.Handlers.Authorizations.Queries;
 
 namespace WebAPI.Controllers
 {
@@ -9,7 +8,6 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserCommand createUser)
         {
