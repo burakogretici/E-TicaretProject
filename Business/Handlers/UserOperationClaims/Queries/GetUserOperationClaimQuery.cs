@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.UserOperationClaims;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Dtos.Users;
+using Entities.Dtos.UserOperationClaim;
 using MediatR;
 
 namespace Business.Handlers.UserOperationClaims.Queries
@@ -15,21 +14,16 @@ namespace Business.Handlers.UserOperationClaims.Queries
 
         public class GetUserOperationClaimQueryHandler : IRequestHandler<GetUserOperationClaimQuery, IDataResult<UserOperationClaimDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IUserOperationClaimService _userOperationClaimService;
 
-            public GetUserOperationClaimQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetUserOperationClaimQueryHandler(IUserOperationClaimService userOperationClaimService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _userOperationClaimService = userOperationClaimService;
             }
-
             public async Task<IDataResult<UserOperationClaimDto>> Handle(GetUserOperationClaimQuery request, CancellationToken cancellationToken)
             {
-                //todo:bir daha incele
-                var userOperationClaim = await _unitOfWork.UserOperationClaimRepository.GetAsync(a => a.UserId == request.Id);
-                var userOperationClaimDto = _mapper.Map<UserOperationClaimDto>(userOperationClaim);
-                return new SuccessDataResult<UserOperationClaimDto>(userOperationClaimDto);
+                var userOperationClaim = await _userOperationClaimService.GetByIdAsync(request.Id);
+                return userOperationClaim;
             }
         }
     }

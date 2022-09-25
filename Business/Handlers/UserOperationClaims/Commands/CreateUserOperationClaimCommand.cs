@@ -1,37 +1,35 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Business.Constants;
+using Business.Services.UserOperationClaims;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
+using Entities.Dtos.UserOperationClaim;
 using MediatR;
 
 namespace Business.Handlers.UserOperationClaims.Commands
 {
     public class CreateUserOperationClaimCommand : IRequest<IResult>
     {
-        public int UserId { get; set; }
-        public int OperationClaimId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid OperationClaimId { get; set; }
 
 
         public class CreateUserOperationClaimCommandHandler : IRequestHandler<CreateUserOperationClaimCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IUserOperationClaimService _userOperationClaimService;
             private readonly IMapper _mapper;
-
-
-            public CreateUserOperationClaimCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public CreateUserOperationClaimCommandHandler(IUserOperationClaimService userOperationClaimService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _userOperationClaimService = userOperationClaimService;
                 _mapper = mapper;
-
             }
+
             public async Task<IResult> Handle(CreateUserOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Entities.Concrete.UserOperationClaim>(request);
-                await _unitOfWork.UserOperationClaimRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.UserOperationClaimAdded);
+                var mapper = _mapper.Map<UserOperationClaimDto>(request);
+                var userOperationClaim = await _userOperationClaimService.AddAsync(mapper);
+                return userOperationClaim;
             }
         }
     }

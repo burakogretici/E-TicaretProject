@@ -1,9 +1,9 @@
 ﻿using System;
-using Core.Entities.Abstract;
+using Core.Entities.Concrete;
 
 namespace Entities.Concrete
 {
-    public class UserOperationClaim : IEntity
+    public class UserOperationClaim : BaseEntity
     {
         public Guid UserId { get; set; }
         public Guid OperationClaimId { get; set; }

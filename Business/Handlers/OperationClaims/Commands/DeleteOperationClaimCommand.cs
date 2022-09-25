@@ -1,11 +1,11 @@
-﻿using Business.Constants;
-using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+﻿using Core.Utilities.Results;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using AutoMapper;
+using Business.Services.OperationClaims;
+using Entities.Dtos.OperationClaims;
 
 namespace Business.Handlers.OperationClaims.Commands
 {
@@ -13,21 +13,22 @@ namespace Business.Handlers.OperationClaims.Commands
     {
         public Guid Id { get; set; }
 
-        public class DeleteOperationClaimHandler : IRequestHandler<DeleteOperationClaimCommand, IResult>
+        public class DeleteOperationClaimCommandHandler : IRequestHandler<DeleteOperationClaimCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-
-            public DeleteOperationClaimHandler(IUnitOfWork unitOfWork)
+            private readonly IOperationClaimService _operationClaimService;
+            private readonly IMapper _mapper;
+            public DeleteOperationClaimCommandHandler(IOperationClaimService operationClaimService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _operationClaimService = operationClaimService;
+                _mapper = mapper;
             }
 
             public async Task<IResult> Handle(DeleteOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                OperationClaim operationClaim = await _unitOfWork.OperationClaimRepository.GetAsync(x => x.Id == request.Id);
-                await _unitOfWork.OperationClaimRepository.DeleteAsync(operationClaim);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.CountryDeleted);
+                var mapper = _mapper.Map<OperationClaimDto>(request);
+                var operationClaim = await _operationClaimService.DeleteAsync(mapper);
+                return operationClaim;
+
             }
         }
     }

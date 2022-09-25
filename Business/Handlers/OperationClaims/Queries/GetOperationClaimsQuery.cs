@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Services.OperationClaims;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.OperationClaims;
 using MediatR;
 
@@ -12,23 +12,17 @@ namespace Business.Handlers.OperationClaims.Queries
     {
         public class GetOperationClaimsQueryHandler : IRequestHandler<GetOperationClaimsQuery, IDataResult<IEnumerable<OperationClaimDto>>>
         {
-            private readonly IUnitOfWork _unitOfWork;
+            private readonly IOperationClaimService _operationClaimService;
 
-            public GetOperationClaimsQueryHandler(IUnitOfWork unitOfWork)
+            public GetOperationClaimsQueryHandler(IOperationClaimService operationClaimService)
             {
-                _unitOfWork = unitOfWork;
+                _operationClaimService = operationClaimService;
             }
 
             public async Task<IDataResult<IEnumerable<OperationClaimDto>>> Handle(GetOperationClaimsQuery request, CancellationToken cancellationToken)
             {
-                var customerList = await _unitOfWork.OperationClaimRepository.GetAllAsync(
-                    selector: x => new OperationClaimDto
-                    {
-                        Id = x.Id,
-                        Name = x.Name
-                    }
-                );
-                return new SuccessDataResult<IEnumerable<OperationClaimDto>>(customerList);
+                var operationClaimList = await _operationClaimService.GetAllAsync();
+                return operationClaimList;
             }
         }
     }

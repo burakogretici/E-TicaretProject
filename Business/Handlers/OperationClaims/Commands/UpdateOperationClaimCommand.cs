@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Business.Constants;
+using AutoMapper;
+using Business.Services.OperationClaims;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
-using Entities.Concrete;
+using Entities.Dtos.OperationClaims;
 using MediatR;
 
 namespace Business.Handlers.OperationClaims.Commands
@@ -16,19 +16,19 @@ namespace Business.Handlers.OperationClaims.Commands
 
         public class UpdateOperationClaimCommandHandler : IRequestHandler<UpdateOperationClaimCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-           
-            public UpdateOperationClaimCommandHandler(IUnitOfWork unitOfWork)
+            private readonly IOperationClaimService _operationClaimService;
+            private readonly IMapper _mapper;
+            public UpdateOperationClaimCommandHandler(IOperationClaimService operationClaimService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;              
+                _operationClaimService = operationClaimService;
+                _mapper = mapper;
             }
-
             public async Task<IResult> Handle(UpdateOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                OperationClaim operationClaim = await _unitOfWork.OperationClaimRepository.GetAsync(x => x.Id == request.Id);
-                await _unitOfWork.OperationClaimRepository.UpdateAsync(operationClaim);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.OperationClaimUpdated);
+                var mapper = _mapper.Map<OperationClaimDto>(request);
+                var operationClaim = await _operationClaimService.UpdateAsync(mapper);
+                return operationClaim;
+
             }
         }
     }

@@ -32,7 +32,7 @@ namespace Business.Helpers.AutoMapperProfiles
             CreateMap<UserForRegister, RegisterUserCommand>().ReverseMap();
 
             CreateMap<User, UserDto>().ReverseMap();
-            
+
 
         }
     }

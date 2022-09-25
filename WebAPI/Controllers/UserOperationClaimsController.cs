@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Business.Handlers.UserOperationClaims.Commands;
 using Business.Handlers.UserOperationClaims.Queries;
-using Entities.Dtos.Users;
+using Entities.Dtos.UserOperationClaim;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +23,8 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteUserOperationClaimCommand deleteUserOperation)
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteUserOperationClaimCommand deleteUserOperation)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteUserOperation));
 

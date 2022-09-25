@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.OperationClaims;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Dtos.OperationClaims;
 using MediatR;
 
@@ -15,20 +14,16 @@ namespace Business.Handlers.OperationClaims.Queries
 
         public class GetOperationClaimQueryHandler : IRequestHandler<GetOperationClaimQuery, IDataResult<OperationClaimDto>>
         {
-            private readonly IUnitOfWork _unitOfWork;
-            private readonly IMapper _mapper;
+            private readonly IOperationClaimService _operationClaimService;
 
-            public GetOperationClaimQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+            public GetOperationClaimQueryHandler(IOperationClaimService operationClaimService)
             {
-                _unitOfWork = unitOfWork;
-                _mapper = mapper;
+                _operationClaimService = operationClaimService;
             }
-
             public async Task<IDataResult<OperationClaimDto>> Handle(GetOperationClaimQuery request, CancellationToken cancellationToken)
             {
-                var operationClaim = await _unitOfWork.OperationClaimRepository.GetAsync(a => a.Id == request.Id);
-                var operationClaimDto = _mapper.Map<OperationClaimDto>(operationClaim);
-                return new SuccessDataResult<OperationClaimDto>(operationClaimDto);
+                var operationClaim = await _operationClaimService.GetByIdAsync(request.Id);
+                return operationClaim;
             }
         }
     }
