@@ -353,8 +353,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("DisplayOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("DisplayOrder")
-                        .HasDefaultValueSql("0");
+                        .HasDefaultValue(0)
+                        .HasColumnName("DisplayOrder");
 
                     b.Property<bool>("Hidden")
                         .HasColumnType("bit")
@@ -373,10 +373,6 @@ namespace DataAccess.Migrations
                     b.Property<Guid?>("ParentMenuId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("QueryString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("QueryString");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -388,7 +384,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ParentMenuId");
 
-                    b.ToTable("Menu");
+                    b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>
@@ -798,7 +794,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Menu", b =>
                 {
                     b.HasOne("Entities.Concrete.Menu", "ParentMenu")
-                        .WithMany()
+                        .WithMany("Childeren")
                         .HasForeignKey("ParentMenuId");
 
                     b.Navigation("ParentMenu");
@@ -955,6 +951,11 @@ namespace DataAccess.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Suppliers");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Menu", b =>
+                {
+                    b.Navigation("Childeren");
                 });
 
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>

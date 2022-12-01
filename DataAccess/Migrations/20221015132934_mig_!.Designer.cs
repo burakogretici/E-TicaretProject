@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(EticaretContext))]
-    [Migration("20220925061704_mig_2")]
-    partial class mig_2
+    [Migration("20221015132934_mig_!")]
+    partial class mig_
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -355,8 +355,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("DisplayOrder")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasColumnName("DisplayOrder")
-                        .HasDefaultValueSql("0");
+                        .HasDefaultValue(0)
+                        .HasColumnName("DisplayOrder");
 
                     b.Property<bool>("Hidden")
                         .HasColumnType("bit")
@@ -375,10 +375,6 @@ namespace DataAccess.Migrations
                     b.Property<Guid?>("ParentMenuId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("QueryString")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("QueryString");
-
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -390,7 +386,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ParentMenuId");
 
-                    b.ToTable("Menu");
+                    b.ToTable("Menus");
                 });
 
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>
@@ -679,10 +675,8 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.UserOperationClaim", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OperationClaimId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -691,15 +685,20 @@ namespace DataAccess.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("OperationClaimId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId", "OperationClaimId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("OperationClaimId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserOperationClaims");
                 });
@@ -797,7 +796,7 @@ namespace DataAccess.Migrations
             modelBuilder.Entity("Entities.Concrete.Menu", b =>
                 {
                     b.HasOne("Entities.Concrete.Menu", "ParentMenu")
-                        .WithMany()
+                        .WithMany("Childeren")
                         .HasForeignKey("ParentMenuId");
 
                     b.Navigation("ParentMenu");
@@ -954,6 +953,11 @@ namespace DataAccess.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Suppliers");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.Menu", b =>
+                {
+                    b.Navigation("Childeren");
                 });
 
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>

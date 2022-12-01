@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccess.Migrations
 {
-    public partial class mig_1 : Migration
+    public partial class mig_ : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,28 +68,27 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Menu",
+                name: "Menus",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Icon = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ParentMenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    DisplayOrder = table.Column<int>(type: "int", nullable: false, defaultValueSql: "0"),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Hidden = table.Column<bool>(type: "bit", nullable: false),
-                    QueryString = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Deleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Menu", x => x.Id);
+                    table.PrimaryKey("PK_Menus", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Menu_Menu_ParentMenuId",
+                        name: "FK_Menus_Menus_ParentMenuId",
                         column: x => x.ParentMenuId,
-                        principalTable: "Menu",
+                        principalTable: "Menus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -233,12 +232,16 @@ namespace DataAccess.Migrations
                 name: "UserOperationClaims",
                 columns: table => new
                 {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OperationClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    OperationClaimId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserOperationClaims", x => new { x.UserId, x.OperationClaimId });
+                    table.PrimaryKey("PK_UserOperationClaims", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserOperationClaims_OperationClaims_OperationClaimId",
                         column: x => x.OperationClaimId,
@@ -503,8 +506,8 @@ namespace DataAccess.Migrations
                 column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Menu_ParentMenuId",
-                table: "Menu",
+                name: "IX_Menus_ParentMenuId",
+                table: "Menus",
                 column: "ParentMenuId");
 
             migrationBuilder.CreateIndex(
@@ -551,6 +554,11 @@ namespace DataAccess.Migrations
                 name: "IX_UserOperationClaims_OperationClaimId",
                 table: "UserOperationClaims",
                 column: "OperationClaimId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserOperationClaims_UserId",
+                table: "UserOperationClaims",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -562,7 +570,7 @@ namespace DataAccess.Migrations
                 name: "Individual");
 
             migrationBuilder.DropTable(
-                name: "Menu");
+                name: "Menus");
 
             migrationBuilder.DropTable(
                 name: "OrderDetails");

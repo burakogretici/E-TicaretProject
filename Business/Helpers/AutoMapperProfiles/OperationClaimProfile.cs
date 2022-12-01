@@ -2,7 +2,6 @@
 using Business.Handlers.OperationClaims.Commands;
 using Entities.Concrete;
 using Entities.Dtos.OperationClaims;
-using Entities.Dtos.UserOperationClaim;
 
 namespace Business.Helpers.AutoMapperProfiles
 {

@@ -32,6 +32,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Color> Colors { get; set; }
+        public DbSet<Menu> Menus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) => 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

@@ -30,6 +30,10 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<BrandRepository>().As<IBrandRepository>();
             builder.RegisterType<BrandRules>().SingleInstance();
 
+            //Menu
+            builder.RegisterType<MenuRepository>().As<IMenuRepository>();
+            builder.RegisterType<MenuRules>().SingleInstance();
+
             //User
             builder.RegisterType<UserRepository>().As<IUserRepository>().SingleInstance();
             builder.RegisterType<UserRules>().SingleInstance();

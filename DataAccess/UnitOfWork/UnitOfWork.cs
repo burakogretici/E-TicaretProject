@@ -219,6 +219,18 @@ namespace DataAccess.UnitOfWork
                 return _operationClaimRepository;
             }
         }
+        private IMenuRepository _menuRepository;
+        public IMenuRepository MenuRepository
+        {
+            get
+            {
+                if (_menuRepository == null)
+                {
+                    _menuRepository = new MenuRepository(_eticaretContext);
+                }
+                return _menuRepository;
+            }
+        }
 
         public async Task Commit() => await _eticaretContext.SaveChangesAsync();
 

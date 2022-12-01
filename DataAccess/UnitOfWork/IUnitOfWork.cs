@@ -22,7 +22,7 @@ namespace DataAccess.UnitOfWork
         IOrderRepository OrderRepository { get; }
         ISupplierRepository SupplierRepository { get; }
         IOperationClaimRepository OperationClaimRepository { get; }
-
+        IMenuRepository MenuRepository { get; }
         Task Commit();
     }
 }
