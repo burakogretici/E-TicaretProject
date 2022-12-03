@@ -14,12 +14,11 @@ namespace DataAccess.Concrete.Configurations
             builder.Property(m => m.Hidden).HasColumnName("Hidden");
             builder.Property(m => m.DisplayOrder).HasColumnName("DisplayOrder").HasDefaultValue("0");
             builder.Property(m => m.ParentMenuId).IsRequired(false).HasDefaultValue(null);
-            if (builder.HasMany(m => m.Childeren)
-                    .WithOne(m => m.ParentMenu)
-                    .HasForeignKey(m => m.ParentMenuId) == null)
-            {
-                
-            }
+            builder.HasMany(m => m.Childeren)
+                .WithOne(m => m.ParentMenu)
+                .HasForeignKey(m => m.ParentMenuId);
+
+            builder.HasIndex(x => x.Name).IsUnique();
 
             base.Configure(builder);
         }
