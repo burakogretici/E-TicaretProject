@@ -17,14 +17,11 @@
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            @*  <div class="form-group">
-                <label asp-for="ParentMenuId" class="control-label"></label>
-                <input asp-for="ParentMenuId" class="form-control" />
-                <span asp-validation-for="ParentMenuId" class="text-danger"></span>
-            </div>*@
+            </div>         
             <div class="form-group">
-                @Html.DropDownList("ParentMenuId",ViewBag.Menus,"Seçiniz...",new { @class="form-group" })
+                <label asp-for="ParentMenu" class="control-label"></label>
+                @Html.DropDownList("ParentMenuId", ViewBag.Menus, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="ParentMenuId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Url" class="control-label"></label>

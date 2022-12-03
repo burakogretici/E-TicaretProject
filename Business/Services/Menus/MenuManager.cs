@@ -28,7 +28,7 @@ namespace Business.Services.Menus
 
         public async Task<IDataResult<MenuDto>> AddAsync(MenuDto menuDto)
         {
-            IResult result = BusinessRules.Run(await _menuRules.MenuNameAlreadyExists(menuDto.Name));
+            IResult result = BusinessRules.Run();
             if (result == null)
             {
                 var mapper = _mapper.Map<Menu>(menuDto);
@@ -56,28 +56,18 @@ namespace Business.Services.Menus
 
         public async Task<IResult> UpdateAsync(MenuDto menuDto)
         {
-            var menu = await GetByIdAsync(menuDto.Id);
-            if (menu.Data != null)
-            {
-                IResult result = BusinessRules.Run(await _menuRules.MenuNameAlreadyExists(menuDto.Name));
-                if (result == null)
-                {
-                    menu.Data.Name = menuDto.Name;
-                    menu.Data.ParentMenuId = menuDto.ParentMenuId;
-                    menu.Data.Hidden = menuDto.Hidden;
-                    menu.Data.Icon = menuDto.Icon;
-                    menu.Data.Url = menuDto.Url;
-                    menu.Data.DisplayOrder = menuDto.DisplayOrder;
-
-                    var mapper = _mapper.Map<Menu>(menu.Data);
-                    await _unitOfWork.MenuRepository.UpdateAsync(mapper);
-                    await _unitOfWork.Commit();
-                    return new SuccessResult(Messages.MenuUpdated);
-                }
-
-                return result;
+            IResult result = BusinessRules.Run();
+            if (result == null)
+            {         
+                var mapper = _mapper.Map<Menu>(menuDto);
+                await _unitOfWork.MenuRepository.UpdateAsync(mapper);
+                await _unitOfWork.Commit();
+                return new SuccessResult(Messages.MenuUpdated);
             }
-            return menu;
+
+            return result;
+
+        
         }
         public async Task<IDataResult<IEnumerable<MenuDto>>> GetAllAsync()
         {

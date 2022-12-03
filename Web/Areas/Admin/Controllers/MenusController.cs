@@ -23,6 +23,9 @@ namespace Web.Areas.Admin.Controllers
         [HttpGet("menus/update")]
         public async Task<IActionResult> Update(string id)
         {
+            var menus = await _apiHelper.Get<MenuDto>("menus/getall");
+            ViewBag.Menus = new SelectList(menus, "Id", "Name");
+
             var menu = await _apiHelper.GetById<MenuDto>($"menus/{id}");
             return View(menu);
         }
@@ -34,9 +37,10 @@ namespace Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult GetById()
+        public async Task<IActionResult> GetById(string id)
         {
-            throw new System.NotImplementedException();
+            var menu = await _apiHelper.GetById<MenuDto>($"menus/{id}");
+            return View(menu);
         }
 
         [HttpGet("menus/delete")]
