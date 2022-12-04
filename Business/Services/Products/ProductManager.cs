@@ -48,26 +48,17 @@ namespace Business.Services.Products
 
         public async Task<IResult> UpdateAsync(ProductDto productDto)
         {
-            var product = await GetByIdAsync(productDto.Id);
-            if (product.Data != null)
-            {
                 IResult result = BusinessRules.Run(await _productRules.ProductAlreadyExists(productDto.Name));
                 if (result == null)
                 {
-                    product.Data.Name = productDto.Name;
-                    product.Data.Code = productDto.Code;
-                    product.Data.UnitPrice = productDto.UnitPrice;
-                    product.Data.UnitsInStock = productDto.UnitsInStock;
-
-                    var mapper = _mapper.Map<Product>(product.Data);
+                    var mapper = _mapper.Map<Product>(productDto);
                     await _unitOfWork.ProductRepository.UpdateAsync(mapper);
                     await _unitOfWork.Commit();
                     return new SuccessResult(Messages.ProductUpdated);
                 }
 
                 return result;
-            }
-            return product;
+            
         }
 
         public async Task<IResult> DeleteAsync(ProductDto productDto)
@@ -100,6 +91,8 @@ namespace Business.Services.Products
                     BrandName = x.Brand.Name,
                     CategoryName = x.Category.Name,
                     ColorName = x.Color.Name,
+                    UnitPrice = x.UnitPrice,
+                    UnitsInStock = x.UnitsInStock,
                     //SupplierName = x.Supplier.CompanyName,
                     CreatedDate = x.CreatedDate,
                     UpdatedDate = x.UpdatedDate,

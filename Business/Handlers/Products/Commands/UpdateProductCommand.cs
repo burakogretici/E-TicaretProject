@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Business.Services.Products;
 using Core.Utilities.Results;
+using Entities.Dtos;
 using Entities.Dtos.Products;
 using MediatR;
 
 namespace Business.Handlers.Products.Commands
 {
-    public class UpdateProductCommand : IRequest<IResult>
+    public class UpdateProductCommand : BaseCommand, IRequest<IResult>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
         public Guid SupplierId { get; set; }

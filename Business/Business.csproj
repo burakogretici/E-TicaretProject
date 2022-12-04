@@ -5,12 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Handlers\Addresses\ValidationRules\**" />
+    <Compile Remove="Handlers\Baskets\ValidationRules\**" />
     <Compile Remove="Handlers\Categories\ValidationRules\**" />
+    <Compile Remove="Handlers\Cities\ValidationRules\**" />
     <Compile Remove="Handlers\Colors\ValidationRules\**" />
+    <Compile Remove="Handlers\Countries\ValidationRules\**" />
+    <Compile Remove="Handlers\Products\ValidationRules\**" />
+    <EmbeddedResource Remove="Handlers\Addresses\ValidationRules\**" />
+    <EmbeddedResource Remove="Handlers\Baskets\ValidationRules\**" />
     <EmbeddedResource Remove="Handlers\Categories\ValidationRules\**" />
+    <EmbeddedResource Remove="Handlers\Cities\ValidationRules\**" />
     <EmbeddedResource Remove="Handlers\Colors\ValidationRules\**" />
+    <EmbeddedResource Remove="Handlers\Countries\ValidationRules\**" />
+    <EmbeddedResource Remove="Handlers\Products\ValidationRules\**" />
+    <None Remove="Handlers\Addresses\ValidationRules\**" />
+    <None Remove="Handlers\Baskets\ValidationRules\**" />
     <None Remove="Handlers\Categories\ValidationRules\**" />
+    <None Remove="Handlers\Cities\ValidationRules\**" />
     <None Remove="Handlers\Colors\ValidationRules\**" />
+    <None Remove="Handlers\Countries\ValidationRules\**" />
+    <None Remove="Handlers\Products\ValidationRules\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,20 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\Addresses\ValidationRules\" />
-    <Folder Include="Handlers\Baskets\ValidationRules\" />
-    <Folder Include="Handlers\Brands\ValidationRules\" />
-    <Folder Include="Handlers\Cities\ValidationRules\" />
-    <Folder Include="Handlers\Countries\ValidationRules\" />
-    <Folder Include="Handlers\Customers\ValidationRules\" />
-    <Folder Include="Handlers\OrderDetails\ValidationRules\" />
-    <Folder Include="Handlers\OperationClaims\ValidationRules\" />
-    <Folder Include="Handlers\Orders\ValidationRules\" />
-    <Folder Include="Handlers\Products\ValidationRules\" />
-    <Folder Include="Handlers\Suppliers\ValidationRules\" />
-    <Folder Include="Handlers\UserOperationClaims\ValidationRules\" />
-    <Folder Include="Handlers\Users\ValidationRules\" />
-    <Folder Include="Services\BasketDetails\" />
+	  <Folder Include="Services\BasketDetails\" />
     <Folder Include="Services\Baskets\" />
   </ItemGroup>
 

@@ -17,6 +17,8 @@ namespace DataAccess.Concrete.Configurations
             builder.Property(a => a.UnitPrice).HasColumnName("UnitPrice").HasColumnType("decimal(18,2)");
             builder.Property(a => a.UnitsInStock).HasColumnName("UnitsInStock");
 
+            builder.HasIndex(x => x.Code).IsUnique();
+
             builder.HasOne(a => a.Brand)
                 .WithMany(a => a.Products)
                 .HasForeignKey(a => a.BrandId);
