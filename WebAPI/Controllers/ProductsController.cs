@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateProductCommand createProduct)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createProduct));
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateProductCommand updateProduct)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(updateProduct));
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete]
+        [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromBody] DeleteProductCommand deleteProduct)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteProduct));

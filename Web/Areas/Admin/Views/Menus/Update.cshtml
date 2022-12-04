@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Update";
-    var isParent = Model.ParentMenu ?? "Seçiniz...";
 }
 
 <div class="row">
@@ -17,7 +16,7 @@
 
             <div class="form-group">
             <label asp-for="ParentMenu" class="control-label"></label>
-                @Html.DropDownList("ParentMenuId",ViewBag.Menus,isParent,new { @class="form-control" })
+                @Html.DropDownList("ParentMenuId",ViewBag.Menus,"Seçiniz",new { @class="form-control" })
                 <span asp-validation-for="ParentMenuId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -40,6 +39,7 @@
                 <input asp-for="Hidden" class="form-control" />
                 <span asp-validation-for="Hidden" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="CreatedDate" />
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
