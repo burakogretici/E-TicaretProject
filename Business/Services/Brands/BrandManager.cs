@@ -42,22 +42,17 @@ namespace Business.Services.Brands
 
         public async Task<IResult> UpdateAsync(BrandDto brandDto)
         {
-            var brand = await GetByIdAsync(brandDto.Id);
-            if (brand.Data != null)
+            IResult result = BusinessRules.Run(await _brandRules.BrandNameAlreadyExists(brandDto.Name));
+            if (result == null)
             {
-                IResult result = BusinessRules.Run(await _brandRules.BrandNameAlreadyExists(brandDto.Name));
-                if (result == null)
-                {
-                    brand.Data.Name = brandDto.Name;
-                    var mapper = _mapper.Map<Brand>(brand.Data);
-                    await _unitOfWork.BrandRepository.UpdateAsync(mapper);
-                    await _unitOfWork.Commit();
-                    return new SuccessResult(Messages.BrandUpdated);
-                }
-
-                return result;
+                var mapper = _mapper.Map<Brand>(brandDto);
+                await _unitOfWork.BrandRepository.UpdateAsync(mapper);
+                await _unitOfWork.Commit();
+                return new SuccessResult(Messages.BrandUpdated);
             }
-            return brand;
+
+            return result;
+
         }
 
         public async Task<IResult> DeleteAsync(BrandDto brandDto)
@@ -75,7 +70,7 @@ namespace Business.Services.Brands
 
         }
 
-        [SecuredOperation("Admin")]
+        //[SecuredOperation("Admin")]
         public async Task<IDataResult<IEnumerable<BrandDto>>> GetAllAsync()
         {
             var result = await _unitOfWork.BrandRepository.GetAllAsync(expression: x => x.Deleted != true,
