@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     {
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(IEnumerable<CategoryDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetCategoriesQuery()));
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateCategoryCommand createCategory)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createCategory));
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateCategoryCommand updateCategory)
 
         {

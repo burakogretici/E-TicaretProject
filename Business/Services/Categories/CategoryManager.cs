@@ -47,22 +47,17 @@ namespace Business.Services.Categories
 
         public async Task<IResult> UpdateAsync(CategoryDto categoryDto)
         {
-            var category = await GetByIdAsync(categoryDto.Id);
-            if (category.Data != null)
+            IResult result = BusinessRules.Run(await _categoryRules.CategoryNameAlreadyExists(categoryDto.Name));
+            if (result == null)
             {
-                IResult result = BusinessRules.Run(await _categoryRules.CategoryNameAlreadyExists(categoryDto.Name));
-                if (result == null)
-                {
-                    category.Data.Name = categoryDto.Name;
-                    var mapper = _mapper.Map<Category>(category.Data);
-                    await _unitOfWork.CategoryRepository.UpdateAsync(mapper);
-                    await _unitOfWork.Commit();
-                    return new SuccessResult(Messages.CategoryUpdated);
-                }
-                return result;
-
+                var mapper = _mapper.Map<Category>(categoryDto);
+                await _unitOfWork.CategoryRepository.UpdateAsync(mapper);
+                await _unitOfWork.Commit();
+                return new SuccessResult(Messages.CategoryUpdated);
             }
-            return category;
+            return result;
+
+
         }
 
 
@@ -80,7 +75,7 @@ namespace Business.Services.Categories
             return category;
         }
 
-        [CacheAspect(50)]
+        
         public async Task<IDataResult<IEnumerable<CategoryDto>>> GetAllAsync()
         {
             var result = await _unitOfWork.CategoryRepository.GetAllAsync(expression: x => x.Deleted != true,
