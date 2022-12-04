@@ -32,7 +32,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateColorCommand createColor)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createColor));
@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut]
+        [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateColorCommand updateColor)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(updateColor));

@@ -42,22 +42,16 @@ namespace Business.Services.Colors
 
         public async Task<IResult> UpdateAsync(ColorDto colorDto)
         {
-            var color = await GetByIdAsync(colorDto.Id);
-            if (color.Data != null)
+            IResult result = BusinessRules.Run(await _colorRules.ColorNameAlreadyExists(colorDto.Name));
+            if (result == null)
             {
-                IResult result = BusinessRules.Run(await _colorRules.ColorNameAlreadyExists(colorDto.Name));
-                if (result == null)
-                {
-                    color.Data.Name = colorDto.Name;
-                    var mapper = _mapper.Map<Color>(color.Data);
-                    await _unitOfWork.ColorRepository.UpdateAsync(mapper);
-                    await _unitOfWork.Commit();
-                    return new SuccessResult(Messages.ColorUpdated);
-                }
-                return new ErrorResult(result.Message);
+                var mapper = _mapper.Map<Color>(colorDto);
+                await _unitOfWork.ColorRepository.UpdateAsync(mapper);
+                await _unitOfWork.Commit();
+                return new SuccessResult(Messages.ColorUpdated);
             }
+            return new ErrorResult(result.Message);
 
-            return color;
         }
 
         public async Task<IResult> DeleteAsync(ColorDto colorDto)
