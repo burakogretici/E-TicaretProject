@@ -25,10 +25,9 @@ namespace Business.Handlers.Orders.Queries
                     selector: x => new OrderDto
                     {
                         Id = x.Id,
-                        CustomerFullName = x.Customer.User.FirstName + " " + x.Customer.User.LastName,
+                        CustomerFullName = x.User.FirstName + " " + x.User.LastName,
                         Address = x.Address.City.Name + " / " + x.Address.Country,
                         Shipper = x.Shipper.Name,
-                        Amount = x.Amount,
                         OrderStatus = x.OrderStatus
                     }
                 );

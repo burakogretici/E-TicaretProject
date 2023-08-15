@@ -5,6 +5,8 @@ using Business.Handlers.Brands.Commands;
 using Business.Handlers.Brands.Queries;
 using Entities.Dtos.Brands;
 using Microsoft.AspNetCore.Http;
+using Core.Entities.Concrete;
+using Entities.Dtos.Addresses;
 
 namespace WebAPI.Controllers
 {
@@ -12,22 +14,30 @@ namespace WebAPI.Controllers
     [ApiController]
     public class BrandsController : BaseController
     {
-     
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BrandDto>))]
+
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AddressListDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
+        public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)
+        {
+            GetBrandsTableQuery getAddressTableQuery = new() { TableGlobalFilter = tableGlobalFilter };
+            return GetResponseOnlyResult(await Mediator.Send(getAddressTableQuery));
+        }
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BrandDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("get")]
         public async Task<IActionResult> GetAll()
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetBrandsQuery()));
+            GetBrandsQuery getBrandsQuery = new() { }; ;
+            return GetResponseOnlyResult(await Mediator.Send(getBrandsQuery));
         }
 
-       
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BrandDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetBrandQuery getBrandQuery)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(getBrandQuery));
+            return GetResponseOnlyResult(await Mediator.Send(getBrandQuery));
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -35,24 +45,24 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateBrandCommand createBrand)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createBrand));
+            return GetResponseOnlyResult(await Mediator.Send(createBrand));
         }
-        
-        
+
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateBrandCommand updateBrand)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateBrand));
+            return GetResponseOnlyResult(await Mediator.Send(updateBrand));
         }
-        
+
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteBrandCommand deleteBrand)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteBrand));
+            return GetResponseOnlyResult(await Mediator.Send(deleteBrand));
         }
 
     }

@@ -3,7 +3,7 @@ using Entities.Concrete;
 
 namespace DataAccess.Abstract
 {
-    public interface IBasketDetailRepository : IEntityAsyncRepository<BasketDetail>
+    public interface IBasketItemRepository : IEntityAsyncRepository<BasketItem>
     {
     }
 }

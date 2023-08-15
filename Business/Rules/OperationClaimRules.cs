@@ -1,4 +1,5 @@
 ﻿using Business.Constants;
+using Core.CrossCuttingConcerns.Exceptions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using System.Threading.Tasks;
@@ -14,13 +15,11 @@ namespace Business.Rules
             _operationClaimRepository = operationClaimRepository;
         }
 
-        public async Task<IResult> OperationClaimAlreadyExists(string claim)
+        public async Task OperationClaimAlreadyExists(string claim)
         {
             var result = await _operationClaimRepository.AnyAsync(b => b.Name == claim);
-            if (!result)
-                return new SuccessResult();
-            else
-                return new ErrorResult(Messages.OperationClaimExists);
+            if (result) throw new BusinessException(Messages.OperationClaimExists);
+
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Business.Constants;
+using Core.CrossCuttingConcerns.Exceptions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using System.Threading.Tasks;
 
 namespace Business.Rules
@@ -14,13 +17,12 @@ namespace Business.Rules
             _brandDal = brandDal;
         }
 
-        public async Task<IResult> BrandNameAlreadyExists(string brandName)
+       
+        public async Task BrandNameAlreadyExists(string brandName)
         {
             var result = await _brandDal.AnyAsync(b => b.Name == brandName);
-            if (!result) 
-                return new SuccessResult();
-            else
-                return new ErrorResult(Messages.BrandNameAlreadyExists);
+            if (result) throw new BusinessException(Messages.BrandNameAlreadyExists);
         }
+
     }
 }

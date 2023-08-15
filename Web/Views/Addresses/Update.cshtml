@@ -1,0 +1,61 @@
+﻿@model Entities.Dtos.Addresses.AddressDto
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="updateAddress" action="/product/update/" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                @Html.DropDownList("UserId", ViewBag.Users, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                @Html.DropDownList("CountryId", ViewBag.Countries, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="CountryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CityId" class="control-label"></label>
+                @Html.DropDownList("CityId", ViewBag.Cities, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AddressDetail" class="control-label"></label>
+                <input asp-for="AddressDetail" class="form-control" />
+                <span asp-validation-for="AddressDetail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+
+            <div class="form-group">
+                <input onclick="updateAddress()" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section scripts{
+    <script>
+        function updateAddress() {
+            var form = $("#updateAddress");
+            app.callJx(form.attr("action"), "body", form.serialize());
+        }
+    </script>
+}

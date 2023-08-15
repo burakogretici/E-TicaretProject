@@ -9,7 +9,7 @@
         public static string UserUpdated => "Kullanıcı güncellendi";
 
         public static string AccessTokenCreated => "Token oluşturuldu";
-        public static string UserNotFound => "Kullanıcı bulunamadı";
+        public static string UserNotFound => "Kullanıcı Adı veya Şifre Hatalı!";
 
         public static string UserAlreadyExists => "Kullanıcı zaten var";
         public static string UserRegistered => "Kullanıcı başarıyla kayıt oldu.";

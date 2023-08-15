@@ -1,0 +1,53 @@
+﻿@using Entities.Dtos.Addresses
+@model AddressDto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form action="/address/create" id="createAddress" method="post" enctype="multipart/form-data">
+        
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                @Html.DropDownList("UserId", ViewBag.Users, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                @Html.DropDownList("CountryId", ViewBag.Countries, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="CountryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CityId" class="control-label"></label>
+                @Html.DropDownList("CityId", ViewBag.Cities, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="CityId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AddressDetail" class="control-label"></label>
+                <input asp-for="AddressDetail" class="form-control" />
+                <span asp-validation-for="AddressDetail" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>     
+      
+            <div class="form-group">
+                <input onclick="$Address.save()" class="btn btn-primary" value="Kaydet" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section scripts{
+    <script src="~/js/pages/address.js"></script>
+}

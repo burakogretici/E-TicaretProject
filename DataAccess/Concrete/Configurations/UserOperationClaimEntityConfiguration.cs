@@ -1,10 +1,9 @@
 ﻿using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataAccess.Concrete.Configurations
 {
-    public class UserOperationClaimEntityConfiguration : IEntityTypeConfiguration<UserOperationClaim>
+    public class UserOperationClaimEntityConfiguration : BaseEntityConfiguration<UserOperationClaim>
     {
         public void Configure(EntityTypeBuilder<UserOperationClaim> builder)
         {
@@ -17,6 +16,9 @@ namespace DataAccess.Concrete.Configurations
             builder.HasOne(a => a.OperationClaim)
                 .WithMany(a => a.UserOperationClaims)
                 .HasForeignKey(a => a.OperationClaimId);
+
+            base.Configure(builder);
+
         }
     }
 }

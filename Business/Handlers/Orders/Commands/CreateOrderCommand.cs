@@ -13,10 +13,11 @@ namespace Business.Handlers.Orders.Commands
 {
     public class CreateOrderCommand : IRequest<IResult>
     {
-        public Guid CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public Guid AddressId { get; set; }
         public Guid ShipperId { get; set; }
-        public int Amount { get; set; }
+        public Guid BasketId { get; set; }
+
         public OrderStatus OrderStatus { get; set; }
 
         public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, IResult>
@@ -32,10 +33,10 @@ namespace Business.Handlers.Orders.Commands
 
             public async Task<IResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<Order>(request);
-                await _unitOfWork.OrderRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.OrderAdded);
+                    var mapper = _mapper.Map<Order>(request);
+                    await _unitOfWork.OrderRepository.AddAsync(mapper);
+                    await _unitOfWork.Commit();
+                    return new SuccessResult(Messages.OrderAdded);             
             }
         }
     }

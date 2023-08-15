@@ -11,7 +11,7 @@ namespace Business.Handlers.Menus.Queries
 {
     public class GetParentMenusQuery : IRequest<IDataResult<IEnumerable<MenuDto>>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public class GetParentMenusQueryHandler : IRequestHandler<GetParentMenusQuery, IDataResult<IEnumerable<MenuDto>>>
         {
             private readonly IMenuService _menuService;

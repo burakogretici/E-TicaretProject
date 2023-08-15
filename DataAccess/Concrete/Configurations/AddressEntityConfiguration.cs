@@ -8,15 +8,15 @@ namespace DataAccess.Concrete.Configurations
     {
         public override void Configure(EntityTypeBuilder<Address> builder)
         {
-            builder.Property(a => a.CustomerId).HasColumnName("CustomerId").IsRequired();
+            builder.Property(a => a.UserId).HasColumnName("UserId").IsRequired();
             builder.Property(a => a.CountryId).HasColumnName("CountryId").IsRequired();
             builder.Property(a => a.CityId).HasColumnName("CityId").IsRequired();
             builder.Property(a => a.AddressDetail).HasColumnName("AddressDetail").HasMaxLength(500);
             builder.Property(a => a.PostalCode).HasColumnName("PostalCode");
 
-            builder.HasOne(a => a.Customer)
+            builder.HasOne(a => a.User)
                 .WithMany(a => a.Addresses)
-                .HasForeignKey(a => a.CustomerId)
+                .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(a => a.Country)

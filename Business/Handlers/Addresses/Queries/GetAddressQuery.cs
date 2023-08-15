@@ -21,7 +21,6 @@ namespace Business.Handlers.Addresses.Queries
                 _addressService = addressService;
             }
 
-
             public async Task<IDataResult<AddressDto>> Handle(GetAddressQuery request, CancellationToken cancellationToken)
             {
                 var address = await _addressService.GetByIdAsync(request.Id);

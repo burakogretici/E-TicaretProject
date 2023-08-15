@@ -11,7 +11,7 @@ namespace Entities.Concrete
             Orders = new HashSet<Order>();
         }
         public string Name { get; set; }
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }

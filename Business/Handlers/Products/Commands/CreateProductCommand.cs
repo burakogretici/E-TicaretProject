@@ -13,7 +13,6 @@ namespace Business.Handlers.Products.Commands
     {
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
-        //public Guid SupplierId { get; set; }
         public Guid BrandId { get; set; }
         public Guid ColorId { get; set; }
         public string Code { get; set; }

@@ -8,11 +8,17 @@ namespace Entities.Concrete
     {
         public Basket()
         {
-            BasketDetails = new HashSet<BasketDetail>();
+            BasketItems = new HashSet<BasketItem>();
+            Orders = new HashSet<Order>();
         }
-        public Guid CustomerId { get; set; }
 
-        public virtual Customer Customer { get; set; }
-        public virtual ICollection<BasketDetail> BasketDetails { get; set; }
+        public Guid UserId { get; set; }
+
+
+        public virtual User User { get; set; }
+        public virtual ICollection<BasketItem> BasketItems { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+
     }
+
 }

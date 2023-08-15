@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -12,7 +13,7 @@ namespace Business.Handlers.UserOperationClaims.Commands
     public class CreateUserOperationClaimCommand : IRequest<IResult>
     {
         public Guid UserId { get; set; }
-        public Guid OperationClaimId { get; set; }
+        public List<Guid> OperationClaimIds { get; set; }
 
 
         public class CreateUserOperationClaimCommandHandler : IRequestHandler<CreateUserOperationClaimCommand, IResult>

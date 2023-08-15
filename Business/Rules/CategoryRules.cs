@@ -1,4 +1,5 @@
 ﻿using Business.Constants;
+using Core.CrossCuttingConcerns.Exceptions;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using System.Threading.Tasks;
@@ -14,15 +15,10 @@ namespace Business.Rules
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IResult> CategoryNameAlreadyExists(string categoryName)
+        public async Task CategoryNameAlreadyExists(string categoryName)
         {
             var result = await _categoryRepository.AnyAsync(b => b.Name == categoryName);
-            if (!result)
-                return new SuccessResult();
-            else
-                return new ErrorResult(Messages.CategoryNameAlreadyExists);
-
-
+            if (result) throw new BusinessException(Messages.CategoryNameAlreadyExists);
         }
     }
 }

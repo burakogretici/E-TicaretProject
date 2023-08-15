@@ -1,0 +1,24 @@
+﻿@model Address_VM
+@{
+    ViewBag.Title = "Adresler";
+}
+
+<filters>
+    <filter for="User.FullName" label="Kulanıcı Adı" placeholder="Markaya göre ara..." operator="eq" type="text" />
+    <filter for="Country.Name" label="Ülke Adı" placeholder="Kategoriye göre ara..." operator="eq" type="text" />
+    <filter for="City.Name" label="Şehir Adı" placeholder="Renge göre ara..." operator="eq" type="text" />
+    <filter for="AddressDetail" placeholder="Mahalleye göre ara..." operator="contains" type="text" />
+    <filter for="PostalCode" placeholder="Posta Koduna göre ara..." operator="eq" type="text" />
+    <filter for="CreatedDate" placeholder="Arama yapın" operator="eq" type="date" />
+</filters>
+
+<grid read-url="/Addresses/Read" edit-url="/Addresses/Update" delete-url="/Addresses/Delete" create-url="/Addresses/Create">
+    <column custom-property="true" sortable="false"></column>
+
+    <column for="FullName" sortable="false"></column>
+    <column for="CountryName" sortable="false"></column>
+    <column for="CityName" sortable="false"></column>
+    <column for="AddressDetail" sortable="false"></column>
+    <column for="PostalCode"></column>
+    <column for="CreatedDate" format="formatDate"></column>
+</grid>

@@ -5,6 +5,7 @@ using Business.Handlers.Categories.Commands;
 using Business.Handlers.Categories.Queries;
 using Entities.Dtos.Categories;
 using Microsoft.AspNetCore.Http;
+using Core.Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
@@ -12,12 +13,22 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CategoriesController : BaseController
     {
-        [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(IEnumerable<CategoryDto>))]
+        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CategoryDto>))]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[HttpGet("getall")]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    return GetResponseOnlyResult(await Mediator.Send(new GetCategoriesQuery()));
+        //}
+
+
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CategoryDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetCategoriesQuery()));
+            GetCategoriesTableQuery getCategoriesQuery = new() { TableGlobalFilter = tableGlobalFilter };
+            return GetResponseOnlyResult(await Mediator.Send(getCategoriesQuery));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategoryDto))]
@@ -25,7 +36,7 @@ namespace WebAPI.Controllers
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetCategoryQuery getCategoryQuery)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(getCategoryQuery));
+            return GetResponseOnlyResult(await Mediator.Send(getCategoryQuery));
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -33,16 +44,15 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateCategoryCommand createCategory)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createCategory));
+            return GetResponseOnlyResult(await Mediator.Send(createCategory));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateCategoryCommand updateCategory)
-
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateCategory));
+            return GetResponseOnlyResult(await Mediator.Send(updateCategory));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -50,7 +60,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteCategoryCommand deleteCategory)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteCategory));
+            return GetResponseOnlyResult(await Mediator.Send(deleteCategory));
         }
     }
 }

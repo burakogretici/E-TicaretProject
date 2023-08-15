@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Core.Utilities.Results;
+using Core.CrossCuttingConcerns.Exceptions;
 using DataAccess.Abstract;
 
 namespace Business.Rules
@@ -13,15 +13,10 @@ namespace Business.Rules
             _productDal = productDal;
         }
 
-        public async Task<IResult> ProductAlreadyExists(string code)
+        public async Task ProductAlreadyExists(string code)
         {
             var result = await _productDal.AnyAsync(p => p.Code == code);
-            if (result)
-            {
-                return new ErrorResult($" {code} Ürün Kodu başka bir üründe kullanılmaktadır.");
-            }
-            
-            return new SuccessResult();
+            if (result) throw new BusinessException($" {code} Ürün Kodu başka bir üründe kullanılmaktadır.");
         }
     }
 }

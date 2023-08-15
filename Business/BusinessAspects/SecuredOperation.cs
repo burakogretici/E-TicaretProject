@@ -1,6 +1,7 @@
 ﻿using System;
 using Business.Constants;
 using Castle.DynamicProxy;
+using Core.CrossCuttingConcerns.Exceptions;
 using Core.Extensions;
 using Core.Utilities.Interceptors;
 using Core.Utilities.IoC;
@@ -31,7 +32,7 @@ namespace Business.BusinessAspects
                     return;
                 }
             }
-            throw new Exception(Messages.AuthorizationDenied);
+            throw new AuthorizationException(Messages.AuthorizationDenied);
         }
     }
 }

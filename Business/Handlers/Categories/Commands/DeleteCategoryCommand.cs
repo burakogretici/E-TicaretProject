@@ -24,7 +24,6 @@ namespace Business.Handlers.Categories.Commands
                 _mapper = mapper;
             }
          
-
             public async Task<IResult> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
             {
                 var mapper = _mapper.Map<CategoryDto>(request);             

@@ -7,7 +7,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseController : ControllerBase
+    public class BaseController : Controller
     {
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
@@ -35,6 +35,5 @@ namespace WebAPI.Controllers
         {
             return result.Success ? Ok(result.Data) : BadRequest(result.Message);
         }
-
     }
 }

@@ -1,0 +1,20 @@
+﻿@model Country_VM
+
+@{
+    ViewBag.Title = "Ülkeler";
+}
+<filters>
+    <filter for="Name" placeholder="Ülke ara..." operator="contains" type="text" />
+</filters>
+
+<grid read-url="/Countries/Read" edit-url="/Countries/Update" delete-url="/Countries/Delete" create-url="/Countries/Create">
+    <column custom-property="true" sortable="false"></column>
+    <column for="Name"></column>
+    <column for="CreatedDate"></column>
+</grid>
+
+
+
+
+
+

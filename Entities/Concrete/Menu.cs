@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Entities.Concrete
 {
-    public class Menu : BaseEntity<Guid>
+    public class Menu : BaseEntity<int>
     {
         public Menu()
         {
@@ -14,12 +14,13 @@ namespace Entities.Concrete
 
         public string Icon { get; set; }
 
-        public Guid? ParentMenuId { get; set; }
+        public int? ParentMenuId { get; set; }
 
         public int DisplayOrder { get; set; }
 
         public string Url { get; set; }
         public bool Hidden { get; set; }
+        public bool IsAdmin { get; set; }
 
         public virtual Menu ParentMenu { get; set; }
         public virtual ICollection<Menu> Childeren { get; set; }

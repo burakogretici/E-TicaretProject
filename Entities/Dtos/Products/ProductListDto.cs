@@ -1,4 +1,6 @@
-﻿namespace Entities.Dtos.Products
+﻿using System;
+
+namespace Entities.Dtos.Products
 {
     public class ProductListDto : BaseDto
     {

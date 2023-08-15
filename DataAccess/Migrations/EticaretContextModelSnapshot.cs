@@ -41,10 +41,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CustomerId");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
@@ -55,13 +51,17 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CityId");
 
                     b.HasIndex("CountryId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Addresses");
                 });
@@ -75,24 +75,24 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CustomerId");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UserId");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Baskets");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.BasketDetail", b =>
+            modelBuilder.Entity("Entities.Concrete.BasketItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,17 +112,9 @@ namespace DataAccess.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real")
-                        .HasColumnName("Price");
-
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ProductId");
-
-                    b.Property<float>("Total")
-                        .HasColumnType("real")
-                        .HasColumnName("Total");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -133,7 +125,7 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketDetail");
+                    b.ToTable("BasketItems");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Brand", b =>
@@ -160,6 +152,50 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7bea26bf-ceec-4e6f-9f66-9d67ffd60bf2"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "İphone"
+                        },
+                        new
+                        {
+                            Id = new Guid("e835a5fd-74e7-488a-a840-ddce2755e7f8"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Samsung"
+                        },
+                        new
+                        {
+                            Id = new Guid("f8845ea1-f085-42fc-a851-72e1761c0f23"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Vestel"
+                        },
+                        new
+                        {
+                            Id = new Guid("7f692f3a-1177-48f5-8e03-ae238ab3cda8"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Asus"
+                        },
+                        new
+                        {
+                            Id = new Guid("8ab10fd3-6e04-42d7-ab8d-81b5c4bec33b"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Philips"
+                        },
+                        new
+                        {
+                            Id = new Guid("efe24598-d27e-4e6c-ba86-0efac1a2ad68"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Hp"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Concrete.Category", b =>
@@ -186,6 +222,50 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("4d94f442-b948-43fc-8fec-6d9e0014c3ce"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Telefon"
+                        },
+                        new
+                        {
+                            Id = new Guid("58526241-fef9-4ed9-bdab-99cc68e02193"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Elektronik"
+                        },
+                        new
+                        {
+                            Id = new Guid("0a981a18-e6d3-4879-a971-22659552cb32"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Bilgisayar"
+                        },
+                        new
+                        {
+                            Id = new Guid("4e9be0d0-dd4d-440f-a2c4-eceaabf19f6b"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Beyaz Eşya"
+                        },
+                        new
+                        {
+                            Id = new Guid("4a51d8d8-f034-48a8-b4b9-c3f5c5a48a9d"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Giyim"
+                        },
+                        new
+                        {
+                            Id = new Guid("6efc50a3-0926-4d3b-8f7c-f88b50b10082"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Mobilya"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Concrete.City", b =>
@@ -266,7 +346,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.Customer", b =>
+            modelBuilder.Entity("Entities.Concrete.File", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -275,74 +355,57 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerType")
-                        .HasColumnType("int")
-                        .HasColumnName("CustomerType");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UserId");
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Storage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.ToTable("Files");
 
-                    b.ToTable("Customers");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("File");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.Individual", b =>
+            modelBuilder.Entity("Entities.Concrete.Log", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Exception")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CustomerId");
+                    b.Property<string>("Level")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DateOfBirth");
+                    b.Property<string>("MessageTemplate")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("FirstName");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("LastName");
-
-                    b.Property<DateTime?>("UpdatedDate")
+                    b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Individual");
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Menu", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -364,14 +427,18 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Icon");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsAdmin");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)")
                         .HasColumnName("Name");
 
-                    b.Property<Guid?>("ParentMenuId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("ParentMenuId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -388,6 +455,180 @@ namespace DataAccess.Migrations
                     b.HasIndex("ParentMenuId");
 
                     b.ToTable("Menus");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 0,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Ürün "
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 0,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Ürün Listesi",
+                            ParentMenuId = 1,
+                            Url = "/product/index"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 1,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Markalar",
+                            ParentMenuId = 1,
+                            Url = "/brand/index"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 2,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Kategoriler",
+                            ParentMenuId = 1,
+                            Url = "/category/index"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 3,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Renkler",
+                            ParentMenuId = 1,
+                            Url = "/color/index"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 1,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Sipariş"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 0,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Sipariş Listesi",
+                            ParentMenuId = 6,
+                            Url = "/order/index"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 2,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Adres"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 0,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Adres Listesi",
+                            ParentMenuId = 8,
+                            Url = "/adress/index"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 1,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Ülke Listesi",
+                            ParentMenuId = 8,
+                            Url = "/country/index"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 2,
+                            Hidden = false,
+                            IsAdmin = false,
+                            Name = "Şehir Listesi",
+                            ParentMenuId = 8,
+                            Url = "/city/index"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 0,
+                            Hidden = false,
+                            IsAdmin = true,
+                            Name = "Kullanıcı İşlemleri"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 0,
+                            Hidden = false,
+                            IsAdmin = true,
+                            Name = "Kullanıcı Listesi",
+                            ParentMenuId = 13,
+                            Url = "/user/index"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 1,
+                            Hidden = false,
+                            IsAdmin = true,
+                            Name = "Roller",
+                            ParentMenuId = 13,
+                            Url = "/operationclaim/index"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            DisplayOrder = 2,
+                            Hidden = false,
+                            IsAdmin = true,
+                            Name = "Kullanıcı Rolleri",
+                            ParentMenuId = 13,
+                            Url = "/useroperationclaim/index"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Concrete.OperationClaim", b =>
@@ -413,6 +654,330 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OperationClaims");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a1252ad2-6519-4d38-8d48-3db4d8531dca"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("025a40f4-f11a-4422-b184-a9d7084bac0d"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Category.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("7fd159bd-680f-4c0b-949c-602ffc28cad9"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Category.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("c32d5773-8a85-4679-8013-f0d88f4a98bf"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Category.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("7c97c838-04bf-4e1a-bab6-2559e83bc2d5"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Category.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("a8ff9516-1e1b-496a-81a7-a5b2fa225ef5"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Category.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("bdf591cc-191e-4d98-b78b-f4afd15e7a87"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Product.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("580e291a-ef64-4fbd-bebe-298f467b21fc"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Product.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("1bc1eeab-0144-4963-bf78-9f711c8cea1f"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Product.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("2077ac3e-f6fb-4a56-a5e4-7a0f6d67c9b2"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Product.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("e74c43f0-382a-422c-968e-b44b49cb68e8"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Product.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("838d948d-4652-4b46-a844-dcd0f53fb6c8"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Color.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("d97ee25a-370c-4ce2-9087-80c0882c744e"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Color.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("02b8d7fd-9060-4c26-a6ae-1d5a688c23b0"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Color.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0733478-e5d0-4dcd-84b7-324c9b0e69b9"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Color.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("be5e33f6-0f7d-4b73-9f35-d21a488db37e"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Color.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("18d57b5c-e0c6-4494-a0b6-0e4e0f3c3923"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Brand.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("ea7b041a-02da-4e35-90f0-f37bfe86cb35"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Brand.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("ba8b5011-64c1-4cbf-b3c7-00836d1d2458"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Brand.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("bbae5fed-e6dc-4989-9b77-d5dc85a6c000"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Brand.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("6af7ff3b-2f9e-450e-87d3-38e4cf268c85"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Brand.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("ff3b32d7-ba43-436b-b7b2-964ce6c58cc0"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Address.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("2ce30a08-f64c-4c6c-8af0-9881f17da8f0"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Address.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("cd9f8786-1fe5-4475-b922-fe2ee8334c45"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Address.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("0848fae2-9e22-4179-9780-72083c61dd6b"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Address.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("a01e95ca-ac62-4c55-adc1-b687fbbd5d2e"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Address.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("07a3ed58-e8d0-4bb2-9aa8-dd48a95c8135"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Menu.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("64978ae0-4743-4fa5-a8c0-c80e8639342a"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Menu.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("6b242b08-16c5-4249-b79a-ec3454e79232"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Menu.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("2fc64b39-8ffe-408e-b2a9-4d80e24d9cf6"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Menu.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("3c2390dc-ce4e-469a-b600-077ee4ee802a"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "Menu.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("13d1a812-b2b7-47f2-b94c-72ae32192fb1"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "User.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("10a0b009-0ae9-4116-98f8-721ee66afd7f"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "User.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("af1fb35d-e090-4962-98b4-805e3470ed35"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "User.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("596e6bc7-6c5e-4ee8-8139-ab67b32d019d"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "User.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("c44166c3-cad1-4966-a426-46f732f412e7"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "User.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("29a7e6ca-fd12-4fe0-9e5e-e7dfb1c5a822"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "OperationClaim.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("2f967ac0-723d-483d-a9a1-7a6b61043cf4"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "OperationClaim.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("7b281c3d-e19a-4f49-9fef-b61c31687953"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "OperationClaim.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("8cbc840f-3c8d-4e48-ba50-0a6b5b7dc4cd"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "OperationClaim.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("75195646-f45b-4242-b7c1-a50c9b82473f"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "OperationClaim.Get"
+                        },
+                        new
+                        {
+                            Id = new Guid("3074de5e-ef15-466c-a481-8dc109b98103"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "UserOperationClaim.Add"
+                        },
+                        new
+                        {
+                            Id = new Guid("c8eb87dc-1007-4226-9b58-b5fe9f3d70b0"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "UserOperationClaim.List"
+                        },
+                        new
+                        {
+                            Id = new Guid("3eb7f188-f44c-4336-8b97-a306ed357d60"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "UserOperationClaim.Delete"
+                        },
+                        new
+                        {
+                            Id = new Guid("6379ee1f-175d-4deb-a072-83fdf2b85713"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "UserOperationClaim.Update"
+                        },
+                        new
+                        {
+                            Id = new Guid("d2176c11-93ae-4476-a4df-55691dd88350"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deleted = false,
+                            Name = "UserOperationClaim.Get"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Concrete.Order", b =>
@@ -425,16 +990,12 @@ namespace DataAccess.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("AddressId");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("int")
-                        .HasColumnName("Amount");
+                    b.Property<Guid>("BasketId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("BasketId");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CustomerId");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
@@ -450,50 +1011,21 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UserId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("BasketId");
 
                     b.HasIndex("ShipperId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.OrderDetail", b =>
-                {
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int")
-                        .HasColumnName("Amount");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("SalePrice")
-                        .HasColumnType("int")
-                        .HasColumnName("SalePrice");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Product", b =>
@@ -597,10 +1129,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CustomerId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CustomerId");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
 
@@ -611,13 +1139,17 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UserId");
+
                     b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Website");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Suppliers");
                 });
@@ -645,6 +1177,12 @@ namespace DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("FirstName");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("FullName");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit")
@@ -707,6 +1245,31 @@ namespace DataAccess.Migrations
                     b.ToTable("UserOperationClaims");
                 });
 
+            modelBuilder.Entity("ProductProductImage", b =>
+                {
+                    b.Property<Guid>("ProductImagesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProductImagesId", "ProductsId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.ToTable("ProductProductImage");
+                });
+
+            modelBuilder.Entity("Entities.Concrete.ProductImage", b =>
+                {
+                    b.HasBaseType("Entities.Concrete.File");
+
+                    b.Property<bool>("Showcase")
+                        .HasColumnType("bit");
+
+                    b.HasDiscriminator().HasValue("ProductImage");
+                });
+
             modelBuilder.Entity("Entities.Concrete.Address", b =>
                 {
                     b.HasOne("Entities.Concrete.City", "City")
@@ -721,9 +1284,9 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                    b.HasOne("Entities.Concrete.User", "User")
                         .WithMany("Addresses")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -731,32 +1294,32 @@ namespace DataAccess.Migrations
 
                     b.Navigation("Country");
 
-                    b.Navigation("Customer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Basket", b =>
                 {
-                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                    b.HasOne("Entities.Concrete.User", "User")
                         .WithMany("Baskets")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.BasketDetail", b =>
+            modelBuilder.Entity("Entities.Concrete.BasketItem", b =>
                 {
                     b.HasOne("Entities.Concrete.Basket", "Basket")
-                        .WithMany("BasketDetails")
+                        .WithMany("BasketItems")
                         .HasForeignKey("BasketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.Concrete.Product", "Product")
-                        .WithMany("BasketDetails")
+                        .WithMany("BasketItems")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Basket");
@@ -773,28 +1336,6 @@ namespace DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Customer", b =>
-                {
-                    b.HasOne("Entities.Concrete.User", "User")
-                        .WithMany("Customers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Individual", b =>
-                {
-                    b.HasOne("Entities.Concrete.Customer", "Customer")
-                        .WithMany("Individuals")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Menu", b =>
@@ -814,9 +1355,9 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                    b.HasOne("Entities.Concrete.Basket", "Basket")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("BasketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -826,30 +1367,19 @@ namespace DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entities.Concrete.User", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Address");
 
-                    b.Navigation("Customer");
+                    b.Navigation("Basket");
 
                     b.Navigation("Shipper");
-                });
 
-            modelBuilder.Entity("Entities.Concrete.OrderDetail", b =>
-                {
-                    b.HasOne("Entities.Concrete.Order", "Order")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Concrete.Product", "Product")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Product");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Product", b =>
@@ -881,13 +1411,13 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Supplier", b =>
                 {
-                    b.HasOne("Entities.Concrete.Customer", "Customer")
+                    b.HasOne("Entities.Concrete.User", "User")
                         .WithMany("Suppliers")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Entities.Concrete.UserOperationClaim", b =>
@@ -909,6 +1439,21 @@ namespace DataAccess.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ProductProductImage", b =>
+                {
+                    b.HasOne("Entities.Concrete.ProductImage", null)
+                        .WithMany()
+                        .HasForeignKey("ProductImagesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Concrete.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Entities.Concrete.Address", b =>
                 {
                     b.Navigation("Orders");
@@ -916,7 +1461,9 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.Basket", b =>
                 {
-                    b.Navigation("BasketDetails");
+                    b.Navigation("BasketItems");
+
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Brand", b =>
@@ -946,19 +1493,6 @@ namespace DataAccess.Migrations
                     b.Navigation("Cities");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.Customer", b =>
-                {
-                    b.Navigation("Addresses");
-
-                    b.Navigation("Baskets");
-
-                    b.Navigation("Individuals");
-
-                    b.Navigation("Orders");
-
-                    b.Navigation("Suppliers");
-                });
-
             modelBuilder.Entity("Entities.Concrete.Menu", b =>
                 {
                     b.Navigation("Childeren");
@@ -969,16 +1503,9 @@ namespace DataAccess.Migrations
                     b.Navigation("UserOperationClaims");
                 });
 
-            modelBuilder.Entity("Entities.Concrete.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
-                });
-
             modelBuilder.Entity("Entities.Concrete.Product", b =>
                 {
-                    b.Navigation("BasketDetails");
-
-                    b.Navigation("OrderDetails");
+                    b.Navigation("BasketItems");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Shipper", b =>
@@ -988,7 +1515,13 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.Concrete.User", b =>
                 {
-                    b.Navigation("Customers");
+                    b.Navigation("Addresses");
+
+                    b.Navigation("Baskets");
+
+                    b.Navigation("Orders");
+
+                    b.Navigation("Suppliers");
 
                     b.Navigation("UserOperationClaims");
                 });

@@ -15,7 +15,9 @@
     <PackageReference Include="Autofac" Version="6.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.15.0" />
     <PackageReference Include="FluentValidation" Version="10.3.3" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
@@ -37,7 +39,6 @@
     <PackageReference Include="Serilog.Formatting.Elasticsearch" Version="8.4.1" />
     <PackageReference Include="Serilog.Sinks.Http" Version="7.2.0" />
     <PackageReference Include="Serilog.Sinks.MicrosoftTeams" Version="0.2.1" />
-    <PackageReference Include="Serilog.Sinks.MongoDB" Version="5.1.2" />
     <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.7.0" />
     <PackageReference Include="ServiceStack.Redis" Version="6.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.3.0" />

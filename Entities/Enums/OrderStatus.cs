@@ -1,7 +1,6 @@
 ﻿
 namespace Entities.Enums
 {
-
     public enum OrderStatus
     {
         All = 0,

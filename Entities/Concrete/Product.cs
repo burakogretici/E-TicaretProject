@@ -8,24 +8,24 @@ namespace Entities.Concrete
     {
         public Product()
         {
-            OrderDetails = new HashSet<OrderDetail>();
-            BasketDetails = new HashSet<BasketDetail>();
+            BasketItems = new HashSet<BasketItem>();
+            ProductImages = new HashSet<ProductImage>();
         }
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
-        //public Guid SupplierId { get; set; }
         public Guid BrandId { get; set; }
         public Guid ColorId { get; set; }
         public string Code { get; set; }
         public short UnitsInStock { get; set; }
         public decimal UnitPrice { get; set; }
+        //public string Image { get; set; }
 
         public virtual Category Category { get; set; }
-        //public virtual Supplier Supplier { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual Color Color { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual ICollection<BasketDetail> BasketDetails { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
+
+        public virtual ICollection<BasketItem> BasketItems { get; set; }
     }
 }

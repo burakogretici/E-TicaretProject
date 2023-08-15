@@ -35,6 +35,7 @@ namespace Business.Helpers.Jwt
 
             return new AccessToken()
             {
+                User = userDto,
                 Token = token,
                 Expiration = _accessTokenExpiration
             };

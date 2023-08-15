@@ -18,7 +18,7 @@ namespace DataAccess.Concrete.EntityFramework
         public async Task<List<AddressDetailDto>> GetAddressDetails()
         {
             var list = await (from a in Context.Addresses
-                                  join u in Context.Users on a.CustomerId equals u.Id
+                                  join u in Context.Users on a.UserId equals u.Id
                                   join cou in Context.Countries on a.CountryId equals cou.Id
                                   join city in Context.Cities on a.CityId equals city.Id
 

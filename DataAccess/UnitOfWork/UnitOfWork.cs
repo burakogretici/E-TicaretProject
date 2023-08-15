@@ -51,14 +51,14 @@ namespace DataAccess.UnitOfWork
             }
         }
 
-        private IBasketDetailRepository _basketDetailRepository;
-        public IBasketDetailRepository BasketDetailRepository
+        private IBasketItemRepository _basketDetailRepository;
+        public IBasketItemRepository BasketItemRepository
         {
             get
             {
                 if (_basketDetailRepository == null)
                 {
-                    _basketDetailRepository = new BasketDetailRepository(_eticaretContext);
+                    _basketDetailRepository = new BasketItemRepository(_eticaretContext);
                 }
                 return _basketDetailRepository;
             }
@@ -100,19 +100,6 @@ namespace DataAccess.UnitOfWork
                     _categoryRepository = new CategoryRepository(_eticaretContext);
                 }
                 return _categoryRepository;
-            }
-        }
-
-        private ICustomerRepository _customerRepository;
-        public ICustomerRepository CustomerRepository
-        {
-            get
-            {
-                if (_customerRepository == null)
-                {
-                    _customerRepository = new CustomerRepository(_eticaretContext);
-                }
-                return _customerRepository;
             }
         }
 
@@ -168,19 +155,6 @@ namespace DataAccess.UnitOfWork
             }
         }
 
-        private IOrderDetailRepository _orderDetailRepository;
-        public IOrderDetailRepository OrderDetailRepository
-        {
-            get
-            {
-                if (_orderDetailRepository == null)
-                {
-                    _orderDetailRepository = new OrderDetailRepository(_eticaretContext);
-                }
-                return _orderDetailRepository;
-            }
-        }
-
         private IOrderRepository _orderRepository;
         public IOrderRepository OrderRepository
         {
@@ -219,6 +193,20 @@ namespace DataAccess.UnitOfWork
                 return _operationClaimRepository;
             }
         }
+
+        private IShipperRepository _shipperRepository;
+        public IShipperRepository ShipperRepository
+        {
+            get
+            {
+                if (_shipperRepository == null)
+                {
+                    _shipperRepository = new ShipperRepository(_eticaretContext);
+                }
+                return _shipperRepository;
+            }
+        }
+  
         private IMenuRepository _menuRepository;
         public IMenuRepository MenuRepository
         {
@@ -232,9 +220,32 @@ namespace DataAccess.UnitOfWork
             }
         }
 
+        private ILogRepository _logRepository;
+        public ILogRepository LogRepository
+        {
+            get
+            {
+                if (_logRepository == null)
+                {
+                    _logRepository = new LogRepository(_eticaretContext);
+                }
+                return _logRepository;
+            }
+        }
+
+        private IProductImageRepository _productImageRepository;
+        public IProductImageRepository ProductImageRepository
+        {
+            get
+            {
+                if (_productImageRepository == null)
+                {
+                    _productImageRepository = new ProductImageRepository(_eticaretContext);
+                }
+                return _productImageRepository;
+            }
+        }
         public async Task Commit() => await _eticaretContext.SaveChangesAsync();
-
-
 
         private bool isDisposed = false;
         public async ValueTask DisposeAsync()

@@ -10,7 +10,7 @@ namespace Core.Entities.Concrete
 
         public bool Deleted { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
+        public virtual DateTime? UpdatedDate { get; set; }
 
     }
 }

@@ -1,0 +1,84 @@
+﻿@model Category_VM
+
+@{
+    ViewBag.Title = "Kategoriler";
+}
+
+<filters>
+    <filter for="Name" placeholder="Kategori ara..." operator="contains" type="text" />
+</filters>
+
+<grid read-url="/Categories/Read" edit-url="/Categories/Update" delete-url="/Categories/Delete" create-url="/Categories/Create">
+    <column custom-property="true" sortable="false"></column>
+    <column for="Name"></column>
+    <column for="CreatedDate"></column>
+</grid>
+
+
+
+
+
+
+
+
+
+
+
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="GetById" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>*@
+
+@*@section scripts{
+    <script>
+        debugger;
+        $(document).ready(function () {
+            debugger;
+            $.ajax({
+                url: '/category/index',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    debugger;
+                    var table = '<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody>';
+                    $.each(data, function (i, item) {
+                        table += '<tr><td>' + item.Name + '</td><td>' + item.Age + '</td><td>' + item.Country + '</td></tr>';
+                    });
+                    table += '</tbody></table>';
+                    $('#table-container').html(table);
+                }
+            });
+        });
+
+    </script>
+}*@

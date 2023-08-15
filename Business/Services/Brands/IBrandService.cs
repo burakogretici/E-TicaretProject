@@ -1,4 +1,6 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using Core.Utilities.Results.Paging;
 using Entities.Dtos.Brands;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,9 @@ namespace Business.Services.Brands
         Task<IResult> UpdateAsync(BrandDto brand);
         Task<IResult> DeleteAsync(BrandDto brand);
 
-        Task<IDataResult<IEnumerable<BrandDto>>> GetAllAsync();
+        Task<IDataResult<List<BrandDto>>> GetAllAsync();
+        Task<PaginatedResult<BrandDto>> GetTableSearch(TableGlobalFilter tableGlobalFilter);
+
         Task<IDataResult<BrandDto>> GetByIdAsync(Guid id);
     }
 }

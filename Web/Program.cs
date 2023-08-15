@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Web
@@ -12,9 +13,9 @@ namespace Web
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(WebBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    WebBuilder.UseStartup<Startup>();
                 });
     }
 }

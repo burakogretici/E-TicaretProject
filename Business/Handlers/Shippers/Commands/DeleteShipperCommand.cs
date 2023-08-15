@@ -1,10 +1,11 @@
-﻿using Business.Constants;
-using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
+﻿using Core.Utilities.Results;
 using MediatR;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using AutoMapper;
+using Business.Services.Shippers;
+using Entities.Dtos.Shippers;
 
 namespace Business.Handlers.Shippers.Commands
 {
@@ -14,19 +15,20 @@ namespace Business.Handlers.Shippers.Commands
 
         public class DeleteShipperCommandHandler : IRequestHandler<DeleteShipperCommand, IResult>
         {
-            private readonly IUnitOfWork _unitOfWork;
-
-            public DeleteShipperCommandHandler(IUnitOfWork unitOfWork)
+            private readonly IShipperService _shipperService;
+            private readonly IMapper _mapper;
+            public DeleteShipperCommandHandler(IShipperService shipperService, IMapper mapper)
             {
-                _unitOfWork = unitOfWork;
+                _shipperService = shipperService;
+                _mapper = mapper;
             }
 
             public async Task<IResult> Handle(DeleteShipperCommand request, CancellationToken cancellationToken)
             {
-                //Shipper shipper = await _unitOfWork.ShipperRepository.GetAsync(x => x.Id == request.Id);
-                //await _unitOfWork.ShipperRepository.DeleteAsync(shipper);
-                //await _unitOfWork.Commit();
-                return new SuccessResult(Messages.BrandDeleted);
+                var mapper = _mapper.Map<ShipperDto>(request);
+                var shipper = await _shipperService.DeleteAsync(mapper);
+                return shipper;
+
             }
         }
     }

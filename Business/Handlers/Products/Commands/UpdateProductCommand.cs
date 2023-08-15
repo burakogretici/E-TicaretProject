@@ -10,8 +10,9 @@ using MediatR;
 
 namespace Business.Handlers.Products.Commands
 {
-    public class UpdateProductCommand : BaseCommand, IRequest<IResult>
+    public class UpdateProductCommand : IRequest<IResult>
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid CategoryId { get; set; }
         public Guid SupplierId { get; set; }

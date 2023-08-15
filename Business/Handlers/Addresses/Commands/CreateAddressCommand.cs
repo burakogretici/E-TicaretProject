@@ -11,7 +11,7 @@ namespace Business.Handlers.Addresses.Commands
 {
     public class CreateAddressCommand : IRequest<IResult>
     {
-        public Guid CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public Guid CountryId { get; set; }
         public Guid CityId { get; set; }
         public string AddressDetail { get; set; }
@@ -27,7 +27,6 @@ namespace Business.Handlers.Addresses.Commands
                 _addressService = addressService;
                 _mapper = mapper;
             }
-
 
             public async Task<IResult> Handle(CreateAddressCommand request, CancellationToken cancellationToken)
             {

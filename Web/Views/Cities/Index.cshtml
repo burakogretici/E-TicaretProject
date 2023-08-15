@@ -1,0 +1,22 @@
+﻿@model City_VM
+
+@{
+    ViewBag.Title = "Şehirler";
+}
+<filters>
+    <filter for="Country.Name" label="Ülke Adı" placeholder="Ülke ara..." operator="contains" type="text" />
+    <filter for="Name" placeholder="Şehir ara..." operator="contains" type="text" />
+
+</filters>
+
+<grid read-url="/Cities/Read" edit-url="/Cities/Update" delete-url="/Cities/Delete" create-url="/Cities/Create">
+    <column custom-property="true" sortable="false"></column>
+    <column for="CountryName"></column>
+    <column for="Name"></column>
+    <column for="CreatedDate"></column>
+</grid>
+
+
+
+
+

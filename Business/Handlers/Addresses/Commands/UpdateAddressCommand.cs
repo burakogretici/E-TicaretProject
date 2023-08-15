@@ -12,7 +12,7 @@ namespace Business.Handlers.Addresses.Commands
     public class UpdateAddressCommand : IRequest<IResult>
     {
         public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public Guid CountryId { get; set; }
         public Guid CityId { get; set; }
         public string AddressDetail { get; set; }

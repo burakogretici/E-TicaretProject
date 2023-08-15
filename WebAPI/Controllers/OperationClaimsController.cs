@@ -14,7 +14,7 @@ namespace WebAPI.Controllers
     {
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost]
+        [HttpPost("[action]")]
         public async Task<IActionResult> Add([FromBody] CreateOperationClaimCommand createOperationClaim)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(createOperationClaim));
@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete]
+        [HttpDelete("[action]")]
         public async Task<IActionResult> Delete([FromBody] DeleteOperationClaimCommand deleteOperationClaim)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteOperationClaim));
@@ -31,26 +31,26 @@ namespace WebAPI.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut]
+        [HttpPut("[action]")]
         public async Task<IActionResult> Update([FromBody] UpdateOperationClaimCommand updateOperationClaim)
         {
-        return GetResponseOnlyResultMessage(await Mediator.Send(updateOperationClaim));
+        return GetResponseOnlyResult(await Mediator.Send(updateOperationClaim));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(IEnumerable<OperationClaimDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet]
+        [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetOperationClaimsQuery()));
+            return GetResponseOnlyResult(await Mediator.Send(new GetOperationClaimsQuery()));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK,Type = typeof(OperationClaimDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("{Id}")]
+        [HttpGet("[action]/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetOperationClaimQuery getOperationClaimQuery)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(getOperationClaimQuery));
+            return GetResponseOnlyResult(await Mediator.Send(getOperationClaimQuery));
         }
 
     }

@@ -48,7 +48,6 @@
 
   <ItemGroup>
 	  <Folder Include="Services\BasketDetails\" />
-    <Folder Include="Services\Baskets\" />
   </ItemGroup>
 
 </Project>

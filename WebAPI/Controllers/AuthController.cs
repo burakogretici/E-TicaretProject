@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Business.Handlers.Authorizations.Commands;
+using Business.Handlers.Authorizations.Queries;
 
 namespace WebAPI.Controllers
 {
@@ -13,12 +14,11 @@ namespace WebAPI.Controllers
         {
             return GetResponseOnlyResult(await Mediator.Send(createUser));
         }
-
         [HttpPost("login")]
-        public async Task<ActionResult> Login([FromBody] LoginUserCommand loginModel)
+        public async Task<ActionResult> Login([FromBody] LoginUserQuery loginModel)
         {
             var result = await Mediator.Send(loginModel);
-            return result.Success ? Ok(result) : Unauthorized(result.Message);
+            return result.Success ? Ok(result) : BadRequest(result);
         }
     }
 }

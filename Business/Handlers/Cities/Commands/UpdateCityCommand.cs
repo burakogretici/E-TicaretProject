@@ -29,7 +29,6 @@ namespace Business.Handlers.Cities.Commands
                 var mapper = _mapper.Map<CityDto>(request);
                 var city = await _cityService.UpdateAsync(mapper);
                 return city;
-
             }
         }
     }

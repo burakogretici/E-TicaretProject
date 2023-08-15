@@ -11,14 +11,19 @@ namespace Business.Helpers.AutoMapperProfiles
         {
 
             CreateMap<UserOperationClaim, UserOperationClaimDto>().ReverseMap();
+            CreateMap<UserOperationClaim, DeleteUserOperationCLaimDto>().ReverseMap();
+
 
             CreateMap<UserOperationClaim, CreateUserOperationClaimCommand>().ReverseMap();
             CreateMap<UserOperationClaim, DeleteUserOperationClaimCommand>().ReverseMap();
             CreateMap<UserOperationClaim, UpdateUserOperationClaimCommand>().ReverseMap();
 
+
             CreateMap<UserOperationClaimDto, CreateUserOperationClaimCommand>().ReverseMap();
             CreateMap<UserOperationClaimDto, DeleteUserOperationClaimCommand>().ReverseMap();
             CreateMap<UserOperationClaimDto, UpdateUserOperationClaimCommand>().ReverseMap();
+
+            CreateMap<DeleteUserOperationCLaimDto, DeleteUserOperationClaimCommand>().ReverseMap();
 
 
         }

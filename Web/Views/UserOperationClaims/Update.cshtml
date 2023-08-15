@@ -1,0 +1,43 @@
+﻿@*@model Entities.Dtos.UserOperationClaim.UserOperationClaimDto
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form action="/useroperataionclaim/update" id="updateUserClaim" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                @Html.DropDownList("UserId", ViewBag.Users, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperationClaimName" class="control-label"></label>
+                @Html.DropDownList("OperationClaimId", ViewBag.OperationClaims, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="OperationClaimId" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input onclick="updateUserClaim()" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section scripts{
+    <script>
+        function updateColor() {
+            var form = $("#updateUserClaim");
+            app.callJx(form.attr("action"), "body", form.serialize(), function () {
+                app.gotoUrl("/useroperataionclaim/index");
+            });
+        }
+    </script>
+}
+*@

@@ -1,0 +1,93 @@
+﻿@using Entities.Dtos.UserOperationClaim
+@model UserOperationClaimDto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@if (!ViewContext.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        @(Html.Raw(ViewData.ModelState.GetErrorMessage()))
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form action="/useroperationclaim/create" id="createUserClaim" method="post">
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label">User</label>
+                @Html.DropDownList("UserId", ViewBag.Users, "Select...", new { @class = "form-control" })
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div>
+                @{
+                    var operationClaims = ViewBag.OperationClaims as IEnumerable<SelectListItem>;
+                    var groupIndex = 0;
+                }
+                @foreach (var group in operationClaims.GroupBy(c => c.Text.Split('.')[0]))
+                {
+                    <div class="form-group">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <input type="checkbox" id="groupCheckbox_@groupIndex" onchange="toggleGroupSelection(@groupIndex)">
+                            </div>
+                            @*<div class="col">*@
+                            <label class="accordion-toggle" data-toggle="collapse" data-target="#collapse_@groupIndex" onclick="toggleCollapse(@groupIndex)">
+                                @group.Key
+                            </label>
+                            @*  </div>*@
+                        </div>
+
+                        <div id="collapse_@groupIndex" class="collapse">
+                            @foreach (var item in group)
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="OperationClaimIds" value="@item.Value" id="@item.Value">
+                                    <label class="form-check-label" for="@item.Value">@item.Text.Substring(item.Text.IndexOf('.') + 1)</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    groupIndex++;
+
+                }
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="createUserClaim()">Create</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-link">Back to List</a>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+
+        function createUserClaim() {
+            var form = $("#createUserClaim");
+            app.callJx(form.attr("action"), "body", form.serialize());
+        }
+        function toggleCollapse(index) {
+            var target = $("#collapse_" + index);
+            var isOpen = target.hasClass('show');
+
+            $('.collapse.show').collapse('hide');
+
+            if (!isOpen) {
+                target.collapse('show');
+            }
+        }
+
+        function toggleGroupSelection(index) {
+            var groupCheckbox = $("#groupCheckbox_" + index);
+            var groupCheckboxes = $("#collapse_" + index).find('input[type="checkbox"]').not(groupCheckbox);
+
+            groupCheckboxes.prop('checked', groupCheckbox.prop('checked'));
+        }
+
+    </script>
+}

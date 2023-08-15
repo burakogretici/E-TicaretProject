@@ -1,0 +1,76 @@
+﻿@using Entities.Dtos.Users;
+@model UserForLogin
+@{
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    ViewBag.Title = "Kullanıcı Girişi";
+}
+
+@if (!ViewContext.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        @(Html.Raw(ViewData.ModelState.GetErrorMessage()))
+    </div>
+}
+<div class="logo text-center">
+    <img src="/images/imagesLogo.png" alt="Logo" style="width: 6cm; height: 6cm;">
+</div>
+<form id="loginForm" asp-action="Login" method="post" asp-route-returnUrl="@ViewBag.ReturnUrl">
+    <input name="__RequestVerificationToken" type="hidden" value="@Html.AntiForgeryToken()" />
+
+    <div class="input-group">
+        <label class="palceholder" asp-for="Email">Email</label>
+        <input class="form-control" asp-for="Email" type="email">
+        <span class="lighting"></span>
+    </div>
+    <div class="input-group">
+        <label class="palceholder" asp-for="Password">Password</label>
+        <input class="form-control" asp-for="Password" type="password">
+        <span class="lighting"></span>
+    </div>
+    <button type="submit" value="Login">Login</button>
+@*    <input type="submit" value="Login" class="btn btn-primary" />
+*@    @*   <div class="clearfix supporter">
+    <div class="pull-left remember-me">
+    <input id="rememberMe" type="checkbox">
+    <label for="rememberMe">Remember Me</label>
+    </div>
+    <a class="forgot pull-right" href="#">Forgot Password?</a>
+    </div>
+
+    <div class="signup-wrapper text-center">
+    <a href="#"> Kayıt olmak için <span class="text-primary">Create One</span></a>
+    </div>*@
+ 
+</form>
+
+@section scripts{
+    <script>
+        $().ready(function () {
+            $("#loginForm").validate({
+                rules: {
+                    Email: {
+                        required: true
+                    },
+                    Password: {
+                        required: true
+                    }
+                },
+                messages: {
+                    Email: {
+                        required: "E-posta boş geçilemez!"
+                    },
+                    Password: {
+                        required: "Şifre boş geçilemez!"
+                    }
+                }
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+

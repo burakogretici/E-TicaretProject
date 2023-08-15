@@ -8,16 +8,21 @@ namespace DataAccess.Concrete.Configurations
     {
         public override void Configure(EntityTypeBuilder<Basket> builder)
         {
-         
-            builder.Property(a => a.CustomerId).HasColumnName("CustomerId").IsRequired();
 
-            builder.HasOne(a => a.Customer)
+            builder.Property(a => a.UserId).HasColumnName("UserId").IsRequired();
+
+
+            builder.HasOne(a => a.User)
                 .WithMany(a => a.Baskets)
-                .HasForeignKey(a => a.CustomerId);
+                .HasForeignKey(a => a.UserId);
 
-            builder.HasMany(a => a.BasketDetails)
+            builder.HasMany(a => a.BasketItems)
                 .WithOne(a => a.Basket)
                 .HasForeignKey(a => a.BasketId);
+
+            builder.HasMany(a => a.Orders)
+    .WithOne(a => a.Basket)
+    .HasForeignKey(a => a.BasketId);
 
             base.Configure(builder);
         }

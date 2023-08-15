@@ -1,0 +1,49 @@
+﻿@model Brand_VM
+
+@{
+    ViewBag.Title = "Markalar";
+}
+<filters>
+    <filter for="Name" placeholder="Marka ara..." operator="contains" type="text" />
+</filters>
+
+<grid read-url="/Brands/Read" edit-url="/Brands/Update" delete-url="/Brands/Delete" create-url="/Brands/Create">
+    <column custom-property="true" sortable="false"></column>
+    <column for="Name"></column>
+    <column for="CreatedDate"></column>
+</grid>
+
+
+
+
+
+
+
+
+
+
+
+
+@*@section scripts{
+    <script>
+        debugger;
+        $(document).ready(function () {
+            debugger;
+            $.ajax({
+                url: '/Brands/Read',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    debugger;
+                    var table = '<table><thead><tr><th>Name</th><th>Age</th><th>Country</th></tr></thead><tbody>';
+                    $.each(data, function (i, item) {
+                        table += '<tr><td>' + item.Name + '</td><td>' + item.Age + '</td><td>' + item.Country + '</td></tr>';
+                    });
+                    table += '</tbody></table>';
+                    $('#table-container').html(table);
+                }
+            });
+        });
+
+    </script>
+}*@

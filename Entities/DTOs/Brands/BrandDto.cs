@@ -1,4 +1,5 @@
-﻿namespace Entities.Dtos.Brands
+﻿
+namespace Entities.Dtos.Brands
 {
     public class BrandDto : BaseDto
     { 

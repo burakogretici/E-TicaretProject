@@ -23,7 +23,6 @@ namespace Business.Handlers.Addresses.Commands
                 _addressService = addressService;
                 _mapper = mapper;
             }
-
             public async Task<IResult> Handle(DeleteAddressCommand request, CancellationToken cancellationToken)
             {
                 var mapper = _mapper.Map<AddressDto>(request);

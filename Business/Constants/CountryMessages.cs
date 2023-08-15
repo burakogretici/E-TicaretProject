@@ -10,4 +10,5 @@
         public static string CountryNameAlreadyExists => "Ülke adı zaten var";
         public static string CountryNotFound => "Ülke bulunamadı";
     }
+
 }

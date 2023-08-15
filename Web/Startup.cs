@@ -1,10 +1,11 @@
-
+using Business.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RestSharp;
+using System;
 using Web.ApiHelper;
 
 namespace Web
@@ -15,70 +16,56 @@ namespace Web
         {
             Configuration = configuration;
             Environment = environment;
-
         }
-
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; }
 
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            //services.AddDbContext<EticaretContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Mssql")));
-            services.AddHttpContextAccessor();
-            services.AddScoped<IApiHelper, Web.ApiHelper.ApiHelper>();
-            services.AddScoped<RestClient>();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IUserAccessor, UserAccessor>();
+            services.AddScoped<IHttpClient, HttpClient>();
 
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(typeof(SessionFilterAttribute));
+
+            }).AddViewOptions(options =>
+            {
+                options.HtmlHelperOptions.ClientValidationEnabled = false;
+            });;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();           
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
+            app.UseSession();
 
+            app.UseCookiePolicy(new CookiePolicyOptions()
+            {
+                Secure = CookieSecurePolicy.SameAsRequest
+            });
+
+            app.UseRouting();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-
-                endpoints.MapControllerRoute(
-                name: "areaDefault",
-                pattern: "{area:exists}/{controller=Home}/{action=Index}");
-
-                endpoints.MapControllerRoute(
-                name: "brand",
-                pattern: "{area:exists}/{controller=Brands}/{action=GetAll}");
-
-                endpoints.MapControllerRoute(
-                name: "Brand",
-                pattern: "{controller=Brands}/{action=GetAll}");
-
-                endpoints.MapControllerRoute(
-             name: "Brand",
-             pattern: "{controller=Brands}/{action=Create}");
-
-                endpoints.MapAreaControllerRoute(
-                    name: "admin",
-                    areaName: "Admin",
-                    pattern: "admin/{controller=Brands}/{action=GetAll}"
-
-                    );
-
                 endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

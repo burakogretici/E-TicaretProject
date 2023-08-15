@@ -10,6 +10,7 @@ namespace DataAccess.Concrete.Configurations
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasQueryFilter(x => x.Deleted != true);
         }
     }
 }

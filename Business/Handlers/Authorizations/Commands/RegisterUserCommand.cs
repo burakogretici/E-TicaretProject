@@ -26,7 +26,6 @@ namespace Business.Handlers.Authorizations.Commands
                 _authService = authService;
             }
 
-
             public async Task<IResult> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
             {
                 var mapper = _mapper.Map<UserForRegister>(request);

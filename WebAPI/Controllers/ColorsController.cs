@@ -5,6 +5,7 @@ using Business.Handlers.Colors.Commands;
 using Business.Handlers.Colors.Queries;
 using Entities.Dtos.Colors;
 using Microsoft.AspNetCore.Http;
+using Core.Entities.Concrete;
 
 namespace WebAPI.Controllers
 {
@@ -14,20 +15,19 @@ namespace WebAPI.Controllers
     {
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ColorDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-
         [HttpGet("getall")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetColorsQuery()));
+            GetColorsTableQuery getColorsQuery = new() { TableGlobalFilter = tableGlobalFilter };
+            return GetResponseOnlyResult(await Mediator.Send(getColorsQuery));
         }
-
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ColorDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetColorQuery getColorQuery)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(getColorQuery));
+            return GetResponseOnlyResult(await Mediator.Send(getColorQuery));
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateColorCommand createColor)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createColor));
+            return GetResponseOnlyResult(await Mediator.Send(createColor));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> Update([FromBody] UpdateColorCommand updateColor)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateColor));
+            return GetResponseOnlyResult(await Mediator.Send(updateColor));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -51,7 +51,7 @@ namespace WebAPI.Controllers
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] DeleteColorCommand deleteColor)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteColor));
+            return GetResponseOnlyResult(await Mediator.Send(deleteColor));
         }
     }
 }

@@ -1,11 +1,14 @@
-﻿namespace Entities.Dtos.Baskets
+﻿using Entities.Concrete;
+using System;
+using System.Collections.Generic;
+
+namespace Entities.Dtos.Baskets
 {
     public class BasketDto : BaseDto
     {
-        public string CustomerName { get; set; }
-        public string ProductName { get; set; }
-        public float Amount { get; set; }
-        public float Price { get; set; }
-        public float Total { get; set; }
+        public Guid UserId { get; set; }
+       
+        public virtual ICollection<BasketItem> BasketItems { get; set; }
+
     }
 }

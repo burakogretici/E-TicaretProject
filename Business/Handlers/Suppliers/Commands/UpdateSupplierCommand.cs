@@ -12,7 +12,7 @@ namespace Business.Handlers.Suppliers.Commands
     public class UpdateSupplierCommand : IRequest<IResult>
     {
         public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public string CompanyName { get; set; }
         public string Fax { get; set; }
         public string Website { get; set; }

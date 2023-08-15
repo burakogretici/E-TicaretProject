@@ -26,7 +26,7 @@ namespace Business.Handlers.Suppliers.Queries
                     selector: x => new SupplierDto
                     {
                         Id = x.Id,
-                        CustomerFullName = x.Customer.User.FirstName + " " + x.Customer.User.LastName,
+                        CustomerFullName = x.User.FirstName + " " + x.User.LastName,
                         CompanyName = x.CompanyName,
                         Website = x.Website,
                         Fax = x.Fax

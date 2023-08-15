@@ -11,14 +11,16 @@ namespace Business.Services.UserOperationClaims
     {
         Task<IResult> AddAsync(UserOperationClaimDto userOperationClaimDto);
         Task<IResult> UpdateAsync(UserOperationClaimDto userOperationClaimDto);
-        Task<IResult> DeleteAsync(UserOperationClaimDto userOperationClaimDto);
+        //Task<IResult> DeleteAsync(Guid userId,List<Guid> roleIds);
+        Task<IResult> DeleteAsync(DeleteUserOperationCLaimDto deleteUserOperation);
+
 
         Task<IDataResult<IEnumerable<UserOperationClaimDto>>> GetAllAsync();
         Task<IDataResult<UserOperationClaimDto>> GetByIdAsync(Guid id);
 
 
         Task<IDataResult<IEnumerable<UserOperationClaimDto>>> GetAllByOperationClaim(Guid operationClaimId);
-        Task<IDataResult<IEnumerable<UserOperationClaimDto>>> GetAllByUser(Guid userId);
+        Task<IDataResult<UserOperationClaimListDto>> GetAllByUser(Guid userId);
 
 
 

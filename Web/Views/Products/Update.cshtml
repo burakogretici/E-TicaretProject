@@ -1,0 +1,68 @@
+﻿@model Entities.Dtos.Products.ProductDto
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="updateProduct" action="/product/update/" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                @Html.DropDownList("CategoryId", ViewBag.Categories, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrandId" class="control-label"></label>
+                @Html.DropDownList("BrandId", ViewBag.Brands, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorId" class="control-label"></label>
+                @Html.DropDownList("ColorId", ViewBag.Colors, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="ColorId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitPrice" class="control-label"></label>
+                <input asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitsInStock" class="control-label"></label>
+                <input asp-for="UnitsInStock" class="form-control" />
+                <span asp-validation-for="UnitsInStock" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedDate" />
+
+            <div class="form-group">
+                <input onclick="updateProduct()" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section scripts{
+    <script>
+        function updateProduct() {
+            var form = $("#updateProduct");
+            app.callJx(form.attr("action"), "body", form.serialize());
+        }
+    </script>
+}

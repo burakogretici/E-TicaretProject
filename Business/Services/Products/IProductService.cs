@@ -1,4 +1,6 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using Core.Utilities.Results.Paging;
 using Entities.Dtos.Products;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace Business.Services.Products
         Task<IResult> DeleteAsync(ProductDto productDto);
 
         Task<IDataResult<IEnumerable<ProductListDto>>> GetAllAsync();
+        Task<PaginatedResult<ProductListDto>> GetTableSearch(TableGlobalFilter tableGlobalFilter);
         Task<IDataResult<ProductDto>> GetByIdAsync(Guid id);
 
         Task<IDataResult<IEnumerable<ProductDto>>> GetAllByCategoryIdAsync(Guid categoryId);

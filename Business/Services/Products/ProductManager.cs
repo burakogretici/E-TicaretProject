@@ -1,108 +1,137 @@
-﻿using AutoMapper;
-using Business.Constants;
+﻿using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
 using Entities.Concrete;
 using Entities.Dtos.Products;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Business.Rules;
-using Core.Utilities.Business;
-using Microsoft.EntityFrameworkCore;
+using Business.BusinessAspects;
+using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using Core.Aspects.Autofac.Logging;
+using Core.CrossCuttingConcerns.Exceptions;
+using System.Linq.Expressions;
+using Core.Entities.Concrete;
+using Core.Utilities.Results.Paging;
 
 namespace Business.Services.Products
 {
-    public class ProductManager : IProductService
+    public class ProductManager : ServiceBase, IProductService
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ProductRules _productRules;
 
-        public ProductManager(IMapper mapper, IUnitOfWork unitOfWork, ProductRules productRules)
+        public ProductManager(IServiceProvider serviceProvider, ProductRules productRules) : base(serviceProvider)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
             _productRules = productRules;
         }
 
 
         [ValidationAspect(typeof(ProductValidator))]
-        //[SecuredOperation("Product.List")]
+        [SecuredOperation("Product.Add,Admin")]
+        [LogAspect(typeof(MssqlDbLogger))]
         public async Task<IDataResult<ProductDto>> AddAsync(ProductDto productDto)
         {
-            IResult result = BusinessRules.Run(await _productRules.ProductAlreadyExists(productDto.Code));
-            if (result == null)
-            {
-                var mapper = _mapper.Map<Product>(productDto);
-                await _unitOfWork.ProductRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessDataResult<ProductDto>(productDto, Messages.ProductAdded);
-            }
+            await _productRules.ProductAlreadyExists(productDto.Code);
 
-            return new ErrorDataResult<ProductDto>(result.Message);
+            var mapper = _mapper.Map<Product>(productDto);
+            await _unitOfWork.ProductRepository.AddAsync(mapper);
+            await _unitOfWork.Commit();
+            return new SuccessDataResult<ProductDto>(productDto, Messages.ProductAdded);
+
         }
-
+        [SecuredOperation("Product.Update,Admin")]
+        [LogAspect(typeof(MssqlDbLogger))]
         public async Task<IResult> UpdateAsync(ProductDto productDto)
         {
-                IResult result = BusinessRules.Run(await _productRules.ProductAlreadyExists(productDto.Name));
-                if (result == null)
-                {
-                    var mapper = _mapper.Map<Product>(productDto);
-                    await _unitOfWork.ProductRepository.UpdateAsync(mapper);
-                    await _unitOfWork.Commit();
-                    return new SuccessResult(Messages.ProductUpdated);
-                }
+            var oldEntity = await GetByIdAsync(productDto.Id);
 
-                return result;
-            
+            await _productRules.ProductAlreadyExists(productDto.Name);
+            productDto.CreatedDate = oldEntity.Data.CreatedDate;
+
+            var mapper = _mapper.Map<Product>(productDto);
+            await _unitOfWork.ProductRepository.UpdateAsync(mapper);
+            await _unitOfWork.Commit();
+            return new SuccessResult(Messages.ProductUpdated);
+
+
         }
-
+        [SecuredOperation("Product.Delete,Admin")]
         public async Task<IResult> DeleteAsync(ProductDto productDto)
         {
             var product = await GetByIdAsync(productDto.Id);
-            if (product.Data != null)
-            {
-                var mapper = _mapper.Map<Product>(product.Data);
-                await _unitOfWork.ProductRepository.DeleteAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ProductDeleted);
-            }
 
-            return product;
+            var mapper = _mapper.Map<Product>(product.Data);
+            await _unitOfWork.ProductRepository.DeleteAsync(mapper);
+            await _unitOfWork.Commit();
+            return new SuccessResult(Messages.ProductDeleted);
+
         }
 
+        [SecuredOperation("Product.List,Admin")]
+        [LogAspect(typeof(MssqlDbLogger))]
         public async Task<IDataResult<IEnumerable<ProductListDto>>> GetAllAsync()
         {
-            var result = await _unitOfWork.ProductRepository.GetAllAsync(expression: x => x.Deleted != true,
-                include: x => x
-                                              .Include(p => p.Brand)
-                                              .Include(p => p.Category)
-                                              .Include(x => x.Color),
-                                              //.Include(x => x.Supplier),
-                selector: x => new ProductListDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Code = x.Code,
-                    BrandName = x.Brand.Name,
-                    CategoryName = x.Category.Name,
-                    ColorName = x.Color.Name,
-                    UnitPrice = x.UnitPrice,
-                    UnitsInStock = x.UnitsInStock,
-                    //SupplierName = x.Supplier.CompanyName,
-                    CreatedDate = x.CreatedDate,
-                    UpdatedDate = x.UpdatedDate,
-                    Deleted = x.Deleted,
-                },
-                orderBy: x => x.OrderBy(x => x.Name));
 
-            return new SuccessDataResult<IEnumerable<ProductListDto>>(result, Messages.ProductListed);
+            var includes = new Expression<Func<Product, object>>[]
+            {
+                x => x.Brand,
+                x => x.Category,
+                x=>x.Color
+            };
+
+            var products = await _unitOfWork.ProductRepository.GetListAsync(includeEntities: includes);
+
+            var mapper = _mapper.Map<List<ProductListDto>>(products);
+            return new SuccessDataResult<IEnumerable<ProductListDto>>(mapper, Messages.ProductListed);
         }
 
+        [SecuredOperation("Product.List,Admin")]
+        public async Task<PaginatedResult<ProductListDto>> GetTableSearch(TableGlobalFilter tableGlobalFilter)
+        {
+            var includes = new Expression<Func<Product, object>>[]
+            {
+                x => x.Brand,
+                x => x.Category,
+                x=>x.Color 
+            };
+
+            var products = await _unitOfWork.ProductRepository.GetListForTableSearch(tableGlobalFilter,includes);
+          
+            var mapped = _mapper.Map<PaginatedResult<ProductListDto>>(products);
+            return mapped;
+           
+        }
+        //[SecuredOperation("Product.List,Admin")]
+        //[LogAspect(typeof(MssqlDbLogger))]
+        //public async Task<IDataResult<IEnumerable<ProductListDto>>> GetAllAsync()
+        //{
+        //    var result = await _unitOfWork.ProductRepository.GetAllAsync(expression: x => x.Deleted != true,
+        //        include: x => x
+        //                    .Include(p => p.Brand)
+        //                    .Include(p => p.Category)
+        //                    .Include(x => x.Color),
+        //        //.Include(x => x.Supplier),
+        //        selector: x => new ProductListDto
+        //        {
+        //            Id = x.Id,
+        //            Name = x.Name,
+        //            Code = x.Code,
+        //            BrandName = x.Brand.Name,
+        //            CategoryName = x.Category.Name,
+        //            ColorName = x.Color.Name,
+        //            UnitPrice = x.UnitPrice,
+        //            UnitsInStock = x.UnitsInStock,
+        //            //SupplierName = x.Supplier.CompanyName,
+        //            CreatedDate = x.CreatedDate,
+        //            UpdatedDate = x.UpdatedDate,
+        //            Deleted = x.Deleted,
+        //        },
+        //        orderBy: x => x.OrderBy(x => x.Name));
+
+        //    return new SuccessDataResult<IEnumerable<ProductListDto>>(result, Messages.ProductListed);
+        //}
         public async Task<IDataResult<IEnumerable<ProductDto>>> GetAllByCategoryIdAsync(Guid categoryId)
         {
             var result = await _unitOfWork.ProductRepository.GetAllAsync(p => p.CategoryId == categoryId);
@@ -117,13 +146,12 @@ namespace Business.Services.Products
             return new SuccessDataResult<IEnumerable<ProductDto>>(mapper);
         }
 
+        [SecuredOperation("Product.Get,Admin")]
         public async Task<IDataResult<ProductDto>> GetByIdAsync(Guid productId)
         {
             var result = await _unitOfWork.ProductRepository.GetAsync(br => br.Id == productId);
-            if (result == null)
-            {
-                return new ErrorDataResult<ProductDto>(Messages.ProductNotFound);
-            }
+            if (result == null) throw new BusinessException(Messages.ProductNotFound);
+
             var mapper = _mapper.Map<ProductDto>(result);
             return new SuccessDataResult<ProductDto>(mapper);
         }
@@ -133,18 +161,6 @@ namespace Business.Services.Products
             var result = await _unitOfWork.ProductRepository.GetProductDetails();
             return new SuccessDataResult<List<ProductDetailDto>>(result);
         }
-
-        //look!!!
-        //private IResult CheckProductNameLimit(string productName)
-        //{
-        //    var result = _productDal.GetAllAsync(p => p.Name == productName).Count();
-        //    if (result <= 2)
-        //    {
-        //        return new ErrorResult(Messages.CheckProductNameLimit);
-        //    }
-
-        //    return new SuccessResult();
-        //}
     }
 
 }

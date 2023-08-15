@@ -1,4 +1,7 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using Core.Utilities.Results.Paging;
+using Entities.Dtos.Brands;
 using Entities.Dtos.Cities;
 using System;
 using System.Collections.Generic;
@@ -15,5 +18,8 @@ namespace Business.Services.Cities
         Task<IDataResult<IEnumerable<CityDto>>> GetAllAsync();
         Task<IDataResult<CityDto>> GetByIdAsync(Guid id);
         Task<IDataResult<IEnumerable<CityDto>>> GetAllByCountryAsync(Guid countryId);
+
+        Task<PaginatedResult<CityListDto>> GetTableSearch(TableGlobalFilter tableGlobalFilter);
+
     }
 }

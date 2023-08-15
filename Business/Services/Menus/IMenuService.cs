@@ -1,7 +1,5 @@
 ﻿using Core.Utilities.Results;
-using Entities.Dtos.Brands;
 using Entities.Dtos.Menus;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,8 +12,8 @@ namespace Business.Services.Menus
         Task<IResult> DeleteAsync(MenuDto menuDto);
 
         Task<IDataResult<IEnumerable<MenuDto>>> GetAllAsync();
-        Task<IDataResult<IEnumerable<MenuDto>>> GetAllByParentMenuAsync(Guid parentMenuId);
-        Task<IDataResult<MenuDto>> GetByIdAsync(Guid id);
+        Task<IDataResult<IEnumerable<MenuDto>>> GetAllByParentMenuAsync(int parentMenuId);
+        Task<IDataResult<MenuDto>> GetByIdAsync(int id);
 
     }
 }

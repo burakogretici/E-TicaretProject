@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,7 +12,9 @@ namespace Business.Handlers.UserOperationClaims.Commands
 {
     public class DeleteUserOperationClaimCommand : IRequest<IResult>
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public List<Guid> RoleIds { get; set; }
+
 
         public class DeleteUserOperationClaimCommandHandler : IRequestHandler<DeleteUserOperationClaimCommand, IResult>
         {
@@ -25,7 +28,7 @@ namespace Business.Handlers.UserOperationClaims.Commands
 
             public async Task<IResult> Handle(DeleteUserOperationClaimCommand request, CancellationToken cancellationToken)
             {
-                var mapper = _mapper.Map<UserOperationClaimDto>(request);
+                var mapper = _mapper.Map<DeleteUserOperationCLaimDto>(request);
                 var userOperationClaim = await _userOperationClaimService.DeleteAsync(mapper);
                 return userOperationClaim;
 

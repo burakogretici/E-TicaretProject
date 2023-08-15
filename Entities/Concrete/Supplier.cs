@@ -9,12 +9,12 @@ namespace Entities.Concrete
         //{
         //    Products = new HashSet<Product>();
         //}
-        public Guid CustomerId  { get; set; }
+        public Guid UserId { get; set; }
         public string CompanyName { get; set; }
         public string Fax { get; set; }
         public string Website { get; set; }
         //public virtual ICollection<Product> Products { get; set; }
-        public virtual Customer Customer { get; set; }
+        public virtual User User { get; set; }
 
     }
 }

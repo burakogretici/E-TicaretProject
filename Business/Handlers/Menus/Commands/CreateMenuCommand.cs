@@ -17,6 +17,8 @@ namespace Business.Handlers.Menus.Commands
         public int DisplayOrder { get; set; }
         public string Url { get; set; }
         public bool Hidden { get; set; }
+        public bool IsAdmin { get; set; }
+
 
         public class CreateMenuCommandHandler : IRequestHandler<CreateMenuCommand, IResult>
         {

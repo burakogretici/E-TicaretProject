@@ -10,6 +10,7 @@ namespace Business.Helpers.AutoMapperProfiles
         public OrderProfile()
         {
             CreateMap<Order, OrderDto>().ReverseMap();
+
             CreateMap<Order, CreateOrderCommand>().ReverseMap();
             CreateMap<Order, DeleteOrderCommand>().ReverseMap();
             CreateMap<Order, UpdateOrderCommand>().ReverseMap();

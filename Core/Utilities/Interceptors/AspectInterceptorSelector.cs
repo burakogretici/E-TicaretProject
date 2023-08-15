@@ -16,7 +16,7 @@ namespace Core.Utilities.Interceptors
             {
                 classAttributes.AddRange(methodAttributes);
             }
-            //classAttributes.Add(new ExceptionLogAspect(typeof(FileLogger)));
+            //classAttributes.Add(new ExceptionLogAspect(typeof(MssqlDbLogger)));
             return classAttributes.OrderBy(x => x.Priority).ToArray();
         }
     }

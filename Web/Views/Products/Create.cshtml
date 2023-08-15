@@ -1,0 +1,73 @@
+﻿@using Entities.Dtos.Products
+@model ProductDto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form action="/product/create" id="createProduct" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>
+                @Html.DropDownList("CategoryId", ViewBag.Categories, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrandId" class="control-label"></label>
+                @Html.DropDownList("BrandId", ViewBag.Brands, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="BrandId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ColorId" class="control-label"></label>
+                @Html.DropDownList("ColorId", ViewBag.Colors, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="ColorId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitPrice" class="control-label"></label>
+                <input asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitsInStock" class="control-label"></label>
+                <input asp-for="UnitsInStock" class="form-control" />
+                <span asp-validation-for="UnitsInStock" class="text-danger"></span>
+            </div>
+            @*  <div class="form-group ">
+            <label class="col-form-label col-lg-3 required" asp-for="Image"></label>
+            <div class="col-lg-9">
+            <input type="file" name="files" multiple/>
+            <input type="hidden" asp-for="Image" />
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+            <a href="@(Model.Image)" target="_blank">@(
+            Model.Image
+            )</a>
+            }
+            </div>
+            </div>*@
+            <div class="form-group">
+                <input onclick="$Product.save()" class="btn btn-primary" value="Kaydet" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section scripts{
+    <script src="~/js/pages/product.js"></script>
+}

@@ -10,7 +10,7 @@ namespace Business.Handlers.Menus.Queries
 {
     public class GetMenuQuery : IRequest<IDataResult<MenuDto>>
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public class GetMenuQueryHandler : IRequestHandler<GetMenuQuery, IDataResult<MenuDto>>
         {

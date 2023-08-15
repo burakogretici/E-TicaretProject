@@ -45,4 +45,25 @@ namespace Business.ValidationRules.FluentValidation
 
         }
     }
+
+    public class UserLoginValidator : AbstractValidator<UserForLogin>
+    {
+        public UserLoginValidator()
+        {
+            RuleFor(request => request.Email)
+                .NotEmpty().WithMessage("E-posta boş geçilemez!")
+                .MaximumLength(40).WithMessage("E-posta maksimum 40 karakter olmalıdır!")
+                .EmailAddress().WithMessage("Geçerli bir e-posta giriniz!");
+
+            RuleFor(request => request.Password)
+                .NotEmpty().WithMessage("Şifre boş geçilemez!")
+                .MinimumLength(8).WithMessage("Şifre en az 8 karakter olmalıdır!")
+                .MaximumLength(20).WithMessage("Şifre maksimum 20 karakter olmalıdır!")
+                .Matches("[A-Z]").WithMessage("'Şifre' bir veya daha fazla büyük harf içermelidir!")
+                .Matches(@"\d").WithMessage("'Şifre' bir veya daha fazla rakam içermelidir!")
+                .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]")
+                .WithMessage("'Şifre' bir veya daha fazla özel karakter içermelidir!");
+
+        }
+    }
 }

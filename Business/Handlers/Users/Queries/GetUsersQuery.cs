@@ -2,15 +2,18 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Business.Services.Users;
-using Core.Utilities.Results;
+using Core.Entities.Concrete;
+using Core.Utilities.Results.Paging;
 using Entities.Dtos.Users;
 using MediatR;
 
 namespace Business.Handlers.Users.Queries
 {
-    public class GetUsersQuery : IRequest<IDataResult<IEnumerable<UserDto>>>
+    public class GetUsersTableQuery : IRequest<PaginatedResult<UserDto>>
     {
-        public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, IDataResult<IEnumerable<UserDto>>>
+        public TableGlobalFilter TableGlobalFilter { get; set; }
+
+        public class GetUsersQueryHandler : IRequestHandler<GetUsersTableQuery, PaginatedResult<UserDto>>
         {
             private readonly IUserService _userService;
 
@@ -19,9 +22,9 @@ namespace Business.Handlers.Users.Queries
                 _userService = userService;
             }
 
-            public async Task<IDataResult<IEnumerable<UserDto>>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+            public async Task<PaginatedResult<UserDto>> Handle(GetUsersTableQuery request, CancellationToken cancellationToken)
             {
-                var userList = await _userService.GetAllAsync();
+                var userList = await _userService.GetTableSearch(request.TableGlobalFilter);
                 return userList;
             }
         }

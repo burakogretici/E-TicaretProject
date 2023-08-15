@@ -1,0 +1,38 @@
+﻿@model Entities.Dtos.Products.ProductListDto
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.CategoryName)
+                @Html.DisplayNameFor(model => model.BrandName)
+                @Html.DisplayNameFor(model => model.ColorName)
+                @Html.DisplayNameFor(model => model.Code)
+                @Html.DisplayNameFor(model => model.UnitPrice)
+                @Html.DisplayNameFor(model => model.UnitsInStock)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.Name)
+                @Html.DisplayFor(modelItem => modelItem.CategoryName)
+                @Html.DisplayFor(modelItem => modelItem.BrandName)
+                @Html.DisplayFor(modelItem => modelItem.ColorName)
+                @Html.DisplayFor(modelItem => modelItem.Code)
+                @Html.DisplayFor(modelItem => modelItem.UnitPrice)
+                @Html.DisplayFor(modelItem => modelItem.UnitsInStock)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                <a asp-action="Update" asp-route-id="@Model.Id">Edit</a>
+            </td>
+    </tbody>
+</table>

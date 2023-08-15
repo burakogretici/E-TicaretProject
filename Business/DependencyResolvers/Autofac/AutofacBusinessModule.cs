@@ -2,6 +2,7 @@
 using Autofac.Extras.DynamicProxy;
 using Business.Helpers.Jwt;
 using Business.Rules;
+using Business.Services;
 using Business.Services.Brands;
 using Business.Services.Colors;
 using Castle.DynamicProxy;
@@ -9,7 +10,7 @@ using Core.Utilities.Interceptors;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.UnitOfWork;
-
+using Microsoft.AspNetCore.Http;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -20,7 +21,13 @@ namespace Business.DependencyResolvers.Autofac
             //Product
             builder.RegisterType<ProductRepository>().As<IProductRepository>().SingleInstance();
             builder.RegisterType<ProductRules>().SingleInstance();
-            
+
+            //ProductImage
+            builder.RegisterType<ProductImageRepository>().As<IProductImageRepository>().SingleInstance();
+            builder.RegisterType<FileRepository>().As<IFileRepository>().SingleInstance();
+
+
+
             //Basket
             builder.RegisterType<BasketRepository>().As<IBasketRepository>().SingleInstance();
             builder.RegisterType<BasketRules>().SingleInstance();
@@ -57,15 +64,7 @@ namespace Business.DependencyResolvers.Autofac
 
             //Country
             builder.RegisterType<CountryRepository>().As<ICountryRepository>().SingleInstance();
-            builder.RegisterType<CountryRules>().SingleInstance();
-
-            //OrderDetail
-            builder.RegisterType<OrderDetailRepository>().As<IOrderDetailRepository>().SingleInstance();
-            builder.RegisterType<OrderDetailRules>().SingleInstance();
-
-            //Customer
-            builder.RegisterType<CustomerRepository>().As<ICustomerRepository>().SingleInstance();
-            builder.RegisterType<CustomerRules>().SingleInstance();
+            builder.RegisterType<CountryRules>().SingleInstance();          
 
             //Color
             builder.RegisterType<ColorManager>().As<IColorService>().SingleInstance();
@@ -88,7 +87,8 @@ namespace Business.DependencyResolvers.Autofac
 
             //Auth
             builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
-            
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
+
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
                 .EnableInterfaceInterceptors(new ProxyGenerationOptions()

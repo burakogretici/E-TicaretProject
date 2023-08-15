@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Business.Handlers.Cities.Commands;
 using Business.Handlers.Cities.Queries;
+using Core.Entities.Concrete;
 using Entities.Dtos.Cities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,21 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CitiesController : BaseController
     {
+
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CityDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("getall")]
+        public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)
+        {
+            GetCitiesTableQuery getCitiesTableQuery = new() { TableGlobalFilter = tableGlobalFilter };
+            return GetResponseOnlyResult(await Mediator.Send(getCitiesTableQuery));
+        }
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateCityCommand createCity)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createCity));
+            return GetResponseOnlyResult(await Mediator.Send(createCity));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -25,7 +35,7 @@ namespace WebAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteCityCommand deleteCity)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteCity));
+            return GetResponseOnlyResult(await Mediator.Send(deleteCity));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -33,15 +43,15 @@ namespace WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateCityCommand updateCity)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateCity));
+            return GetResponseOnlyResult(await Mediator.Send(updateCity));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CityDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpGet("getall")]
+        [HttpGet("get")]
         public async Task<IActionResult> GetAll()
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetCitiesQuery()));
+            return GetResponseOnlyResult(await Mediator.Send(new GetCitiesQuery()));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CityDto))]
@@ -49,7 +59,7 @@ namespace WebAPI.Controllers
         [HttpGet("delete/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetCityQuery getCityQuery)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(getCityQuery));
+            return GetResponseOnlyResult(await Mediator.Send(getCityQuery));
         }
     }
 }

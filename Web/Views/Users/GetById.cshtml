@@ -1,0 +1,32 @@
+﻿@using Entities.Dtos.Users
+@model UserDto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.FullName)
+                @Html.DisplayFor(modelItem => modelItem.Email)
+                @Html.DisplayFor(modelItem => modelItem.Phone)
+
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                <a asp-action="Update" asp-route-id="@Model.Id">Edit</a>
+            </td>
+    </tbody>
+</table>

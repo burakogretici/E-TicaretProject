@@ -1,4 +1,7 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
+using Core.Utilities.Results.Paging;
+using Entities.Dtos.Brands;
 using Entities.Dtos.Countries;
 using System;
 using System.Collections.Generic;
@@ -14,5 +17,8 @@ namespace Business.Services.Countries
 
         Task<IDataResult<IEnumerable<CountryDto>>> GetAllAsync();
         Task<IDataResult<CountryDto>> GetByIdAsync(Guid id);
+
+        Task<PaginatedResult<CountryDto>> GetTableSearch(TableGlobalFilter tableGlobalFilter);
+
     }
 }

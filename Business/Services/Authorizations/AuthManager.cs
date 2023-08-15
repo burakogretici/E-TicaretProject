@@ -7,7 +7,8 @@ using Core.Utilities.Results;
 using Core.Utilities.Security.Hashing;
 using Entities.Dtos.Users;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.Services.Baskets;
+using Entities.Dtos.Baskets;
 
 namespace Business.Services.Authorizations
 {
@@ -15,13 +16,13 @@ namespace Business.Services.Authorizations
     {
         private readonly IUserService _userService;
         private readonly ITokenHelper _tokenHelper;
-        private readonly IMapper _mapper;
+        private readonly IBasketService _basketService;
 
-        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IMapper mapper)
+        public AuthManager(IUserService userService, ITokenHelper tokenHelper, IBasketService basketService)
         {
             _userService = userService;
             _tokenHelper = tokenHelper;
-            _mapper = mapper;
+            _basketService = basketService;
         }
 
         [ValidationAspect(typeof(UserValidator))]
@@ -46,6 +47,8 @@ namespace Business.Services.Authorizations
             };
 
             await _userService.AddAsync(user);
+
+
             return new SuccessDataResult<UserDto>(user, Messages.UserRegistered);
         }
 
@@ -62,6 +65,16 @@ namespace Business.Services.Authorizations
                 return new ErrorDataResult<UserDto>(Messages.PasswordError);
             }
 
+            var existingBasket = await _basketService.GetBasketByUserId(userToCheck.Data.Id);
+            if (existingBasket.Data == null)
+            {
+                BasketDto basket = new BasketDto
+                {
+                    UserId = userToCheck.Data.Id
+                };
+                await _basketService.CreateBasket(basket);
+            }
+          
             return new SuccessDataResult<UserDto>(userToCheck.Data, Messages.SuccessfulLogin);
         }
 

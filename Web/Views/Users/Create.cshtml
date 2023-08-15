@@ -1,0 +1,57 @@
+﻿@using Entities.Dtos.Users
+@model UserForRegister
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@if (!ViewContext.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        @(Html.Raw(ViewData.ModelState.GetErrorMessage()))
+    </div>
+}
+<div class="row">
+
+    <div class="col-md-4">
+        <form action="/user/create" id="createUser" method="post">
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input onclick="createUser()" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section scripts{
+    <script>
+        function createUser() {
+            var form = $("#createUser");
+            app.callJx(form.attr("action"), "body", form.serialize());
+        }
+    </script>
+}

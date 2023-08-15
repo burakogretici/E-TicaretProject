@@ -1,0 +1,36 @@
+﻿@model Entities.Dtos.Brands.BrandDto
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="updateBrand" action="/brand/update/" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input onclick="updateBrand()" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section scripts{
+    <script>
+        function updateBrand() {
+            var form = $("#updateBrand");
+            app.confirmModal("Kayıt Güncelleme", "Bu kaydı güncellemeyi onaylıyor musunuz?", function () {
+                app.callJx(form.attr("action"), "body", form.serialize());
+            });
+        }
+    </script>
+}

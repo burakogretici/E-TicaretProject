@@ -1,0 +1,106 @@
+﻿@using Entities.Dtos.UserOperationClaim
+@model List<UserOperationClaimDto>
+
+@{
+    ViewBag.Title = "Kullanıcı Rolleri";
+}
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Kullanıcı</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>
+                    <button type="button" class="btn btn-link show-roles-btn" data-userid="@user.UserId"><i class="fa fa-eye"></i> Rolleri Görüntüle</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger delete-roles-btn" data-userid="@user.UserId"><i class="fa fa-trash"></i> Rolleri Sil</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div id="roles_@user.UserId" class="collapse">
+                        <ul id="ul_roles_@user.UserId" style="padding-left: inherit;"></ul>
+                    </div>
+                </td>
+
+            </tr>
+        }
+        <tr>
+            <td colspan="2">
+                <a href="create" class="btn btn-success">Ekleme Sayfasına Git</a>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('.show-roles-btn').click(function () {
+            debugger;
+            var userId = $(this).data('userid');
+            var rolesContainer = $('#roles_' + userId);
+
+            // API isteği yap
+            $.ajax({
+                url: `/useroperationclaim/getUserRoles`,
+                type: 'GET',
+                data: { userId: userId },
+                success: function (response) {
+                    debugger;
+                    rolesContainer.find('ul').empty();
+
+                    response.operationClaims.forEach(function (operationClaim) {
+                        rolesContainer.find('ul').append('<input type="checkbox" name="selectedRoles" value="' + operationClaim.id + '"/><label style="margin-left: 0.5em;">' + operationClaim.name + '</label><br>');
+
+                    });
+
+                    if (rolesContainer.hasClass('show')) {
+                        rolesContainer.collapse('hide');
+                    } else {
+                        rolesContainer.collapse('show');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $('.delete-roles-btn').click(function () {
+            var userId = $(this).data('userid');
+
+            // Seçilen rollerin ID'lerini al
+            var selectedRoles = $('#ul_roles_' + userId + ' input[type="checkbox"]:checked').map(function () {
+                return $(this).val();
+            }).get();
+
+            // API isteği yap
+            //$.ajax({
+            //    url: '/useroperationclaim/delete',
+            //    type: 'POST',
+            //    data: { userId: userId, roleIds: selectedRoles },
+            //    success: function (response) {
+            //        // Roller başarıyla silindiğinde yapılacak işlemler
+            //    },
+            //    error: function (xhr, status, error) {
+            //        console.log(error);
+            //    }
+            //});
+            //app.callJx(form.attr("action"), "body", form.serialize());
+
+            app.callJx("/useroperationclaim/delete", " body", { userId: userId, roleIds: selectedRoles });
+        });
+
+    });
+</script>

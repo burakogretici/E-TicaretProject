@@ -2,71 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
+using Business.BusinessAspects;
 using Business.Constants;
 using Business.Rules;
-using Core.Utilities.Business;
+using Core.CrossCuttingConcerns.Exceptions;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
-using DataAccess.UnitOfWork;
+using Core.Utilities.Results.Paging;
 using Entities.Concrete;
 using Entities.Dtos.Colors;
 
-
 namespace Business.Services.Colors
 {
-    public class ColorManager : IColorService
+    public class ColorManager : ServiceBase, IColorService
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ColorRules _colorRules;
-        public ColorManager(IMapper mapper, IUnitOfWork unitOfWork, ColorRules colorRules)
+        public ColorManager(IServiceProvider serviceProvider, ColorRules colorRules) : base(serviceProvider)
         {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
             _colorRules = colorRules;
         }
-
+        //[SecuredOperation("Color.Add,Admin")]
         public async Task<IDataResult<ColorDto>> AddAsync(ColorDto colorDto)
         {
-            IResult result = BusinessRules.Run(await _colorRules.ColorNameAlreadyExists(colorDto.Name));
-            if (result == null)
-            {
-                var mapper = _mapper.Map<Color>(colorDto);
-                await _unitOfWork.ColorRepository.AddAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessDataResult<ColorDto>(colorDto, Messages.ColorAdded);
-            }
+            await _colorRules.ColorNameAlreadyExists(colorDto.Name);
 
-            return new ErrorDataResult<ColorDto>(result.Message);
+            var mapper = _mapper.Map<Color>(colorDto);
+            await _unitOfWork.ColorRepository.AddAsync(mapper);
+            await _unitOfWork.Commit();
+            return new SuccessDataResult<ColorDto>(colorDto, Messages.ColorAdded);
+
         }
-
+        [SecuredOperation("Color.Update,Admin")]
         public async Task<IResult> UpdateAsync(ColorDto colorDto)
         {
-            IResult result = BusinessRules.Run(await _colorRules.ColorNameAlreadyExists(colorDto.Name));
-            if (result == null)
-            {
-                var mapper = _mapper.Map<Color>(colorDto);
-                await _unitOfWork.ColorRepository.UpdateAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ColorUpdated);
-            }
-            return new ErrorResult(result.Message);
+            var color = await GetByIdAsync(colorDto.Id);
+
+            await _colorRules.ColorNameAlreadyExists(colorDto.Name);
+            colorDto.CreatedDate = color.Data.CreatedDate;
+
+            var mapper = _mapper.Map<Color>(colorDto);
+            await _unitOfWork.ColorRepository.UpdateAsync(mapper);
+            await _unitOfWork.Commit();
+
+            return new SuccessResult(Messages.ColorUpdated);
 
         }
-
+        [SecuredOperation("Color.Delete,Admin")]
         public async Task<IResult> DeleteAsync(ColorDto colorDto)
         {
             var color = await GetByIdAsync(colorDto.Id);
-            if (color.Data != null)
-            {
-                var mapper = _mapper.Map<Color>(color.Data);
-                await _unitOfWork.ColorRepository.DeleteAsync(mapper);
-                await _unitOfWork.Commit();
-                return new SuccessResult(Messages.ColorDeleted);
-            }
-            return color;
-        }
 
+            var mapper = _mapper.Map<Color>(color.Data);
+            await _unitOfWork.ColorRepository.DeleteAsync(mapper);
+            await _unitOfWork.Commit();
+
+            return new SuccessResult(Messages.ColorDeleted);
+
+        }
+        [SecuredOperation("Color.List,Admin")]
         public async Task<IDataResult<IEnumerable<ColorDto>>> GetAllAsync()
         {
             var result = await _unitOfWork.ColorRepository.GetAllAsync(expression: x => x.Deleted != true,
@@ -86,12 +79,17 @@ namespace Business.Services.Colors
         public async Task<IDataResult<ColorDto>> GetByIdAsync(Guid colorId)
         {
             var result = await _unitOfWork.ColorRepository.GetAsync(br => br.Id == colorId);
-            if (result == null)
-            {
-                return new ErrorDataResult<ColorDto>(Messages.ColorNotFound);
-            }
+            if (result == null) throw new BusinessException(Messages.ColorNotFound);
+
             var mapper = _mapper.Map<ColorDto>(result);
-            return new SuccessDataResult<ColorDto>(mapper);
+            return new SuccessDataResult<ColorDto>(mapper);         
+        }
+
+        public async Task<PaginatedResult<ColorDto>> GetTableSearch(TableGlobalFilter tableGlobalFilter)
+        {
+            var colors = await _unitOfWork.ColorRepository.GetListForTableSearch(tableGlobalFilter);
+            var mapped = _mapper.Map<PaginatedResult<ColorDto>>(colors);
+            return mapped;
         }
     }
 }

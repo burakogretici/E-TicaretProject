@@ -1,0 +1,21 @@
+﻿@model User_VM
+
+@{
+    ViewBag.Title = "Kullanıcılar";
+}
+
+<filters>
+    <filter for="FullName" placeholder="Kullanıcı ara..." operator="contains" type="text" />
+    <filter for="Email" placeholder="Email ara..." operator="contains" type="text" />
+    <filter for="Phone" placeholder="Telefon ara..." operator="contains" type="text" />
+    <filter for="CreatedDate" operator="eq" type="date" />
+
+</filters>
+
+<grid read-url="/Users/Read" edit-url="/Users/Update" delete-url="/Users/Delete" create-url="/Users/Create">
+    <column custom-property="true" sortable="false"></column>
+    <column for="FullName"></column>
+   <column for="Email"></column>
+    <column for="Phone"></column>
+    <column for="CreatedDate"></column>
+</grid>

@@ -13,7 +13,7 @@ namespace Business.Handlers.Orders.Commands
     public class UpdateOrderCommand : IRequest<IResult>
     {
         public Guid Id { get; set; }
-        public Guid CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public Guid AddressId { get; set; }
         public Guid ShipperId { get; set; }
         public int Amount { get; set; }

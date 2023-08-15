@@ -1,0 +1,92 @@
+﻿@using Entities.Dtos.Menus
+@model IEnumerable<MenuDto>
+
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    @foreach (var item in Model)
+    {
+        <li class="nav-item">
+            <a href="" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt">@item.Icon</i>
+                <p>
+                    @item.Name
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+
+            @if (item.Childs != null && item.Childs.Count > 0)
+            {
+                foreach (var itemMenuDto in item.Childs)
+                {
+                    <ul class="nav nav-treeview">
+                        @if (itemMenuDto.Childs != null && itemMenuDto.Childs.Count > 0)
+                        {
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt">@itemMenuDto.Icon</i>
+                                <p>
+                                    @itemMenuDto.Name
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            foreach (var item2 in itemMenuDto.Childs)
+                            {
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <button href="@item2.Url" url="@item2.Url" class="nav-link">
+                                            <i class="far fa-circle nav-icon">@item2.Icon</i>
+                                            <p>@item2.Name</p>
+                                        </button>
+                                    </li>
+                                </ul>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a href="@itemMenuDto.Url" url="@itemMenuDto.Url" class="nav-link">
+                                    <i class="far fa-circle nav-icon">@itemMenuDto.Icon</i>
+                                    <p>@itemMenuDto.Name</p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
+            }
+        </li>
+    }
+</ul>
+
+@section scripts{
+    @*    <script>
+        debugger;
+        $(document).on('click', '#test', function (e) {
+            debugger;
+            e.preventDefault();
+            //var page = $(this).attr('button').split('page=')[1];
+            var item = $(this);
+            var page = $(this).attr('data-page');
+            //var page2= e.attr("data-page", item.attr("data-page"));
+            $.ajax({
+                url: '/brand/index',
+                data: { PageNumber: page },
+                type: 'get',
+                dataType: 'json',
+                success: function (response) {
+                    debugger;
+                    // Sayfa içeriğini güncelleme işlemleri
+                },
+                error: function () {
+                    // Hata işlemleri
+                }
+            });
+        });
+
+    </script>*@
+    <script>
+        $(document).ready(function () {
+            $('#test').click(function () {
+                alert('Tıklandı!');
+            });
+        });
+
+    </script>
+}                       

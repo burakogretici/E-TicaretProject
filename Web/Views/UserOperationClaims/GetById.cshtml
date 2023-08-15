@@ -1,0 +1,31 @@
+﻿@using Entities.Dtos.UserOperationClaim
+@model UserOperationClaimDto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+                @Html.DisplayNameFor(model => model.OperationClaimNames)
+
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.UserName)
+                @Html.DisplayFor(modelItem => modelItem.OperationClaimNames)
+
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                <a asp-action="Update" asp-route-id="@Model.Id">Edit</a>
+            </td>
+    </tbody>
+</table>

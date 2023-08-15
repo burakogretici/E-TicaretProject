@@ -2,10 +2,9 @@
 {
     public class AddressListDto : BaseDto
     {
-        public string CustomerName { get; set; }
-        public string CustomerLastName { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
+        public string FullName { get; set; }
+        public string CountryName { get; set; }
+        public string CityName { get; set; }
         public string AddressDetail { get; set; }
         public string PostalCode { get; set; }
     }

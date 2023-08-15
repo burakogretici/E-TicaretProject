@@ -1,7 +1,7 @@
 ﻿using Business.Constants;
-using Core.Utilities.Results;
 using System.Threading.Tasks;
 using DataAccess.Abstract;
+using Core.CrossCuttingConcerns.Exceptions;
 
 namespace Business.Rules
 {
@@ -14,13 +14,10 @@ namespace Business.Rules
             _countyRepository = countyRepository;
         }
 
-        public async Task<IResult> CountryNameAlreadyExists(string countryDtoName)
+        public async Task CountryNameAlreadyExists(string countryDtoName)
         {
             var result = await _countyRepository.AnyAsync(b => b.Name == countryDtoName);
-            if (!result)
-                return new SuccessResult();
-            else
-                return new ErrorResult(Messages.CountryNameAlreadyExists);
+            if (result) throw new BusinessException(Messages.CountryNameAlreadyExists);
         }
     }
 }

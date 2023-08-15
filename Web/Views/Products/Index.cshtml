@@ -1,0 +1,34 @@
+﻿@model ProductList_VM
+@{
+    ViewBag.Title = "Ürünler";
+}
+
+<filters>
+    <filter for="Name" placeholder="Ürün ara..." operator="contains" type="text" />
+    <filter for="Brand.Name" label="Marka Adı" placeholder="Markaya göre ara..." operator="eq" type="text" />
+    <filter for="Category.Name" label="Kategori Adı" placeholder="Kategoriye göre ara..." operator="eq" type="text" />
+    <filter for="Color.Name" label="Renk Adı" placeholder="Renge göre ara..." operator="eq" type="text" />
+    <filter for="Code" placeholder="Ürün Koduna göre ara..." operator="eq" type="text" />
+    <filter for="UnitsInStock" placeholder="Stok Miktarına göre ara..." operator="eq" type="number" />
+    <filter for="UnitPrice" placeholder="Fiyata göre arama yapın" operator="eq" type="number" />
+    <filter for="CreatedDate" placeholder="Arama yapın" operator="eq" type="date"  />
+</filters>
+
+<grid read-url="/Products/Read" edit-url="/Products/Update" delete-url="/Products/Delete" create-url="/Products/Create">
+    <column custom-property="true" sortable="false"></column>
+    <column for="Name"></column>
+    <column for="BrandName" sortable="false"></column>
+    <column for="CategoryName" sortable="false"></column>
+    <column for="ColorName" sortable="false"></column>
+    <column for="SupplierName" sortable="false"></column>
+    <column for="Code"></column>
+    <column for="UnitsInStock"></column>
+    <column for="UnitPrice"></column>
+    <column for="CreatedDate" format="formatDate"></column>
+</grid>
+
+
+@*@section scripts{
+    <script src="~/js/pages/product.js"></script>
+}*@
+

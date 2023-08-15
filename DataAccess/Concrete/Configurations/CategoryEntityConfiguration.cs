@@ -1,6 +1,7 @@
 ﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace DataAccess.Concrete.Configurations
 {
@@ -14,6 +15,13 @@ namespace DataAccess.Concrete.Configurations
                 .WithOne(a => a.Category)
                 .HasForeignKey(a => a.CategoryId);
 
+            builder.HasData(
+   new Category { Id = Guid.NewGuid(), Name = "Telefon" },
+   new Category { Id = Guid.NewGuid(), Name = "Elektronik" },
+   new Category { Id = Guid.NewGuid(), Name = "Bilgisayar" },
+   new Category { Id = Guid.NewGuid(), Name = "Beyaz Eşya" },
+   new Category { Id = Guid.NewGuid(), Name = "Giyim" },
+   new Category { Id = Guid.NewGuid(), Name = "Mobilya" });
             base.Configure(builder);
         }
     }

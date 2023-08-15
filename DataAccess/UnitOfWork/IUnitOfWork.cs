@@ -9,20 +9,24 @@ namespace DataAccess.UnitOfWork
         IUserRepository UserRepository { get; }
         IAddressRepository AddressRepository { get; }
         IUserOperationClaimRepository UserOperationClaimRepository { get; }
-        IBasketDetailRepository BasketDetailRepository { get; }
+        IBasketItemRepository BasketItemRepository { get; }
         IBasketRepository BasketRepository { get; }
         IBrandRepository BrandRepository { get; }
         ICategoryRepository CategoryRepository { get; }
-        ICustomerRepository CustomerRepository { get; }
         IProductRepository ProductRepository { get; }
         IColorRepository ColorRepository { get; }
-        ICityRepository  CityRepository { get; }
+        ICityRepository CityRepository { get; }
         ICountryRepository CountryRepository { get; }
-        IOrderDetailRepository OrderDetailRepository { get; }
         IOrderRepository OrderRepository { get; }
         ISupplierRepository SupplierRepository { get; }
         IOperationClaimRepository OperationClaimRepository { get; }
         IMenuRepository MenuRepository { get; }
+        ILogRepository LogRepository { get; }
+        IProductImageRepository ProductImageRepository { get; }
+        IShipperRepository ShipperRepository { get; }
+
+
+
         Task Commit();
     }
 }
