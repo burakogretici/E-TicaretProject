@@ -1,8 +1,6 @@
-﻿using Business.Handlers.Cities.Commands;
-using Business.Handlers.Cities.Queries;
+﻿using Business.Handlers.Cities.Queries;
 using Business.Handlers.Shippers.Commands;
 using Business.Handlers.Shippers.Queries;
-using Entities.Dtos.Cities;
 using Entities.Dtos.Shippers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +16,7 @@ namespace WebAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateShipperCommand createShipper)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createShipper));
+            return GetResponseOnlyResult(await Mediator.Send(createShipper));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -26,7 +24,7 @@ namespace WebAPI.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteShipperCommand deleteShipper)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteShipper));
+            return GetResponseOnlyResult(await Mediator.Send(deleteShipper));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -34,7 +32,7 @@ namespace WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateShipperCommand updateShipper)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateShipper));
+            return GetResponseOnlyResult(await Mediator.Send(updateShipper));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ShipperDto>))]
@@ -42,7 +40,7 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetCitiesQuery()));
+            return GetResponseOnlyResult(await Mediator.Send(new GetShippersQuery()));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShipperDto))]
@@ -50,7 +48,7 @@ namespace WebAPI.Controllers
         [HttpGet("delete/{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetShipperQuery getShipperQuery)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(getShipperQuery));
+            return GetResponseOnlyResult(await Mediator.Send(getShipperQuery));
         }
     }
 }

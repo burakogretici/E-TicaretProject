@@ -6,6 +6,7 @@ using Business.Handlers.Categories.Queries;
 using Entities.Dtos.Categories;
 using Microsoft.AspNetCore.Http;
 using Core.Entities.Concrete;
+using Core.Utilities.Results.Paging;
 
 namespace WebAPI.Controllers
 {
@@ -13,16 +14,8 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CategoriesController : BaseController
     {
-        //[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CategoryDto>))]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[HttpGet("getall")]
-        //public async Task<IActionResult> GetAll()
-        //{
-        //    return GetResponseOnlyResult(await Mediator.Send(new GetCategoriesQuery()));
-        //}
 
-
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CategoryDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<CategoryDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
         public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)

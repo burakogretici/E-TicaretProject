@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Business.Handlers.BasketItems.Commands;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Paging;
-using Business.Handlers.Products.Queries;
 
 namespace WebAPI.Controllers
 {

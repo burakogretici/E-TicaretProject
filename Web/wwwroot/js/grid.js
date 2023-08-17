@@ -95,7 +95,7 @@ function fetchDataAndProcessTable() {
         }, error: function (xhr, textStatus, errorThrown) {
             debugger;
             //todo  Burayý en son ayarla
-        
+
 
             // Diðer hata durumlarýný burada iþleyebilirsiniz
         }
@@ -161,27 +161,55 @@ function processTableData(data) {
         var id = value.id;
         var customProperty = $("th").attr("custom-property");
 
-        if (editUrl && editUrl !== "" && customProperty == "1") {
+        debugger;
+        if (customProperty == "1") {
             var dropdownButton = $('<button>').addClass('btn btn-link dropdown-toggle').attr('type', 'button').attr('data-toggle', 'dropdown').append(
                 $('<i>').addClass('fas fa-bars')
             );
 
-            var dropdownMenu = $('<div>').addClass('dropdown-menu').append(
-                $('<a>').attr('href', '#').addClass('dropdown-item grid-edit').append(
-                    $('<i>').addClass('fas fa-pencil-alt'),
-                    ' Duzenle'
-                )
-            );
+            var dropdownMenu = $('<div>').addClass('dropdown-menu');
 
+            if (editUrl && editUrl !== "") {
+                dropdownMenu.append(
+                    $('<a>').attr('href', '#').addClass('dropdown-item grid-edit')
+                        .append($('<i>').addClass('fas fa-pencil-alt'), ' Duzenle'),
+                                        $('<div>').addClass('dropdown-divider')
+
+                );
+
+            }
             if (deleteUrl && deleteUrl !== "") {
                 dropdownMenu.append(
-                    $('<div>').addClass('dropdown-divider'),
                     $('<a>').attr('href', '#').addClass('dropdown-item grid-delete text-danger').append(
                         $('<i>').addClass('fas fa-trash-alt'),
                         ' Sil'
                     )
                 );
             }
+
+            //if (editUrl && editUrl !== "" && customProperty == "1") {
+            //    debugger;
+            //    var dropdownButton = $('<button>').addClass('btn btn-link dropdown-toggle').attr('type', 'button').attr('data-toggle', 'dropdown').append(
+            //        $('<i>').addClass('fas fa-bars')
+            //    );
+
+            //    var dropdownMenu = $('<div>').addClass('dropdown-menu').append(
+            //        $('<a>').attr('href', '#').addClass('dropdown-item grid-edit').append(
+            //            $('<i>').addClass('fas fa-pencil-alt'),
+            //            ' Duzenle'
+            //        )
+            //    );
+
+            //    if (deleteUrl && deleteUrl !== "") {
+            //        dropdownMenu.append(
+            //            $('<div>').addClass('dropdown-divider'),
+            //            $('<a>').attr('href', '#').addClass('dropdown-item grid-delete text-danger').append(
+            //                $('<i>').addClass('fas fa-trash-alt'),
+            //                ' Sil'
+            //            )
+            //        );
+            //    }
+
 
             dropdownButton.click(function () {
                 dropdownMenu.toggle(); // Menüyü açmak/kapatmak için toggle() yöntemini kullanýyoruz
@@ -205,6 +233,7 @@ function processTableData(data) {
 
         }
         $('tbody').append(tr);
+
     });
 
     // Toplam kayýt sayýsýný içeren div'i oluþtur

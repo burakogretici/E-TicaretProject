@@ -165,7 +165,7 @@
         },
         showErrorDialog: function (title, message, href) {
             var modal = $('<div class="modal fade" tabindex="-1" role="dialog">');
-            var modalDialog = $('<div class="modal-dialog" role="document">'); 
+            var modalDialog = $('<div class="modal-dialog" role="document">');
             var modalContent = $('<div class="modal-content">');
             var modalHeader = $('<div class="modal-header error">');
             var modalTitle = $('<h5 class="modal-title">').html(title);
@@ -197,12 +197,12 @@
                     modal.modal('hide');
                 }
             });
-      
+
             $('body').append(modal);
             modal.modal('show');
         },
 
-            };
+    };
 }();
 
 

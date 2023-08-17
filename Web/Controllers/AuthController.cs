@@ -3,6 +3,8 @@ using Business.Services;
 using Entities.Dtos.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System;
 using System.Threading.Tasks;
 using Web.ApiHelper;
 
@@ -39,7 +41,10 @@ namespace Web.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
+
             var result = await _httpClient.PostAsync<AccessToken>("auth/login/", model);
+
+
             if (result.Success)
             {
                 _userAccessor.User = result.Data.User;

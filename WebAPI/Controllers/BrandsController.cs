@@ -6,8 +6,7 @@ using Business.Handlers.Brands.Queries;
 using Entities.Dtos.Brands;
 using Microsoft.AspNetCore.Http;
 using Core.Entities.Concrete;
-using Entities.Dtos.Addresses;
-using Entities.Dtos.Products;
+using Core.Utilities.Results.Paging;
 
 namespace WebAPI.Controllers
 {
@@ -16,15 +15,15 @@ namespace WebAPI.Controllers
     public class BrandsController : BaseController
     {
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<AddressListDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<BrandDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
         public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)
         {
-            GetBrandsTableQuery getAddressTableQuery = new() { TableGlobalFilter = tableGlobalFilter };
-            return GetResponseOnlyResult(await Mediator.Send(getAddressTableQuery));
+            GetBrandsTableQuery getBrandsTableQuery = new() { TableGlobalFilter = tableGlobalFilter };
+            return GetResponseOnlyResult(await Mediator.Send(getBrandsTableQuery));
         }
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductListDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BrandDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("get")]
         public async Task<IActionResult> GetAll()

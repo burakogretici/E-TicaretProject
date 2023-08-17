@@ -1,7 +1,4 @@
-﻿using Business.Handlers.Cities.Commands;
-using Business.Handlers.Cities.Queries;
-using Entities.Dtos.Cities;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

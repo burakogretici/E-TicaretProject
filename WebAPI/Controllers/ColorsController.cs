@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Business.Handlers.Colors.Commands;
 using Business.Handlers.Colors.Queries;
 using Entities.Dtos.Colors;
 using Microsoft.AspNetCore.Http;
 using Core.Entities.Concrete;
+using Core.Utilities.Results.Paging;
 
 namespace WebAPI.Controllers
 {
@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ColorsController : BaseController
     {
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ColorDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<ColorDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
         public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)

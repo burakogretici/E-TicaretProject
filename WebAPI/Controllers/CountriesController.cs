@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Business.Handlers.Countries.Commands;
 using Business.Handlers.Countries.Queries;
 using Core.Entities.Concrete;
+using Core.Utilities.Results.Paging;
 using Entities.Dtos.Countries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace WebAPI.Controllers
     public class CountriesController : BaseController
     {
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CountryDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<CountryDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
         public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)

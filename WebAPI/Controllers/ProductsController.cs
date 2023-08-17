@@ -8,7 +8,6 @@ using Business.Handlers.Orders.Commands;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Paging;
 using Business.Handlers.Brands.Queries;
-using Entities.Dtos.Brands;
 using System.Collections.Generic;
 
 namespace WebAPI.Controllers

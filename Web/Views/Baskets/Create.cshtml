@@ -25,18 +25,7 @@
                 @Html.DropDownList("ProductId", ViewBag.Products, "Seçiniz...", new { @class = "form-control" })
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>
-
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-
+         
             <div class="form-group">
                 <button type="button" class="btn btn-primary" onclick="createBasketItem()">Create</button>
             </div>

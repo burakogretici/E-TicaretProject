@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Business.Handlers.Cities.Commands;
 using Business.Handlers.Cities.Queries;
 using Core.Entities.Concrete;
+using Core.Utilities.Results.Paging;
 using Entities.Dtos.Cities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,7 @@ namespace WebAPI.Controllers
     public class CitiesController : BaseController
     {
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CityDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<CityDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
         public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Business.Handlers.Users.Commands;
 using Business.Handlers.Users.Queries;
 using Core.Entities.Concrete;
-using Entities.Dtos.Categories;
+using Core.Utilities.Results.Paging;
 using Entities.Dtos.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
         //    return GetResponseOnlyResult(await Mediator.Send(new GetUsersQuery()));
         //}
 
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CategoryDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<UserDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("getall")]
         public async Task<IActionResult> GetTableSearch([FromQuery] TableGlobalFilter tableGlobalFilter)
