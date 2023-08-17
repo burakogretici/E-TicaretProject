@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Business.Helpers.Jwt;
 using Business.Services.Authorizations;
+using Business.Services.Users;
 using Core.Utilities.Results;
 using Entities.Dtos.Users;
 using MediatR;
@@ -22,6 +23,7 @@ namespace Business.Handlers.Authorizations.Queries
             {
                 _mapper = mapper;
                 _authService = authService;
+               
             }
 
             public async Task<IDataResult<AccessToken>> Handle(LoginUserQuery request, CancellationToken cancellationToken)
@@ -33,15 +35,14 @@ namespace Business.Handlers.Authorizations.Queries
                     var result = await _authService.CreateAccessToken(response.Data);
                     if (result.Success)
                     {
-                        return new SuccessDataResult<AccessToken>(result.Data);
+                        return new SuccessDataResult<AccessToken>(result.Data);                   
                     }
-
+                   
                 }
                 else
                 {
                     return new ErrorDataResult<AccessToken>(response.Message);
                 }
-
                 return new SuccessDataResult<AccessToken>(response.Message);
             }
         }

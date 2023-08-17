@@ -11,6 +11,8 @@ using Business.BusinessAspects;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Paging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Business.Services.Authorizations;
 
 namespace Business.Services.Users
 {
@@ -18,6 +20,7 @@ namespace Business.Services.Users
     {
         public UserManager(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+
         }
 
         [SecuredOperation("Admin,User.Delete")]
@@ -35,12 +38,20 @@ namespace Business.Services.Users
         //[SecuredOperation("Admin,User.Add")]
         public async Task<IResult> AddAsync(UserDto userDto)
         {
+            byte[] passwordHash, passwordSalt;
+            HashingHelper.CreatePasswordHash(userDto.Password, out passwordHash, out passwordSalt);
+
             userDto.FullName = userDto.FirstName + " " + userDto.LastName;
+            userDto.PasswordHash = passwordHash;
+            userDto.PasswordSalt = passwordSalt;
+
             var mapper = _mapper.Map<User>(userDto);
 
             await _unitOfWork.UserRepository.AddAsync(mapper);
             await _unitOfWork.Commit();
+
             return new SuccessDataResult<UserDto>(userDto, Messages.UserAdded);
+
 
         }
 
@@ -52,7 +63,7 @@ namespace Business.Services.Users
             userDto.CreatedDate = user.Data.CreatedDate;
             byte[] passwordHash, passwordSalt;
 
-            if (userDto.PasswordHash == null && userDto.PasswordSalt == null)
+            if (userDto.PasswordHash != null && userDto.PasswordSalt != null)
             {
                 userDto.PasswordHash = user.Data.PasswordHash;
                 userDto.PasswordSalt = user.Data.PasswordSalt;

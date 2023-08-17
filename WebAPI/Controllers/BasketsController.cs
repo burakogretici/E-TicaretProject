@@ -7,6 +7,9 @@ using Business.Handlers.Baskets.Queries;
 using Entities.Dtos.Baskets;
 using Microsoft.AspNetCore.Http;
 using Business.Handlers.BasketItems.Commands;
+using Core.Entities.Concrete;
+using Core.Utilities.Results.Paging;
+using Business.Handlers.Products.Queries;
 
 namespace WebAPI.Controllers
 {
@@ -20,7 +23,7 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll()
         {
-            return GetResponseOnlyResultData(await Mediator.Send(new GetBasketsQuery()));
+            return GetResponseOnlyResult(await Mediator.Send(new GetBasketsQuery()));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BasketDto))]
@@ -28,16 +31,24 @@ namespace WebAPI.Controllers
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById([FromRoute] GetBasketItemQuery getBasketQuery)
         {
-            return GetResponseOnlyResultData(await Mediator.Send(getBasketQuery));
+            return GetResponseOnlyResult(await Mediator.Send(getBasketQuery));
         }
 
-        
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedResult<BasketListDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("get-basketItems")]
+        public async Task<IActionResult> GetBasketItems([FromQuery] TableGlobalFilter tableGlobalFilter)
+        {
+            GetBasketItemsQuery getBasketItemsQuery = new() { TableGlobalFilter = tableGlobalFilter };
+            return GetResponseOnlyResult(await Mediator.Send(getBasketItemsQuery));
+        }
+
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost("add")]
         public async Task<IActionResult> Add([FromBody] CreateBasketCommand createBasket)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createBasket));
+            return GetResponseOnlyResult(await Mediator.Send(createBasket));
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -45,22 +56,22 @@ namespace WebAPI.Controllers
         [HttpPost("add-basketItem")]
         public async Task<IActionResult> AddBasketItem([FromBody] CreateBasketItemCommand createBasketItem)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(createBasketItem));
+            return GetResponseOnlyResult(await Mediator.Send(createBasketItem));
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateBasketCommand updateBasket)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(updateBasket));
+            return GetResponseOnlyResult(await Mediator.Send(updateBasket));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteBasketCommand deleteBasket)
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> Delete([FromRoute] DeleteBasketCommand deleteBasket)
         {
-            return GetResponseOnlyResultMessage(await Mediator.Send(deleteBasket));
+            return GetResponseOnlyResult(await Mediator.Send(deleteBasket));
         }
     }
 }

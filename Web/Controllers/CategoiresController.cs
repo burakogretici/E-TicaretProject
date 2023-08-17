@@ -59,7 +59,6 @@ namespace Web.Controllers
             return result.ToJson("/category/index");
         }
 
-        [HttpGet("category/delete")]
         public async Task<IActionResult> Delete(string id)
         {
 

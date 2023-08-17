@@ -1,0 +1,62 @@
+﻿@using Entities.Dtos.Baskets;
+@model BasketItemDto
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@if (!ViewContext.ModelState.IsValid)
+{
+    <div class="alert alert-danger" role="alert">
+        @(Html.Raw(ViewData.ModelState.GetErrorMessage()))
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form action="/basket/create" id="createBasketItem" method="post">
+            <div class="form-group">
+                <label asp-for="BasketId" class="control-label"></label>
+                @Html.DropDownList("BasketId", ViewBag.Baskets, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="BasketId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                @Html.DropDownList("ProductId", ViewBag.Products, "Seçiniz...", new { @class = "form-control" })
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="createBasketItem()">Create</button>
+            </div>
+
+        </form>
+
+    </div>
+    <div>
+        <a asp-action="Index" class="btn btn-link">Back to List</a>
+    </div>
+</div>
+
+@section scripts{
+
+    <script>
+
+        function createBasketItem() {
+            var form = $("#createBasketItem");
+            app.callJx(form.attr("action"), "body", form.serialize());
+        }
+
+    </script>
+}

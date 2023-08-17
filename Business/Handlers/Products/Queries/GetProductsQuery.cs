@@ -1,20 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿
 using Business.Services.Products;
-using Core.Entities.Concrete;
 using Core.Utilities.Results;
-using Core.Utilities.Results.Paging;
+
 using Entities.Dtos.Products;
 using MediatR;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Business.Handlers.Products.Queries
+namespace Business.Handlers.Brands.Queries
 {
-    public class GetProductsQuery : IRequest<PaginatedResult<ProductListDto>>
+    public class GetProductsQuery : IRequest<IDataResult<IEnumerable<ProductListDto>>>
     {
-        public TableGlobalFilter TableGlobalFilter { get; set; }
-
-        public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, PaginatedResult<ProductListDto>>
+        public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, IDataResult<IEnumerable<ProductListDto>>>
         {
             private readonly IProductService _productService;
 
@@ -23,12 +24,11 @@ namespace Business.Handlers.Products.Queries
                 _productService = productService;
             }
 
-            public async Task<PaginatedResult<ProductListDto>> Handle(GetProductsQuery request,
+            public async Task<IDataResult<IEnumerable<ProductListDto>>> Handle(GetProductsQuery request,
                 CancellationToken cancellationToken)
             {
-                var productList = await _productService.GetTableSearch(request.TableGlobalFilter);
+                var productList = await _productService.GetAllAsync();
                 return productList;
-
             }
         }
     }

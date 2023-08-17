@@ -7,6 +7,7 @@ using Entities.Dtos.Brands;
 using Microsoft.AspNetCore.Http;
 using Core.Entities.Concrete;
 using Entities.Dtos.Addresses;
+using Entities.Dtos.Products;
 
 namespace WebAPI.Controllers
 {
@@ -23,7 +24,7 @@ namespace WebAPI.Controllers
             GetBrandsTableQuery getAddressTableQuery = new() { TableGlobalFilter = tableGlobalFilter };
             return GetResponseOnlyResult(await Mediator.Send(getAddressTableQuery));
         }
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<BrandDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductListDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("get")]
         public async Task<IActionResult> GetAll()

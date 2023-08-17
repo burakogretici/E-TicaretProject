@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Http;
 using Business.Handlers.Orders.Commands;
 using Core.Entities.Concrete;
 using Core.Utilities.Results.Paging;
+using Business.Handlers.Brands.Queries;
+using Entities.Dtos.Brands;
+using System.Collections.Generic;
 
 namespace WebAPI.Controllers
 {
@@ -19,10 +22,17 @@ namespace WebAPI.Controllers
         [HttpGet("getall")]
         public async Task<IActionResult> GetAll([FromQuery] TableGlobalFilter tableGlobalFilter)
         {
-            GetProductsQuery getProductsQuery = new() { TableGlobalFilter = tableGlobalFilter };
+            GetProductsTableQuery getProductsQuery = new() { TableGlobalFilter = tableGlobalFilter };
             return GetResponseOnlyResult(await Mediator.Send(getProductsQuery));
         }
-
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ProductListDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [HttpGet("get")]
+        public async Task<IActionResult> GetAll()
+        {
+            GetProductsQuery getProductsQuery = new() { }; ;
+            return GetResponseOnlyResult(await Mediator.Send(getProductsQuery));
+        }
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{Id}")]

@@ -14,13 +14,6 @@
     });
     $('.form-control').blur();
 
-    //$('.form-control').each(function () {
-    //    var $this = $(this);
-    //    if ($this.val().length > 0) {
-    //        $this.parent().addClass("focused");
-    //    }
-    //});
-    // validation
     $.validator.setDefaults({
         errorElement: 'span',
         errorClass: 'validate-tooltip'

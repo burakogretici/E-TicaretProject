@@ -34,6 +34,8 @@ namespace DataAccess.Concrete.Configurations
 
                     new Menu { Id = 6, Name = "Sipariş", DisplayOrder = 1 },
                     new Menu { Id = 7, ParentMenuId = 6, Name = "Sipariş Listesi", DisplayOrder = 0, Url = "/order/index" },
+                    new Menu { Id = 17, ParentMenuId = 6, Name = "Sepet Listesi", DisplayOrder = 0, Url = "/basket/index" },
+
 
                     new Menu { Id = 8, Name = "Adres", DisplayOrder = 2 },
                     new Menu { Id = 9, ParentMenuId = 8, Name = "Adres Listesi", DisplayOrder = 0, Url = "/adress/index" },

@@ -11,8 +11,8 @@ namespace DataAccess.Concrete.Configurations
             builder.Property(a => a.BasketId).HasColumnName("BasketId").IsRequired();
             builder.Property(a => a.ProductId).HasColumnName("ProductId").IsRequired();
             builder.Property(a => a.Amount).HasColumnName("Amount").IsRequired();
-            //builder.Property(a => a.Price).HasColumnName("Price").IsRequired();
-            //builder.Property(a => a.Total).HasColumnName("Total");
+            builder.Property(a => a.Price).HasColumnName("Price").IsRequired().HasColumnType("decimal(18, 2)");
+            ;
 
             builder.HasOne(a => a.Basket)
                 .WithMany(a => a.BasketItems)

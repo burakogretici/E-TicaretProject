@@ -1,4 +1,4 @@
-﻿var exn = function () {
+﻿var app = function () {
     return {
         hideMask: function (block) {
             if (block) {
@@ -30,11 +30,11 @@
             }
         },
         gotoUrl: function (url) {
-            exn.showMask("body", "Yönlendiriliyorsunuz. Lütfen bekleyiniz...");
+            app.showMask("body", "Yönlendiriliyorsunuz. Lütfen bekleyiniz...");
             window.location.href = url;
         },
         callJx: function (url, mask, data, done, fail) {
-            exn.showMask(mask);
+            app.showMask(mask);
 
             var jx = $.ajax({
                 type: 'POST',
@@ -44,15 +44,15 @@
                 success: function (result) {
                     debugger;
                     if (result.data.success) {
-                        exn.hideMask(mask);
+                        app.hideMask(mask);
 
                         if (result.redirect) {
                             toastr.success(result.data.message, 'İşlem Başarılı', { timeOut: 5000 });
-                            exn.gotoUrl(result.redirect);
+                            app.gotoUrl(result.redirect);
                             return;
                         }
                     } else {
-                        exn.hideMask(mask);
+                        app.hideMask(mask);
                         if (result.data.errors != null) {
                             $.each(result.data.errors, function (i, e) {
                                 toastr.error(e.errorMessage, e.message, { timeOut: 5000 });
@@ -66,11 +66,11 @@
                         debugger;
                         done.call(undefined, result);
                     }
-                    //    exn.ajaxDone();
+                    //    app.ajaxDone();
                 },
                 error: function (xhr, status, error) {
                     debugger;
-                    exn.hideMask(mask);
+                    app.hideMask(mask);
                     if (fail && typeof fail === 'function') {
                         fail.call(undefined);
                     }
@@ -86,7 +86,7 @@
         },
         getJx: function (url, mask, data, done, fail) {
             debugger;
-            exn.showMask(mask);
+            app.showMask(mask);
 
             var jx = $.ajax({
                 type: 'GET',
@@ -94,18 +94,18 @@
                 data: data,
                 cache: false,
                 success: function (result) {
-                    exn.hideMask(mask);
+                    app.hideMask(mask);
 
                     if (result && typeof result === 'object') {
                         if (result.redirect) {
-                            exn.gotoUrl(result.redirect);
+                            app.gotoUrl(result.redirect);
                             return;
                         }
 
                         if (result.hasError !== undefined) {
                             if (result.hasError) {
                                 if (result.errors && result.errors.length) {
-                                    exn.showModal("danger", "Hata", exn.resultError(result));
+                                    app.showModal("danger", "Hata", app.resultError(result));
                                 }
                                 return;
                             }
@@ -115,15 +115,15 @@
                     if (done && typeof done === 'function') {
                         done.call(undefined, result.data.data);
                     }
-                    exn.ajaxDone();
+                    app.ajaxDone();
                 },
                 error: function (xhr, status, error) {
-                    exn.hideMask(mask);
+                    app.hideMask(mask);
                     if (fail && typeof fail === 'function') {
                         fail.call(undefined);
                     }
                     else {
-                        exn.showModal("danger", "Hata", "Beklenmedik bir hata oluştu");
+                        app.showModal("danger", "Hata", "Beklenmedik bir hata oluştu");
                     }
                 }
             });
@@ -197,27 +197,12 @@
                     modal.modal('hide');
                 }
             });
-            // "Tamam" düğmesine tıklandığında belirtilen URL'ye yönlendirme yap
-            //okButton.click(function () {
-            //    if (href) {
-            //        window.location.href = href;
-            //    } else {
-            //        modal.modal('hide');
-            //    }
-            //});
-
-            //modal.on('hidden.bs.modal', function () {
-            //    if (href) {
-            //        window.location.href = href;
-            //    }
-            //});
-
+      
             $('body').append(modal);
             modal.modal('show');
         },
 
-
-    };
+            };
 }();
 
 

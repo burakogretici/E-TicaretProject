@@ -62,7 +62,6 @@ namespace Web.Controllers
             return result.ToJson("/operationclaim/index");
         }
 
-        [HttpGet("operationclaim/delete")]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _httpClient.DeleteAsync<OperationClaimDto>($"OperationClaims/Delete/{id}");

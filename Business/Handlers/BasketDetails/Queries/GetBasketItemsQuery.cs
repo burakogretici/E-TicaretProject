@@ -1,37 +1,36 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Business.Handlers.Products.Queries;
+using Business.Services.Baskets;
+using Business.Services.Products;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Core.Utilities.Results.Paging;
 using DataAccess.UnitOfWork;
 using Entities.Dtos.Baskets;
+using Entities.Dtos.Products;
 using MediatR;
 
 namespace Business.Handlers.BasketItems.Queries
 {
-    public class GetBasketItemsQuery : IRequest<IDataResult<IEnumerable<BasketListDto>>>
+    public class GetBasketItemsQuery : IRequest<PaginatedResult<BasketListDto>>
     {
-        public class GetBasketItemsQueryHandler : IRequestHandler<GetBasketItemsQuery, IDataResult<IEnumerable<BasketListDto>>>
-        {
-            private readonly IUnitOfWork _unitOfWork;
+        public TableGlobalFilter TableGlobalFilter { get; set; }
 
-            public GetBasketItemsQueryHandler(IUnitOfWork unitOfWork)
+        public class GetBasketItemsQueryHandler : IRequestHandler<GetBasketItemsQuery, PaginatedResult<BasketListDto>>
+        {
+            private readonly IBasketService _basketService;
+
+            public GetBasketItemsQueryHandler(IBasketService basketService)
             {
-                _unitOfWork = unitOfWork;
+                _basketService = basketService;
             }
 
-            public async Task<IDataResult<IEnumerable<BasketListDto>>> Handle(GetBasketItemsQuery request, CancellationToken cancellationToken)
+            public async Task<PaginatedResult<BasketListDto>> Handle(GetBasketItemsQuery request, CancellationToken cancellationToken)
             {
-                var basketDetailList = await _unitOfWork.BasketItemRepository.GetAllAsync(
-                    selector: x => new BasketListDto
-                    {
-                        Id = x.Id,
-                        CustomerName = x.Basket.User.FirstName + " " + x.Basket.User.LastName,
-                        ProductName = x.Product.Name,
-                        Amount = x.Amount,
-                    }
-                );
-
-                return new SuccessDataResult<IEnumerable<BasketListDto>>(basketDetailList);
+                var basketItemList = await _basketService.GetTableSearch(request.TableGlobalFilter);
+                return basketItemList;
             }
         }
     }

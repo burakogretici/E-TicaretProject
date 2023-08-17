@@ -3,7 +3,7 @@
     return {
         save: function saveRecord() {
             var form = $("#createAddress");
-            exn.callJx(form.attr("action"), "body", form.serialize());
+            app.callJx(form.attr("action"), "body", form.serialize());
 
         }
     }

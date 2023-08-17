@@ -43,7 +43,7 @@ namespace Business.Services.Authorizations
                 LastName = userForRegister.LastName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                IsActive = true
+                IsActive = false
             };
 
             await _userService.AddAsync(user);
@@ -65,6 +65,7 @@ namespace Business.Services.Authorizations
                 return new ErrorDataResult<UserDto>(Messages.PasswordError);
             }
 
+          
             var existingBasket = await _basketService.GetBasketByUserId(userToCheck.Data.Id);
             if (existingBasket.Data == null)
             {
@@ -74,8 +75,9 @@ namespace Business.Services.Authorizations
                 };
                 await _basketService.CreateBasket(basket);
             }
-          
+
             return new SuccessDataResult<UserDto>(userToCheck.Data, Messages.SuccessfulLogin);
+       
         }
 
         public IResult UserExits(string email)

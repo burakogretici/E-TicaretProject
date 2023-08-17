@@ -54,7 +54,6 @@ namespace Web.Controllers
             return result.ToJson("/color/index");
         }
 
-        [HttpGet("color/delete")]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _httpClient.DeleteAsync<ColorDto>($"colors/delete/{id}");

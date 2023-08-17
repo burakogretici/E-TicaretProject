@@ -74,7 +74,6 @@ namespace Web.Controllers
             return result.ToJson("/product/index");
         }
 
-        //[HttpGet("product/delete")]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _httpClient.DeleteAsync<ProductDto>($"products/delete/{id}");

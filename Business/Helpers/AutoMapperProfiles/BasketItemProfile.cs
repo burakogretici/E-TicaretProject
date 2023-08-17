@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Business.Handlers.BasketItems.Commands;
+using Core.Utilities.Results.Paging;
 using Entities.Concrete;
 using Entities.Dtos.Baskets;
-
 namespace Business.Helpers.AutoMapperProfiles
 {
     public class BasketItemProfile : Profile
@@ -10,7 +10,10 @@ namespace Business.Helpers.AutoMapperProfiles
         public BasketItemProfile()
         {
             CreateMap<BasketItem, BasketItemDto>().ReverseMap();
-
+            //CreateMap<BasketItem, BasketListDto>().ReverseMap();
+            CreateMap<BasketItem, BasketListDto>()
+.ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.Basket.User.FullName));
+            CreateMap<PaginatedResult<BasketItem>, PaginatedResult<BasketListDto>>().ReverseMap();
             CreateMap<BasketItem, CreateBasketItemCommand>().ReverseMap();
             CreateMap<BasketItem, DeleteBasketItemCommand>().ReverseMap();
             CreateMap<BasketItem, UpdateBasketItemCommand>().ReverseMap();

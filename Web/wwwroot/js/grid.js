@@ -86,7 +86,7 @@ function fetchDataAndProcessTable() {
         success: function (data) {
             if (data.data.statusCode === 401) {
                 //alert("Yetkilendirme hatasý: Eriþim izniniz yok.");
-                exn.showErrorDialog("Hata", "Yetkilendirme hatasý: Oturumunuzun süresi doldu veya eriþim izniniz yok.", "/Home/Index");
+                app.showErrorDialog("Hata", "Yetkilendirme hatasý: Oturumunuzun süresi doldu veya eriþim izniniz yok.", "/Home/Index");
 
                 // window.location.href = "/Home/Index"; // Örnek bir giriþ sayfasýna yönlendirme
                 return;
@@ -193,8 +193,8 @@ function processTableData(data) {
             });
 
             dropdownMenu.find('.grid-delete').click(function () {
-                exn.confirmModal("Kayýt Silme", "Bu kaydý silmeyi onaylýyor musunuz?", function () {
-                    exn.callJx(`${deleteUrl}`, "body", { id: id }, function () {
+                app.confirmModal("Kayýt Silme", "Bu kaydý silmeyi onaylýyor musunuz?", function () {
+                    app.callJx(`${deleteUrl}`, "body", { id: id }, function () {
                         fetchDataAndProcessTable();
                     });
                 });

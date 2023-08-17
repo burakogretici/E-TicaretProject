@@ -43,7 +43,7 @@
         },
         save: function saveRecord() {
             var form = $("#createProduct");
-            exn.callJx(form.attr("action"), "body", form.serialize());
+            app.callJx(form.attr("action"), "body", form.serialize());
 
         }
     }

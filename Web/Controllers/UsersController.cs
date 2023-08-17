@@ -70,7 +70,6 @@ namespace Web.Controllers
             return result.ToJson("/user/index");
         }
 
-        [HttpGet("user/delete")]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _httpClient.DeleteAsync<UserDto>($"Users/Delete/{id}");

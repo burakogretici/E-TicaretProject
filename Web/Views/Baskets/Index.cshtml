@@ -1,0 +1,23 @@
+﻿@model BasketItem_VM
+@{
+    ViewBag.Title = "Sepetteki Ürünler";
+}
+
+<filters>
+    <filter for="Basket.User.FullName" label="Kullanıcı Adı" placeholder="Ürün ara..." operator="contains" type="text" />
+    <filter for="Product.Name" label="Ürün Adı" placeholder="Ürüne göre ara..." operator="eq" type="text" />
+    <filter for="Amount" placeholder="Miktara göre ara..." operator="eq" type="number" />
+    <filter for="Price" placeholder="Fiyata göre arama yapın" operator="eq" type="number" />
+    <filter for="CreatedDate" placeholder="Arama yapın" operator="eq" type="date" />
+</filters>
+
+<grid read-url="/Baskets/Read" edit-url="/Baskets/Update" delete-url="/Baskets/Delete" create-url="/Baskets/Create">
+    <column custom-property="true" sortable="false"></column>
+    <column for="CustomerName"></column>
+    <column for="ProductName" sortable="false"></column>
+    <column for="Amount" sortable="false"></column>
+    <column for="Price" sortable="false"></column>
+    <column for="CreatedDate" format="formatDate"></column>
+</grid>
+
+
